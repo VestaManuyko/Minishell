@@ -6,3 +6,6 @@ Some interesting starting points:
 **Abstract syntax tree (AST)** \
 A method to parse content based on lexical tokens: \
 https://en.wikipedia.org/wiki/Abstract_syntax_tree.
+
+**Bash Manual** \
+https://www.gnu.org/savannah-checkouts/gnu/bash/manual/
