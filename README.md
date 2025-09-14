@@ -14,6 +14,11 @@ https://en.wikipedia.org/wiki/Abstract_syntax_tree.
 **Bash Manual** \
 https://www.gnu.org/savannah-checkouts/gnu/bash/manual/
 
+# Summary od this document:
+[Allowed functions](https://github.com/francescoPagliaPersonal/minishell/edit/main/README.md#summary-overview-of-the-allowed-functions)
+
+[Questions](https://github.com/francescoPagliaPersonal/minishell/edit/main/README.md#summary-overview-of-the-allowed-functions)
+
 # Summary overview of the allowed functions:
 
 ## **Readline and History Functions**
@@ -183,6 +188,12 @@ fork + execve to run programs
 waitpid to manage them
 
 dup2 + pipe for redirection/pipelines
+
+
+# Question:
+
+## Do we have to handle scripts? 
+## 
 
 stat, opendir for file operations
 
