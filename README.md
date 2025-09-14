@@ -15,9 +15,9 @@ https://en.wikipedia.org/wiki/Abstract_syntax_tree.
 https://www.gnu.org/savannah-checkouts/gnu/bash/manual/
 
 # Summary od this document:
-[Allowed functions](https://github.com/francescoPagliaPersonal/minishell/edit/main/README.md#summary-overview-of-the-allowed-functions)
+[Allowed functions](https://github.com/francescoPagliaPersonal/minishell/main/README.md#summary-overview-of-the-allowed-functions)
 
-[Questions](https://github.com/francescoPagliaPersonal/minishell/edit/main/README.md#summary-overview-of-the-allowed-functions)
+[Questions](https://github.com/francescoPagliaPersonal/minishell/main/README.md#summary-overview-of-the-allowed-functions)
 
 # Summary overview of the allowed functions:
 
