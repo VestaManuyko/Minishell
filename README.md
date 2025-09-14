@@ -17,7 +17,7 @@ https://www.gnu.org/savannah-checkouts/gnu/bash/manual/
 # Summary od this document:
 [Allowed functions](https://github.com/francescoPagliaPersonal/minishell/blob/main/README.md#summary-overview-of-the-allowed-functions)
 
-[Questions](https://github.com/francescoPagliaPersonal/minishell/blob/main/README.md#question))
+[Questions](https://github.com/francescoPagliaPersonal/minishell/blob/main/README.md#question)
 
 # Summary overview of the allowed functions:
 
@@ -189,12 +189,14 @@ waitpid to manage them
 
 dup2 + pipe for redirection/pipelines
 
+stat, opendir for file operations
+
+isatty, tcsetattr, tgetstr for terminal handling
 
 # Question:
 
 ## Do we have to handle scripts? 
+I refer to bash alike scripts that can be read as programs in our shell.
+Do we have to handle cross reference to other shell As in should we be able to jump from one shell to the other? Is this even a topic per se?
+
 ## 
-
-stat, opendir for file operations
-
-isatty, tcsetattr, tgetstr for terminal handling
