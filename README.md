@@ -19,6 +19,8 @@ https://www.gnu.org/savannah-checkouts/gnu/bash/manual/
 
 [Questions](https://github.com/francescoPagliaPersonal/minishell/blob/main/README.md#question)
 
+[Notes](https://github.com/francescoPagliaPersonal/minishell/blob/main/README.md#notes)
+
 # Summary overview of the allowed functions:
 
 ## **Readline and History Functions**
@@ -200,3 +202,7 @@ I refer to bash alike scripts that can be read as programs in our shell.
 Do we have to handle cross reference to other shell As in should we be able to jump from one shell to the other? Is this even a topic per se?
 
 ## 
+
+# Notes:
+
+- [how to filter out readline leaks](https://discordapp.com/channels/1026201148803260527/1138120087488966766/1170818150330282015)
