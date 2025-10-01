@@ -6,12 +6,14 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/01 09:48:17 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/01 10:50:13 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# include "ms_structs.h"
 
 /*			Strings			*/
 
@@ -45,4 +47,3 @@ char	*arr_to_str(char **arr);
 char	**arr_split_by_c(char *str, char c);
 
 #endif
-
