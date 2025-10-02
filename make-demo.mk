@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/02 12:36:56 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/02 12:52:30 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/02 16:03:15 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,10 @@ OBJ = $(wildcard source/*/*.c)
 DEMO_SRC = $(wildcard demo/source/*.c)
 DEMO_BIN = $(patsubst demo/source/%,demo/bin/%,$(DEMO_SRC:.c=.out))
 
+LIBFT = libs/libft/libft.a
 all: $(DEMO_BIN)
 
-demo/bin/%.out:  $(OBJ) $(LIBFT) demo/source/%.c
+demo/bin/%.out:  demo/source/%.c $(OBJ) $(LIBFT)
 	@ mkdir -p $(dir $@)
 	$(CC) $(FLAGS) $(INCLUDES) $^ -o $@ 
 
