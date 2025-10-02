@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 16:43:06 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/02 18:36:14 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/02 18:47:22 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strncpy(char *src, size_t len)
 		return (str);
 }
 
-char	**arr_split_by_c(char *str, char c, bool eva_quote)
+char	**arr_split_by_c(char *str, char c, bool eval_quote)
 {
 	int items;
 	char **arr;
