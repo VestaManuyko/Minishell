@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/01 10:50:13 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/01 12:20:15 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "ms_structs.h"
 
-/*			Strings			*/
+/*			STRINGS			*/
 
 /* Used while looping through a string confirms if the current section of   
  * the given string is being under quotes.
@@ -25,8 +25,6 @@
  * - ASCII decimal value of the open quote
  */
 int		str_isquoted(char c);
-
-/*			ARRAYS			*/
 
 /* Collapses a NULL terminated array to a single string.
  * In the process the memory of the original array is freed
