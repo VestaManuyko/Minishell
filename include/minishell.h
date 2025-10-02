@@ -6,14 +6,21 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/01 12:20:15 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/02 15:12:58 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <sys/types.h>
+
+# include <libft.h>
 # include "ms_structs.h"
+# include "ms_strings.h"
 
 /*			STRINGS			*/
 

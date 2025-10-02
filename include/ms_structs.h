@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/01 11:39:23 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/02 15:41:35 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  */
 typedef enum e_pipe
 {
-	pipe,
+	ispipe,
 	end
 }	t_pipe;
 
