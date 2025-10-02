@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/02 12:59:36 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/02 13:15:47 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,47 +25,40 @@ LIB_DIR := libs
 STRINGS = str_isquoted.c
 EXAMPLE = 
 
-# Add source paths
+# Add source paths to files 
 STRINGS_SRC = $(addprefix $(SRC_DIR)/strings/, $(STRINGS))
 EXAMPLE_SRC = $(addprefix $(SRC_DIR)/example/, $(EXAMPLE))
 
-# Collect everything
+# Collect all the c file in one variable
 SRC = $(STRINGS_SRC) $(EXAMPLE_SRC)
-
 OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
 
 LIBFT := $(LIB_DIR)/libft/libft.a
 
 
-#DEMO creation
-#DEMO_SRC = $(wildcard demo/source/*.c)
-#DEMO_BIN = $(patsubst demo/source/%,demo/bin/%,$(DEMO_SRC:.c=.out))
-
-all : $(NAME) $(LIBFT)
-
 NAME := minishell 
 
 $(NAME)  : $(OBJ) $(LIBFT) $(H_FILES) 
-	$(CC) $(FLAGS) $(INCLUDES) $(OBJ) $(LIBFT) $(LINKS) -o $(NAME)
+	$(CC) $(FLAGS) $(INCLUDES) $(OBJ) $(LIBFT) -o $(NAME)
 $(LIBFT) :
 	make -C $(LIB_DIR)/libft libft.a
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@ mkdir -p $(dir $@)
 	$(CC) $(FLAGS) $(INCLUDES) -o $@ -c $^
 
-#demo/bin/%.out:  $(OBJ) $(LIBFT) demo/source/%.c
-#	@ mkdir -p $(dir $@)
-#	$(CC) $(FLAGS) $(INCLUDES) $^ -o $@ 
-	
-
 .PHONY: all clean fclean re norm demo
+
+all : $(NAME) $(LIBFT)
 
 clean  :
 	make -s -C $(LIB_DIR)/libft clean
 	-rm -rf $(OBJS)
+
 fclean : clean
 	-rm -rf $(NAME) $(LIBFT) *.out
+
 re : fclean all
+
 norm:
 	norminette -R CheckForForbiddenHeader $(SRC) 
 
