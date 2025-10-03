@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_strings.h                                       :+:      :+:    :+:   */
+/*   arr_print.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/03 09:37:24 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/03 09:34:27 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/03 10:17:23 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MS_STRINGS_H
-# define MS_STRINGS_H
+#include <minishell.h>
 
-void	arr_free(char **arr);
-void	arr_print(char **arr);
-
-#endif
+void	arr_print(char **arr)
+{
+	if (arr == NULL)
+		return ;
+	while (*arr != NULL)
+	{
+		printf("%s\n", *arr);
+		arr++;
+	}
+}
