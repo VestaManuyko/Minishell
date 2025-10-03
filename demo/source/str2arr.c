@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_isquoted.c                                     :+:      :+:    :+:   */
+/*   str2arr.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/01 09:12:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/03 11:29:49 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/03 09:10:22 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/03 11:59:58 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	str_isquoted(char c)
+int main(int ac, char **av)
 {
-	static int quote = 0;
-	if (c == '"' || c == '\'')
+	char test[] = "ls '-al s' | grep you | \"wc -l | wc -w\" "; 
+	if (ac != 3)
 	{
-		if (quote == 0)
-			quote = (int)c;
-		else if (quote == (int)c)
-		{
-			quote = 0;
-	//		return ((int)c);
-		}
-			
+		printf("Error:\n\tstr2arr.out {separator} {eval_quote: 0 | 1} {string}\n");
+		return (1);
 	}
-	return (quote);
+	char **arr = arr_split_by_c(test, av[1][0], atoi(av[2]));
+	if (arr == NULL)
+		return (1);
+	arr_print(arr);
+	arr_free(arr);
+	return (0);
 }
