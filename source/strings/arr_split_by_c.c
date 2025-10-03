@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 16:43:06 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/02 18:47:22 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/03 10:15:06 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	**arr_split_by_c(char *str, char c, bool eval_quote)
 			break;
 
 		end = str;
-		while ((evaluate_quote(*end, eval_quote) == 0 && *end != c)
+		while ((evaluate_quote(*end, eval_quote) == 0 && *end != c && *end != 0)
 				|| evaluate_quote(str[i], eval_quote) != 0)
 			end++;
 		arr[i] = ft_strncpy(str, (size_t)(end - str));
