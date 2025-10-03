@@ -60,7 +60,7 @@ typedef struct s_prog
  */
 typedef struct s_shell
 {
-	char	*cmd_str;
+	char	*cmd_line;
 	int		count;
 	t_prog	*items;
 	char	**sys_env;
