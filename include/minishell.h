@@ -6,14 +6,24 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/01 09:48:17 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/02 18:46:54 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-/*			Strings			*/
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <sys/types.h>
+# include <stdbool.h>
+
+# include <libft.h>
+# include "ms_structs.h"
+# include "ms_strings.h"
+
+/*			STRINGS			*/
 
 /* Used while looping through a string confirms if the current section of   
  * the given string is being under quotes.
@@ -24,8 +34,6 @@
  */
 int		str_isquoted(char c);
 
-/*			ARRAYS			*/
-
 /* Collapses a NULL terminated array to a single string.
  * In the process the memory of the original array is freed
  */
@@ -34,6 +42,8 @@ char	*arr_to_str(char **arr);
 /* Given a string, splits it into an array using c as the delimiter.
  * The function takes in consideration the status of the quotes. 
  * char c is only taken in consideration if no quotes are open.
+ * The quote analisys can be muted with the boolen eval_quote, 
+ * setting it to false to ignore them.
  * 
  * Imporant note: 
  * The function doesn't free the original string. it's the task of the caller
@@ -42,7 +52,6 @@ char	*arr_to_str(char **arr);
  * RETURNS:
  * A null terminated array. 
  */
-char	**arr_split_by_c(char *str, char c);
+char	**arr_split_by_c(char *str, char c, bool eval_quote);
 
 #endif
-
