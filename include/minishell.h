@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
+/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/02 18:46:54 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/05 16:32:21 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdio.h>
 # include <sys/types.h>
 # include <stdbool.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # include <libft.h>
 # include "ms_structs.h"
