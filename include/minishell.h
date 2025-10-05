@@ -6,7 +6,11 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/10/06 13:06:14 by vmanuyko         ###   ########.fr       */
+=======
+/*   Updated: 2025/10/05 16:36:57 by vmanuyko         ###   ########.fr       */
+>>>>>>> b48ed58 (add: readline headers)
 /*                                                                            */
 /* ************************************************************************** */
 
