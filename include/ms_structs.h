@@ -67,4 +67,17 @@ typedef struct s_shell
 	char	**env_paths;
 }			t_shell;
 
+/* This structure provides flexible metadata to extend an array.
+ * arr:			the current character array
+ * size:		current amount of used pointers;
+ * capacity:	maximum amount of pointers that can be stored 
+ * 				before the array has to be modified with a realloc;
+ */
+typedef struct s_arr
+{
+	char	**arr;
+	int		size;
+	int		capacity;
+}			t_arr;
+
 #endif
