@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 16:43:06 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/03 12:40:14 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/06 10:10:53 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,6 @@ static int	evaluate_quote(char c, bool eval_quote)
 		return (0);
 	value = str_isquoted(c);
 	return (value);
-}
-
-char	*ft_strncpy(char *src, size_t len)
-{
-	char	*str;
-	int		i;
-
-	i = 0;
-	str = (char *)ft_calloc(len + 1, sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	while (i < len)
-	{
-		str[i] = src[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
 }
 
 static char	**set_array(char *str, char c, bool eval_quote)
