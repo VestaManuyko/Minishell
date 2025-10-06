@@ -5,12 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: Invalid date        by                   #+#    #+#             */
 <<<<<<< HEAD
 /*   Updated: 2025/10/06 13:06:14 by vmanuyko         ###   ########.fr       */
 =======
 /*   Updated: 2025/10/05 16:36:57 by vmanuyko         ###   ########.fr       */
->>>>>>> b48ed58 (add: readline headers)
+=======
+/*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/05 16:34:03 by vmanuyko         ###   ########.fr       */
+>>>>>>> d2f876d (Prompt display by executing the program)
 /*                                                                            */
 /* ************************************************************************** */
 
