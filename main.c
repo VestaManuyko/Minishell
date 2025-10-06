@@ -6,7 +6,11 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:29:16 by vmanuyko          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/10/03 12:51:42 by vmanuyko         ###   ########.fr       */
+=======
+/*   Updated: 2025/10/03 12:36:13 by vmanuyko         ###   ########.fr       */
+>>>>>>> d2f876d (Prompt display by executing the program)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +121,7 @@ int main(int argc, char **argv, char **env)
 	while (1)
 	{
 		line = readline(prompt);
+<<<<<<< HEAD
 		if (!line)
 		{
 			perror("Error");
@@ -127,4 +132,7 @@ int main(int argc, char **argv, char **env)
 		free(line);
 	}
 	free(prompt);
+=======
+	}
+>>>>>>> d2f876d (Prompt display by executing the program)
 }
