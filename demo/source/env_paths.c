@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_strings.h                                       :+:      :+:    :+:   */
+/*   env_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/06 15:26:05 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/06 14:27:25 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/06 14:34:52 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MS_STRINGS_H
-# define MS_STRINGS_H
+#include <minishell.h>
 
-void	arr_free(char **arr);
-void	arr_print(char **arr);
-t_arr	*arr_deepcpy(char **src);
+int main(int ac, char **av, char **env)
+{
+	char **arr;
+	t_shell	shell;
 
-#endif
+	arr = arr_split_by_c(getenv("PATH"), ':', 1);
+	arr_print(arr);
+}
