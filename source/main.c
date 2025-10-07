@@ -8,7 +8,7 @@ int main(int ac, char **av, char **env)
 	init_shell(&shell);
 	while (1)
     {
-    	if (get_command(&shell))
+    	if (!get_command(&shell))
       	{
         	populate_programs(&shell);
         	if (validate_programs(&shell))
