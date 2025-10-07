@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_structs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
+/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/02 15:41:35 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/07 17:12:25 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_prog
 	int		fd_io[2];
 	char	**prog;
 	int		complete;
-}			t_prog;
+}	t_prog;
 
 /* This structure represents the entry point to process the shell inputs:
  * cmd_str:		raw string received as input;
@@ -63,9 +63,9 @@ typedef struct s_shell
 	char	*cmd_line;
 	int		count;
 	t_prog	*items;
-	char	**sys_env;
+	char	**env;
 	char	**env_paths;
-}			t_shell;
+}	t_shell;
 
 /* This structure provides flexible metadata to extend an array.
  * arr:			the current character array
@@ -78,6 +78,6 @@ typedef struct s_arr
 	char	**arr;
 	int		size;
 	int		capacity;
-}			t_arr;
+}	t_arr;
 
 #endif

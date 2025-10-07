@@ -6,13 +6,13 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:29:16 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/06 13:18:31 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/07 18:14:45 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// char *get_prompt gets the USER env variable and appends it with 
+//char *get_prompt gets the USER env variable and appends it with 
 // the shell_prompt, so that readline may display prompt as example:
 //USER/minishell>
 // return value = prompt to be displayed or NULL upon errors;
@@ -39,29 +39,29 @@ static char	*get_prompt(char **env)
 	return (prompt);
 }
 
-int main(int argc, char **argv, char **env)
+int	get_command(t_shell *shell)
 {
-    //schell struct and others to be defined and initialised
 	char	*line;
     char	*prompt;
-	//consider adding prompt to the struct so that in can be freed upon exit
-	prompt = get_prompt(env);
+
+	prompt = get_prompt(shell->env);
 	if (!prompt)
 	{
 		perror("Error");
 		return (1);
 	}
-	while (1)
+	line = readline(prompt);
+	if (!line)
 	{
-		line = readline(prompt);
-		if (!line)
-		{
-			perror("Error");
-			return (0);
-		}
-		if (line && *line)
-			add_history(line);
-		free(line);
+		perror("Error");
+		return (1);
 	}
+	if (line && *line)
+	{
+		add_history(line);
+		shell->cmd_line = ft_strdup(line);
+	}
+	free(line);
 	free(prompt);
+	return (0);
 }
