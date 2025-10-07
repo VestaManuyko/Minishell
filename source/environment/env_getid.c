@@ -1,26 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_strings.h                                       :+:      :+:    :+:   */
+/*   env_getid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/07 15:06:20 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/07 14:17:37 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/07 14:57:49 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MS_STRINGS_H
-# define MS_STRINGS_H
+#include <minishell.h>
 
-void	arr_free(char **arr);
-void	arr_print(char **arr);
-int		arr_deepcpy(char **src, char ***dest, int dest_capacity);
-t_arr	*tar_init(char **src);
-int		tar_putone(t_arr *tar, char *str);
-int		tar_popone(t_arr *tar, int id);
+static int	match_key(char *str, char *key)
+{
+	int	i;
 
-int		env_getid(char **arr, char *key);
-char	*env_getvalue(char **arr, int id);
+	i = 0;
+	while (key[i] != '\0')
+	{
+		if (key[i] != str[i])
+			return (0);
+		i++;
+	}
+	if (str[i] == '=' || str[i] == '\0')
+		return (1);
+	return (0);
+}
 
-#endif
+int	env_getid(char **arr, char *key)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		if (arr[i][0] == key[0] && match_key(arr[i], key))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
