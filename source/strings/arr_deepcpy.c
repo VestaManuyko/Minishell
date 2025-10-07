@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_strings.h                                       :+:      :+:    :+:   */
+/*   arr_deepcpy.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/07 10:32:37 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/06 14:50:06 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/07 10:05:27 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MS_STRINGS_H
-# define MS_STRINGS_H
+#include <minishell.h>
 
-void	arr_free(char **arr);
-void	arr_print(char **arr);
-int		arr_deepcpy(char **src, char ***dest, int dest_capacity);
-t_arr	*tar_init(char **src);
-int		tar_putone(t_arr *tar, char *str);
-int		tar_popone(t_arr *tar, int id);
-char	*env_getvalue(t_arr *env, char *key);
+int	arr_deepcpy(char **src, char ***dest, int dest_capacity)
+{
+	int	i;
 
-#endif
+	i = 0;
+	if (src == NULL || *dest == NULL)
+		return (-1);
+	while (src[i] != NULL)
+	{
+		if (dest_capacity <= i)
+			return (arr_free(*dest), -1);
+		(*dest)[i] = ft_strdup(src[i]);
+		if ((*dest)[i] == NULL)
+			return (arr_free(*dest), -1);
+		i++;
+	}
+	(*dest)[i] = NULL;
+	return (1);
+}

@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_strings.h                                       :+:      :+:    :+:   */
+/*   tar_popone.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/07 10:32:37 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/07 10:31:44 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/07 10:52:46 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MS_STRINGS_H
-# define MS_STRINGS_H
+#include <minishell.h>
 
-void	arr_free(char **arr);
-void	arr_print(char **arr);
-int		arr_deepcpy(char **src, char ***dest, int dest_capacity);
-t_arr	*tar_init(char **src);
-int		tar_putone(t_arr *tar, char *str);
-int		tar_popone(t_arr *tar, int id);
-char	*env_getvalue(t_arr *env, char *key);
+int	tar_popone(t_arr *tar, int id)
+{
+	int	i;
 
-#endif
+	i = id + 1;
+	if (tar == NULL)
+		return (-1);
+	if (id >= tar->size)
+		return (-1);
+	if (tar->arr[id] != NULL)
+		free(tar->arr[id]);
+	while (i < tar->size)
+		tar->arr[id++] = tar->arr[i++];
+	tar->arr[id] = NULL;
+	tar->size += -1;
+	return (1);
+}
