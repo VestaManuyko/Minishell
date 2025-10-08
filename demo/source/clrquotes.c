@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_strings.h                                       :+:      :+:    :+:   */
+/*   clrquotes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/08 14:06:44 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/08 14:07:37 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/08 15:34:25 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MS_STRINGS_H
-# define MS_STRINGS_H
+#include <minishell.h>
 
-void	arr_free(char **arr);
-void	arr_print(char **arr);
-int		arr_deepcpy(char **src, char ***dest, int dest_capacity);
-t_arr	*tar_init(char **src);
-int		tar_putone(t_arr *tar, char *str);
-int		tar_popone(t_arr *tar, int id);
+int main(int ac, char **av, char **env)
+{
+	t_arr *myenv;
+	char *line;
 
-int		env_getid(char **arr, char *key);
-char	*env_getvalue(char **arr, int id);
-char	*str_clearquotes(t_arr *env, char *str);
-
-#endif
+	myenv = tar_init(env);
+	if (ac != 1)
+		printf("this demo takes no input data discarded!\n\n");
+	char example[] = "\"I am $USER\"' not $USER ' some randon envvar:\n $$ $LAN $LANG\n";
+	line =  str_clearquotes(myenv, example);
+	printf("%s", line);
+	return (0);
+}
