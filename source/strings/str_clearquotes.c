@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:36:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/08 15:43:13 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/08 15:56:31 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ char	*str_clearquotes(t_arr *env, char *str)
 				free(line);
 				if (line2 != NULL)
 					free(line2);
-				str = end + 1;
+				if (quotes != 0)
+					str = end + 2;
+				else	
+					str = end + 1;
 			}
 		}
 		else if (*(end + 1) == quotes || (*(end + 1) == '$' && quotes != '\''))
