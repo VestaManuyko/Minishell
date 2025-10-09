@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tar_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 09:57:29 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/08 15:36:53 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/09 13:04:54 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,16 @@ static int	arr_size(char **arr)
 t_arr	*tar_init(char **src)
 {
 	t_arr	*tarr;
-	int		i;
 
 	tarr = (t_arr *)malloc(sizeof(t_arr));
 	if (tarr == NULL)
 		return (NULL);
 	if (src != NULL)
 	{
-		tarr->size = arr_size(src) -1;
+		tarr->size = arr_size(src) - 1;
 		tarr->capacity = tarr->size + 1;
 	}
-	else 
+	else
 	{
 		tarr->size = 0;
 		tarr->capacity = 8;
