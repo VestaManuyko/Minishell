@@ -6,24 +6,77 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:36:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 11:43:57 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/09 12:34:08 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "ms_structs.h"
 #include <minishell.h>
 
-char	*str_clearquotes(t_arr *env, char *str)
+static char *expand_dollar_special(char *str, char **end, t_arr *expand)
 {
-	char	*end;
-	t_arr	*expand;
-	char	*line;
-	char	*line2;
-	int		quotes;
+	char *line;
+	
+	line = ft_strdup("<< $$ and $? TO BE ADDED!!!>>");
+	if (line == NULL)
+		return (arr_free(expand->arr), free(expand), NULL);
+	if (tar_putone(expand, line) == -1)
+		return (arr_free(expand->arr), free(expand), free(line), NULL);
+	free(line);
+	(*end)++; 
+	return (str + 2);
+}
 
-	expand = tar_init(NULL);
-	if (expand == NULL)
-		return (NULL);
+static char *expand_dollar_envvar(char *str, char **end, t_arr *expand, t_arr *env)
+{
+	char *line;
+	char *line2;
+
+	*end = str + 1;
+	while (!ft_strchr("\'\"", *(*end + 1)) && !ft_isspace(*(*end + 1)))
+		(*end)++;
+	line = ft_strncpy(str + 1, *end - str );
+	if (line == NULL)
+		return (arr_free(expand->arr), free(expand), NULL);
+	line2 = env_getvalue(env->arr, env_getid(env->arr, line));
+	if (line2 != NULL)
+	{
+		if (tar_putone(expand, line2) == -1)
+			return (arr_free(expand->arr), free(expand), free(line), free(line2), NULL);
+	}
+	free(line);
+	if (line2 != NULL)
+		free(line2);
+	return (str);
+}
+
+static char *save_substr(char *str, char *end, int quotes, t_arr *expand)
+{
+	char *line;
+	
+	if (str + 1 < end || str + 1 == end + 1) 
+	{
+		if (*str == quotes)
+			str++;
+		line = ft_strncpy(str, end - str + 1);
+		if (line == NULL)
+			return (arr_free(expand->arr), free(expand), NULL);
+		tar_putone(expand, line);
+		free(line);
+	}
+	if (*(end + 1) == quotes && quotes != '\0')
+		str = end + 2;
+	else
+		str = end + 1;
+	return (str);
+}
+
+static int build_arr(t_arr *expand, t_arr *env, char *str)
+{
+	char *end;
+	int	quotes;
+
 	quotes = 0;
 	end = str;
 	while (*str)
@@ -32,34 +85,11 @@ char	*str_clearquotes(t_arr *env, char *str)
 		if (*str == '$' && quotes != '\'') 
 		{
 			if (ft_strchr("?$", *(str + 1)) != NULL)
-			{
-				line = ft_strdup("<< $$ and $? TO BE ADDED!!!>>");
-				if (line == NULL)
-					return (arr_free(expand->arr), free(expand), NULL);
-				if (tar_putone(expand, line) == -1)
-					return (arr_free(expand->arr), free(expand), free(line), NULL);
-				free(line);
-				str = str + 2;
-				end++;
-			}
+				str = expand_dollar_special(str, &end, expand);
 			else
 			{
-				end = str + 1;
-				while (!ft_strchr("\'\"", *(end + 1)) && !ft_isspace(*(end+1)))
-					end++;
-				line = ft_strncpy(str + 1, end - str );
-				if (line == NULL)
-					return (arr_free(expand->arr), free(expand), NULL);
-				line2 = env_getvalue(env->arr, env_getid(env->arr, line));
-				if (line2 != NULL)
-				{
-					if (tar_putone(expand, line2) == -1)
-						return (arr_free(expand->arr), free(expand), free(line), free(line2), NULL);
-				}
-				free(line);
-				if (line2 != NULL)
-					free(line2);
-				if (quotes != 0)
+				str = expand_dollar_envvar(str, &end, expand, env);
+				if (quotes != 0 && str != NULL)
 					str = end + 2;
 				else	
 					str = end + 1;
@@ -67,24 +97,25 @@ char	*str_clearquotes(t_arr *env, char *str)
 		}
 		else if (*(end + 1) == quotes || (*(end + 1) == '$' && quotes != '\'' )
 				|| (quotes == 0 && ft_strchr("\'\"", *(end + 1)) != NULL))
-		{	
-			if (str + 1 < end || str + 1 == end + 1) 
-			{
-				if (*str == quotes)
-					str++;
-				line = ft_strncpy(str, end - str + 1);
-				if (line == NULL)
-					return (arr_free(expand->arr), free(expand), NULL);
-				tar_putone(expand, line);
-				free(line);
-			}
-			if (*(end + 1) == quotes && quotes != '\0')
-				str = end + 2;
-			else
-				str = end + 1;
-		}
+			str = save_substr(str, end, quotes, expand);
+		if (str == NULL)
+			return (0);
 		end++;
 	}
+	return (1);
+}
+
+char	*str_clearquotes(t_arr *env, char *str)
+{
+	t_arr	*expand;
+	char	*line;
+
+	line = NULL;
+	expand = tar_init(NULL);
+	if (expand == NULL)
+		return (NULL);
+	if (!build_arr(expand, env, str))
+		return (arr_free(expand->arr), free(expand), NULL);
 	line = arr_to_str(expand->arr);
 	if (line == NULL)
 		return (arr_free(expand->arr), free(expand), NULL);
