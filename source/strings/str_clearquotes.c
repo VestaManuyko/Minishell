@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_clearquotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:36:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 09:55:45 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/09 10:36:06 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@ char	*str_clearquotes(t_arr *env, char *str)
 		return (NULL);
 	quotes = 0;
 	end = str;
-	while (1)
+	while (*str)
 	{
 		quotes = str_isquoted(*end);
-		if (*str == '\0')
-			break ;
-		else if (*str == '$' && quotes != '\'') 
+		if (*str == '$' && quotes != '\'') 
 		{
 			if (*(str + 1) == '?' || *(str + 1) == '$')
 			{
