@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   str_clearquotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:36:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 11:26:36 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/09 11:43:57 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <minishell.h>
 
 char	*str_clearquotes(t_arr *env, char *str)
@@ -25,14 +26,12 @@ char	*str_clearquotes(t_arr *env, char *str)
 		return (NULL);
 	quotes = 0;
 	end = str;
-	while (1)
+	while (*str)
 	{
 		quotes = str_isquoted(*end);
-		if (*str == '\0')
-			break ;
-		else if (*str == '$' && quotes != '\'') 
+		if (*str == '$' && quotes != '\'') 
 		{
-			if (*(str + 1) == '?' || *(str + 1) == '$')
+			if (ft_strchr("?$", *(str + 1)) != NULL)
 			{
 				line = ft_strdup("<< $$ and $? TO BE ADDED!!!>>");
 				if (line == NULL)
@@ -46,7 +45,7 @@ char	*str_clearquotes(t_arr *env, char *str)
 			else
 			{
 				end = str + 1;
-				while (*(end +1) != '\0' && *(end +1) != '\'' && *(end +1) != '"' && !ft_isspace(*(end+1)))
+				while (!ft_strchr("\'\"", *(end + 1)) && !ft_isspace(*(end+1)))
 					end++;
 				line = ft_strncpy(str + 1, end - str );
 				if (line == NULL)
