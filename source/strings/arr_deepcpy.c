@@ -3,31 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   arr_deepcpy.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 14:50:06 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/07 10:05:27 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/09 15:34:04 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	arr_deepcpy(char **src, char ***dest, int dest_capacity)
+char	**arr_deepcpy(char **src)
 {
-	int	i;
+	ssize_t	size;
+	ssize_t	i;
+	char	**arr;
 
+	if (src == NULL)
+		return (NULL);
+	size = arr_size(src);
+	arr = (char **)malloc((size + 1) * sizeof(char *));
+	if (arr == NULL)
+		return (NULL);
 	i = 0;
-	if (src == NULL || *dest == NULL)
-		return (-1);
-	while (src[i] != NULL)
+	while (i < size)
 	{
-		if (dest_capacity <= i)
-			return (arr_free(*dest), -1);
-		(*dest)[i] = ft_strdup(src[i]);
-		if ((*dest)[i] == NULL)
-			return (arr_free(*dest), -1);
+		arr[i] = ft_strdup(src[i]);
+		if (arr[i] == NULL)
+			return (arr_free(arr), NULL);
 		i++;
 	}
-	(*dest)[i] = NULL;
-	return (1);
+	arr[i] = NULL;
+	return (arr);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arr_split_by_c.c                                   :+:      :+:    :+:   */
+/*   str_split_by_c.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 16:43:06 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/06 10:10:53 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/09 15:07:50 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*find_end(char *str, char c, bool eval_quote)
 	return (end);
 }
 
-char	**arr_split_by_c(char *str, char c, bool eval_quote)
+char	**str_split_by_c(char *str, char c, bool eval_quote)
 {
 	char	**arr;
 	char	*end;

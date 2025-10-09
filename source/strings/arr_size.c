@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_paths.c                                        :+:      :+:    :+:   */
+/*   arr_size.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/06 14:27:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 15:07:19 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/09 15:22:20 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/09 15:37:09 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <sys/types.h>
 
-int main(int ac, char **av, char **env)
+ssize_t	arr_size(char **arr)
 {
-	char **arr;
-	t_shell	shell;
+	ssize_t	i;
 
-	arr = str_split_by_c(getenv("PATH"), ':', 1);
-	arr_print(arr);
+	i = 0;
+	if (arr == NULL)
+		return (-1);
+	while (arr[i++] != NULL)
+		;
+	return (i);
 }

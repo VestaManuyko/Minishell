@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   arr_to_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:48:15 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/02 17:57:08 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/09 15:33:02 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static ssize_t	arr_size(char **arr)
+static ssize_t	arr_totalsize(char **arr)
 {
 	int		i;
 	ssize_t	chars;
@@ -39,7 +39,7 @@ char	*arr_to_str(char **arr)
 
 	i = 0;
 	j = 0;
-	chars = arr_size(arr);
+	chars = arr_totalsize(arr);
 	str = (char *)ft_calloc((chars + 1), sizeof(char));
 	if (!str)
 		return (NULL);

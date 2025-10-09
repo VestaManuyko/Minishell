@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/05 16:32:21 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:06:40 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ char	*arr_to_str(char **arr);
  * RETURNS:
  * A null terminated array. 
  */
-char	**arr_split_by_c(char *str, char c, bool eval_quote);
+char	**str_split_by_c(char *str, char c, bool eval_quote);
 
 #endif
