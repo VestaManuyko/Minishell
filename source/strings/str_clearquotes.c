@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:36:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 15:53:35 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/09 23:15:36 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	*save_substr(char *str, char *end, int quotes, t_arr *expand)
 {
 	char	*line;
 
-	if (str + 1 < end || str + 1 == end + 1)
+	if (str + 1 < end || str + 1 == end + 1 || *(end + 1) == '\0')
 	{
 		if (*str == quotes)
 			str++;
@@ -90,6 +90,8 @@ static int	build_arr(t_quote *data, char *str)
 		{
 			if (ft_strchr("?$", *(str + 1)) != NULL)
 				str = expand_dollar_special(str, &end, data);
+			else if (ft_strchr("\'\"", *(str + 1)) != NULL || ft_isspace(*(str + 1)))
+				str++;
 			else
 				str = expand_dollar_envvar(str, &end, data);
 		}
