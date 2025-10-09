@@ -6,11 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:36:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 10:47:16 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/09 10:36:06 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <minishell.h>
 
 char	*str_clearquotes(t_arr *env, char *str)
@@ -31,7 +30,7 @@ char	*str_clearquotes(t_arr *env, char *str)
 		quotes = str_isquoted(*end);
 		if (*str == '$' && quotes != '\'') 
 		{
-			if (ft_strchr("?$", *(str + 1)) != NULL)
+			if (*(str + 1) == '?' || *(str + 1) == '$')
 			{
 				line = ft_strdup("<< $$ and $? TO BE ADDED!!!>>");
 				if (line == NULL)
