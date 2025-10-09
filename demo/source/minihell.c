@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 18:43:52 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/09 22:57:50 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@ int main(int ac, char **av, char **env)
 {
 	int fd;
 	char *line;
+	char *expanded_line;
 	t_arr *proc_line;
+	t_arr *my_env = tar_init(env);
 	t_prog *proc;
 	t_shell shell;
 	int i = 0;
+	int j = 0;
 
 	if (ac != 2)
 	{
@@ -49,12 +52,21 @@ int main(int ac, char **av, char **env)
 		proc = (t_prog *)malloc((proc_line->size + 1) * sizeof(t_prog));
 		while (i < proc_line->size)
 		{
+			j = 0;
 			(proc + i)->id = i;
 			if (i < proc_line->size -1)
 				(proc + i)->go_to = ispipe;
 			else
 				(proc + i)->go_to = end;
 			(proc + i)->prog = str_split_by_c((proc_line->arr)[i], ' ', 1);
+			while ((proc + i)->prog[j] != NULL)
+			{
+				expanded_line = (proc+ i)->prog[j];
+				expanded_line = str_clearquotes(my_env, (proc+ i)->prog[j]);
+				free((proc + i)->prog[j]);
+				(proc + i)->prog[j] = expanded_line;
+				j++;
+			}
 			(proc + i)->complete = 0;
 			(proc + i)->cpid = 0;
 			i++;
