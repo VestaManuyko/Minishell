@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:36:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 13:14:57 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/09 14:43:23 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,25 @@ static char	*expand_dollar_special(char *str, char **end, t_quote *data)
 
 static char	*expand_dollar_envvar(char *str, char **end, t_quote *data)
 {
-	char	*line;
-	char	*line2;
+	char	*key;
+	char	*value;
 
 	*end = str + 1;
 	while (!ft_strchr("\'\"", *(*end + 1)) && !ft_isspace(*(*end + 1)))
 		(*end)++;
-	line = ft_strncpy(str + 1, *end - str);
-	if (line == NULL)
+	key = ft_strncpy(str + 1, *end - str);
+	if (key == NULL)
 		return (NULL);
-	line2 = env_getvalue(data->env->arr, env_getid(data->env->arr, line));
-	if (line2 != NULL)
+	if (!env_getvalue(data->env->arr, &value, env_getid(data->env->arr, key)))
+		return (NULL);
+	if (value != NULL)
 	{
-		if (tar_putone(data->expand, line2) == -1)
-			return (free(line), free(line2), NULL);
+		if (tar_putone(data->expand, value) == -1)
+			return (free(key), free(value), NULL);
 	}
-	free(line);
-	if (line2 != NULL)
-		free(line2);
+	free(key);
+	if (value != NULL)
+		free(value);
 	if (data->quote != 0)
 		str = *end + 2;
 	else

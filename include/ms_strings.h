@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/08 14:06:44 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/09 14:36:18 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		tar_putone(t_arr *tar, char *str);
 int		tar_popone(t_arr *tar, int id);
 
 int		env_getid(char **arr, char *key);
-char	*env_getvalue(char **arr, int id);
+int		env_getvalue(char **arr, char **str, int id);
 char	*str_clearquotes(t_arr *env, char *str);
 
 #endif
