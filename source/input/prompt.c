@@ -68,18 +68,18 @@ int	get_command(t_shell *shell)
 	prompt = get_prompt(shell->env->arr);
 	if (!prompt)
 	{
-		perror("Error\nGet_prompt");
+		perror("Error\nget_prompt");
 		exit(EXIT_FAILURE);
 	}
 	line = readline(prompt);
 	if (!line)
 	{
-		perror("Error\nReadline");
+		perror("Error\nreadline");
 		exit (EXIT_FAILURE);
 	}
 	if (quote_opened(line))
 	{
-		write(2, "Error\nPlease, close the quotes\n", 31);
+		write(2, "Error\nPlease, open quotes detected.\n", 31);
 		return (0);
 	}
 	shell->cmd_line = line;
