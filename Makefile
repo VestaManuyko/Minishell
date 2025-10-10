@@ -6,7 +6,7 @@
 #    By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/10 17:42:09 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/11 00:04:17 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,5 +74,4 @@ demo: $(MINI) $(LIBFT)
 	make -f make-demo.mk 
 dclean: 
 	-rm  -rf demo/bin 
-
 dre: dclean demo 
