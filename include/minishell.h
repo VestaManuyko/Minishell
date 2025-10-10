@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <sys/types.h>
 # include <stdbool.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -66,7 +67,7 @@ char	**str_split_by_c(char *str, char c, bool eval_quote);
  * Reminder!
  * After calling remember to rl_clear_history() and free(shell->cmd_line); 
  * Return value:
- * 1 on error, 0 in case of success.
+ * 1 if command was got or 0 if no input or error.
  */
 int	get_command(t_shell *shell);
 

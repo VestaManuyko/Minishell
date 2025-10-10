@@ -50,7 +50,7 @@ typedef struct s_prog
 	int		fd_io[2];
 	char	**prog;
 	int		complete;
-}			t_prog;
+}	t_prog;
 
 /* This structure provides flexible metadata to extend an array.
  * arr:			the current character array
@@ -80,6 +80,6 @@ typedef struct s_shell
 	t_prog	*items;
 	t_arr	*env;
 	char	**env_paths;
-}			t_shell;
+}	t_shell;
 
 #endif
