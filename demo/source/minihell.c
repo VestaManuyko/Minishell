@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 22:57:50 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/10 10:01:34 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void tpro_print(t_prog pr)
 }
 
 /* Compile the code then do the following:
- * echo 'cd $HOME | ls -a -l -s" | grep *.out |" wc -l' > lines.txt
+ * echo 'cd $HOME $"H"\'O\'M"E" '\\t    ' | ls -a -l -s" | grep *.out |" wc -l' > lines.txt
  * minihell.out lines.txt | cat -e
  */
 int main(int ac, char **av, char **env)

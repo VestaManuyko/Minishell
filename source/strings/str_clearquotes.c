@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:36:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 23:15:36 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/10 10:19:30 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,32 +48,36 @@ static char	*expand_dollar_envvar(char *str, char **end, t_quote *data)
 	free(key);
 	if (value != NULL)
 		free(value);
-	if (data->quote != 0)
+	if (*(*end + 1) == data->quote)
 		str = *end + 2;
 	else
 		str = *end + 1;
 	return (str);
 }
 
-static char	*save_substr(char *str, char *end, int quotes, t_arr *expand)
+static char	*save_substr(char *str, char **end, t_quote *data)
 {
 	char	*line;
 
-	if (str + 1 < end || str + 1 == end + 1 || *(end + 1) == '\0')
+	if (str + 1 <= *end || str + 1 == *end + 1 || *(*end + 1) == '\0')
 	{
-		if (*str == quotes)
+		if (*str == data->quote)
 			str++;
-		line = ft_strncpy(str, end - str + 1);
+		line = ft_strncpy(str, *end - str + 1);
 		if (line == NULL)
 			return (NULL);
-		if (!tar_putone(expand, line))
+		if (!tar_putone(data->expand, line))
 			return (NULL);
 		free(line);
 	}
-	if (*(end + 1) == quotes && quotes != '\0')
-		str = end + 2;
+	if (*(*end + 1) == data->quote && data->quote != '\0')
+	{
+		str = *end + 2;
+		(*end)++;
+		data->quote = str_isquoted(**end);
+	}
 	else
-		str = end + 1;
+		str = *end + 1;
 	return (str);
 }
 
@@ -81,7 +85,6 @@ static int	build_arr(t_quote *data, char *str)
 {
 	char	*end;
 
-	data->quote = 0;
 	end = str;
 	while (*str)
 	{
@@ -90,7 +93,8 @@ static int	build_arr(t_quote *data, char *str)
 		{
 			if (ft_strchr("?$", *(str + 1)) != NULL)
 				str = expand_dollar_special(str, &end, data);
-			else if (ft_strchr("\'\"", *(str + 1)) != NULL || ft_isspace(*(str + 1)))
+			else if (ft_strchr("\'\"", *(str + 1)) != NULL
+				|| ft_isspace(*(str + 1)))
 				str++;
 			else
 				str = expand_dollar_envvar(str, &end, data);
@@ -98,7 +102,7 @@ static int	build_arr(t_quote *data, char *str)
 		else if (*(end + 1) == data->quote
 			|| (*(end + 1) == '$' && data->quote != '\'' )
 			|| (data->quote == 0 && ft_strchr("\'\"", *(end + 1)) != NULL))
-			str = save_substr(str, end, data->quote, data->expand);
+			str = save_substr(str, &end, data);
 		if (str == NULL)
 			return (0);
 		end++;
@@ -114,6 +118,7 @@ char	*str_clearquotes(t_arr *env, char *str)
 	line = NULL;
 	data.expand = tar_init(NULL);
 	data.env = env;
+	data.quote = 0;
 	if (data.expand == NULL)
 		return (NULL);
 	if (!build_arr(&data, str))
