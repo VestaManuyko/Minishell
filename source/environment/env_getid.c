@@ -1,27 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_isquoted.c                                     :+:      :+:    :+:   */
+/*   env_getid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/01 09:12:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/07 12:11:15 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/07 14:17:37 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/07 14:57:49 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	str_isquoted(char c)
+static int	match_key(char *str, char *key)
 {
-	static int	quote = 0;
+	int	i;
 
-	if (c == '"' || c == '\'')
+	i = 0;
+	while (key[i] != '\0')
 	{
-		if (quote == 0)
-			quote = (int)c;
-		else if (quote == (int)c)
-			quote = 0;
+		if (key[i] != str[i])
+			return (0);
+		i++;
 	}
-	return (quote);
+	if (str[i] == '=' || str[i] == '\0')
+		return (1);
+	return (0);
+}
+
+int	env_getid(char **arr, char *key)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		if (arr[i][0] == key[0] && match_key(arr[i], key))
+			return (i);
+		i++;
+	}
+	return (-1);
 }

@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str2arr.c                                          :+:      :+:    :+:   */
+/*   clearquotes.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/03 09:10:22 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 15:06:49 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/09 12:37:05 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/09 13:05:31 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#ifndef CLEARQUOTES_H
+# define CLEARQUOTES_H
 
-int main(int ac, char **av)
+# include <ms_structs.h>
+
+typedef struct s_quote
 {
-	char test[] = "ls '-al s' | grep you | \"wc -l | wc -w\" "; 
-	if (ac != 3)
-	{
-		printf("Error:\n\tstr2arr.out {separator} {eval_quote: 0 | 1} \n");
-		return (1);
-	}
-	char **arr = str_split_by_c(test, av[1][0], atoi(av[2]));
-	if (arr == NULL)
-		return (1);
-	arr_print(arr);
-	arr_free(arr);
-	return (0);
-}
+	t_arr	*env;
+	t_arr	*expand;
+	int		quote;
+}			t_quote;
+
+#endif

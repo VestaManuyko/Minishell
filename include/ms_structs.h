@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ms_structs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/07 17:12:25 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:36:01 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MS_STRUCTS_H
 # define MS_STRUCTS_H
+
+# include <sys/types.h>
 
 /* This stucture represents the way the current program relates to the 
  * surrounding ones.
@@ -50,6 +52,19 @@ typedef struct s_prog
 	int		complete;
 }	t_prog;
 
+/* This structure provides flexible metadata to extend an array.
+ * arr:			the current character array
+ * size:		current amount of used pointers;
+ * capacity:	maximum amount of pointers that can be stored 
+ * 				before the array has to be expanded;
+ */
+typedef struct s_arr
+{
+	char	**arr;
+	ssize_t	size;
+	ssize_t	capacity;
+}			t_arr;
+
 /* This structure represents the entry point to process the shell inputs:
  * cmd_str:		raw string received as input;
  * count:		amount of program found in the str.
@@ -63,21 +78,8 @@ typedef struct s_shell
 	char	*cmd_line;
 	int		count;
 	t_prog	*items;
-	char	**env;
+	t_arr	*env;
 	char	**env_paths;
 }	t_shell;
-
-/* This structure provides flexible metadata to extend an array.
- * arr:			the current character array
- * size:		current amount of used pointers;
- * capacity:	maximum amount of pointers that can be stored 
- * 				before the array has to be modified with a realloc;
- */
-typedef struct s_arr
-{
-	char	**arr;
-	int		size;
-	int		capacity;
-}	t_arr;
 
 #endif

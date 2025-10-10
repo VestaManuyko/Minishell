@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_isquoted.c                                     :+:      :+:    :+:   */
+/*   getenvval.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/01 09:12:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/07 12:11:15 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/07 14:51:37 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/09 14:38:54 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	str_isquoted(char c)
+int main(int ac, char **av, char **env)
 {
-	static int	quote = 0;
+	char	*line;
+	t_arr	*sys_env;
 
-	if (c == '"' || c == '\'')
+	if (ac != 2)
 	{
-		if (quote == 0)
-			quote = (int)c;
-		else if (quote == (int)c)
-			quote = 0;
+		printf("usage: getenvval.out {env_key}\n");
+		return (0);
 	}
-	return (quote);
+	sys_env = tar_init(env);
+	if (!env_getvalue(sys_env->arr, &line, env_getid(sys_env->arr, av[1])))
+		return (arr_free(sys_env->arr), free(sys_env), 0);
+	printf("value for: %s >> %s\n", av[1], line);
+	free(line);
+	arr_free(sys_env->arr);
+	free(sys_env);
+	return (0);
 }

@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str2arr.c                                          :+:      :+:    :+:   */
+/*   arr_deepcpy.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/03 09:10:22 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 15:06:49 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/06 14:50:06 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/09 15:34:04 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int main(int ac, char **av)
+char	**arr_deepcpy(char **src)
 {
-	char test[] = "ls '-al s' | grep you | \"wc -l | wc -w\" "; 
-	if (ac != 3)
-	{
-		printf("Error:\n\tstr2arr.out {separator} {eval_quote: 0 | 1} \n");
-		return (1);
-	}
-	char **arr = str_split_by_c(test, av[1][0], atoi(av[2]));
+	ssize_t	size;
+	ssize_t	i;
+	char	**arr;
+
+	if (src == NULL)
+		return (NULL);
+	size = arr_size(src);
+	arr = (char **)malloc((size + 1) * sizeof(char *));
 	if (arr == NULL)
-		return (1);
-	arr_print(arr);
-	arr_free(arr);
-	return (0);
+		return (NULL);
+	i = 0;
+	while (i < size)
+	{
+		arr[i] = ft_strdup(src[i]);
+		if (arr[i] == NULL)
+			return (arr_free(arr), NULL);
+		i++;
+	}
+	arr[i] = NULL;
+	return (arr);
 }
