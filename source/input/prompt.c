@@ -12,11 +12,13 @@
 
 #include <minishell.h>
 
-//char *get_prompt gets the USER env variable and appends it with 
-// the shell_prompt, so that readline may display prompt as example:
-//USER/minishell>
-// return value = prompt to be displayed or NULL upon errors;
-//NOTE: should be freed later;
+/* 
+ * Char *get_prompt gets the USER env variable and appends it with 
+ * the shell_prompt, so that readline may display prompt as example:
+ * USER/minishell>
+ * return value = prompt to be displayed or NULL upon errors;
+ * NOTE: should be freed later;
+ */
 static char	*get_prompt(char **env)
 {
 	char	*user;
@@ -42,26 +44,23 @@ static char	*get_prompt(char **env)
 int	get_command(t_shell *shell)
 {
 	char	*line;
-    char	*prompt;
+	char	*prompt;
 
 	prompt = get_prompt(shell->env);
 	if (!prompt)
 	{
 		perror("Error");
-		return (1);
+		return (0);
 	}
 	line = readline(prompt);
 	if (!line)
 	{
 		perror("Error");
-		return (1);
+		return (0);
 	}
-	if (line && *line)
-	{
+	shell->cmd_line = line;
+	if (!*line)
 		add_history(line);
-		shell->cmd_line = ft_strdup(line);
-	}
-	free(line);
 	free(prompt);
-	return (0);
+	return (1);
 }

@@ -20,7 +20,7 @@ int main(int ac, char **av, char **envp)
 	shell.env = envp;
 	shell.cmd_line = NULL;
 	line = NULL;
-	while (!get_command(&shell))
+	while (get_command(&shell))
 	{
 		line = shell.cmd_line;
 		if (!line || !*line)
