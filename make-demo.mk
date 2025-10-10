@@ -6,7 +6,7 @@
 #    By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/02 12:36:56 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/11 00:03:20 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/11 00:13:59 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,4 +27,4 @@ demo/bin/%.out:  demo/source/%.c $(MINI) $(LIBFT)
 	@ mkdir -p $(dir $@)
 	$(CC) $(FLAGS) $(INCLUDES) $^ $(LINKS) -o $@ 
 
-.PHONY: all democlean demore
+.PHONY: all
