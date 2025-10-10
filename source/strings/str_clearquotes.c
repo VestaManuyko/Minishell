@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:36:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/10 10:19:30 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/10 10:54:31 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*expand_dollar_envvar(char *str, char **end, t_quote *data)
 	char	*value;
 
 	*end = str + 1;
-	while (!ft_strchr("\'\"", *(*end + 1)) && !ft_isspace(*(*end + 1)))
+	while (ft_isalnum(*(*end + 1)) && *(*end + 1) != '_')
 		(*end)++;
 	key = ft_strncpy(str + 1, *end - str);
 	if (key == NULL)
