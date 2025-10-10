@@ -32,12 +32,8 @@ static char	*get_prompt(char **env)
 		if (!user)
 			return (NULL);
 	}
-	temp_prompt = strdup("/minishell>");
-	if (!temp_prompt)
-		return (NULL);
-	prompt = ft_strjoin(user, temp_prompt);
+	prompt = ft_strjoin(user, "/minishell>");
 	free(user);
-	free (temp_prompt);
 	return (prompt);
 }
 
