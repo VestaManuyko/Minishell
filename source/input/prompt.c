@@ -41,12 +41,29 @@ static char	*get_prompt(char **env)
 	return (prompt);
 }
 
+static int	quote_opened(char *line)
+{
+	int		status;
+	size_t	i;
+
+	status = -1;
+	i = 0;
+	if (!line[i])
+		return (0);
+	while (line[i])
+	{
+		status = str_isquoted(line[i]);
+		i++;
+	}
+	return (status);
+}
+
 int	get_command(t_shell *shell)
 {
 	char	*line;
 	char	*prompt;
 
-	prompt = get_prompt(shell->env);
+	prompt = get_prompt(shell->env->arr);
 	if (!prompt)
 	{
 		perror("Error");
@@ -58,8 +75,13 @@ int	get_command(t_shell *shell)
 		perror("Error");
 		return (0);
 	}
+	if (quote_opened(line))
+	{
+		write(2, "Error\nPlease, close the quotes\n", 31);
+		return (0);
+	}
 	shell->cmd_line = line;
-	if (!*line)
+	if (*line)
 		add_history(line);
 	free(prompt);
 	return (1);

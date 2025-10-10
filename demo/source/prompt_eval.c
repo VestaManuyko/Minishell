@@ -17,18 +17,28 @@ int main(int ac, char **av, char **envp)
 	t_shell	shell;
 	char	*line;
 
-	shell.env = envp;
+	shell.env = malloc(sizeof(t_arr *));
+	if (!shell.env)
+		return (1);
+	shell.env->arr = envp;
 	shell.cmd_line = NULL;
 	line = NULL;
-	while (get_command(&shell))
+	while (1)
 	{
-		line = shell.cmd_line;
-		if (!line || !*line)
-			return (1);
-		printf("Line: %s\n", line);
-		free (line);
-		shell.cmd_line = NULL;
+		if (get_command(&shell))
+		{
+			line = shell.cmd_line;
+			if (!line || !*line)
+				continue;
+			else
+			{
+				printf("Line: %s\n", line);
+				free (line);
+				shell.cmd_line = NULL;
+			}
+		}
 	}
 	rl_clear_history();
+	free(shell.env);
 	return (0);
 }

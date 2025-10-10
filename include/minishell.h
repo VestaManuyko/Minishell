@@ -70,18 +70,4 @@ char	**str_split_by_c(char *str, char c, bool eval_quote);
  */
 int	get_command(t_shell *shell);
 
-/*			INPUT			*/
-
-/* Calls get_prompt, which gets the USER env variable and appends it with 
- * the shell_prompt, so that readline may display prompt as example:
- * USER/minishell>;
- * then calls readline and appends the returned line to history 
- * and adds it to the shell->cmd_line string upon success.
- * Reminder!
- * After calling remember to rl_clear_history() and free(shell->cmd_line); 
- * Return value:
- * 1 on error, 0 in case of success.
- */
-int	get_command(t_shell *shell);
-
 #endif
