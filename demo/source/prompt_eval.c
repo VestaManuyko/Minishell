@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_eval.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 16:43:42 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/07 18:42:30 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/10 13:27:10 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(int ac, char **av, char **envp)
 	shell.env = envp;
 	shell.cmd_line = NULL;
 	line = NULL;
-	while (!get_command(&shell))
+	while (get_command(&shell))
 	{
 		line = shell.cmd_line;
 		if (!line || !*line)

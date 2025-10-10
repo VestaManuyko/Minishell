@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/05 16:36:57 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/07 18:25:02 by vmanuyko         ###   ########.fr       */
+/*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/10 13:29:23 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,16 @@ char	**arr_split_by_c(char *str, char c, bool eval_quote);
 
 /*			INPUT			*/
 
-/* 
-Calls get_prompt, which gets the USER env variable and appends it with 
-the shell_prompt, so that readline may display prompt as example:
-	USER/minishell>;
-then calls readline and appends the returned line to history 
-and adds it to the shell->cmd_line string upon success.
-Reminder!
-	After calling remember to rl_clear_history() and free(shell->cmd_line); 
-Return value:
-	1 on error, 0 in case of success.
-*/
+/* Calls get_prompt, which gets the USER env variable and appends it with 
+ * the shell_prompt, so that readline may display prompt as example:
+ * USER/minishell>;
+ * then calls readline and appends the returned line to history 
+ * and adds it to the shell->cmd_line string upon success.
+ * Reminder!
+ * After calling remember to rl_clear_history() and free(shell->cmd_line); 
+ * Return value:
+ * 1 on error, 0 in case of success.
+ */
 int	get_command(t_shell *shell);
 
 #endif
