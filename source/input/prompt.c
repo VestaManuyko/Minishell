@@ -22,7 +22,6 @@
 static char	*get_prompt(char **env)
 {
 	char	*user;
-	char	*temp_prompt;
 	char	*prompt;
 	int		id;
 
