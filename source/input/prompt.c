@@ -24,8 +24,11 @@ static char	*get_prompt(char **env)
 	char	*user;
 	char	*temp_prompt;
 	char	*prompt;
+	int		id;
 
-	user = ft_strdup(getenv("USER"));
+	id = env_getid(env, "USER");
+	if (!env_getvalue(env, &user, id))
+		return (NULL);
 	if (!user)
 	{
 		user = ft_strdup("");
@@ -51,8 +54,12 @@ static int	quote_opened(char *line)
 		status = str_isquoted(line[i]);
 		i++;
 	}
-	return (status);
+	if (!status)
+		return (0);
+	str_isquoted(status);
+	return (1);
 }
+//FIX change exit for clean_up
 
 int	get_command(t_shell *shell)
 {
@@ -62,14 +69,14 @@ int	get_command(t_shell *shell)
 	prompt = get_prompt(shell->env->arr);
 	if (!prompt)
 	{
-		perror("Error");
-		return (0);
+		perror("Error\nGet_prompt");
+		exit(EXIT_FAILURE);
 	}
 	line = readline(prompt);
 	if (!line)
 	{
-		perror("Error");
-		return (0);
+		perror("Error\nReadline");
+		exit (EXIT_FAILURE);
 	}
 	if (quote_opened(line))
 	{
