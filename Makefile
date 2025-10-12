@@ -6,7 +6,7 @@
 #    By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/07 17:27:09 by vmanuyko         ###   ########.fr        #
+#    Updated: 2025/10/11 00:04:17 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,19 +22,25 @@ OBJ_DIR := build
 LIB_DIR := libs
 
 # Groups of source files 
-STRINGS = str_isquoted.c
-EXAMPLE = 
+STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
+		  str_clearquotes.c str_split_by_c.c str_isquoted.c \
+		  tar_popone.c tar_init.c tar_putone.c
+
+ENVIRON = env_getid.c env_getvalue.c
+
+INPUT = prompt.c
 
 # Add source paths to files 
 STRINGS_SRC = $(addprefix $(SRC_DIR)/strings/, $(STRINGS))
-EXAMPLE_SRC = $(addprefix $(SRC_DIR)/example/, $(EXAMPLE))
+ENVIRON_SRC = $(addprefix $(SRC_DIR)/environment/, $(ENVIRON))
+INPUT_SRC = $(addprefix $(SRC_DIR)/input/, $(INPUT))
 
 # Collect all the c file in one variable
-SRC = $(STRINGS_SRC) $(EXAMPLE_SRC)
+SRC = $(STRINGS_SRC) $(ENVIRON_SRC) $(INPUT_SRC)
 OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
 
 LIBFT := $(LIB_DIR)/libft/libft.a
-
+MINI := $(OBJ_DIR)/libmini.a
 NAME := minishell 
 
 $(NAME)  : $(OBJ) $(LIBFT) $(H_FILES) 
@@ -44,26 +50,28 @@ $(LIBFT) :
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@ mkdir -p $(dir $@)
 	$(CC) $(FLAGS) $(INCLUDES) -o $@ -c $^
+$(MINI) : $(OBJ) 
+	@ mkdir -p $(dir $@)
+	ar rcs $@ $^
 
 .PHONY: all clean fclean re norm demo
 
-all : $(NAME) $(LIBFT)
+all : $(NAME) $(LIBFT) $(MINI)
 
 clean  :
 	make -s -C $(LIB_DIR)/libft clean
-	-rm -rf $(OBJS)
+	-rm -rf $(OBJ)
 
 fclean : clean
-	-rm -rf $(NAME) $(LIBFT) *.out
+	-rm -rf $(NAME) $(LIBFT) $(MINI) *.out
 
 re : fclean all
 
 norm:
 	norminette -R CheckForForbiddenHeader $(SRC) 
 
-demo: $(OBJ) 
+demo: $(MINI) $(LIBFT) 
 	make -f make-demo.mk 
 dclean: 
 	-rm  -rf demo/bin 
-
 dre: dclean demo 
