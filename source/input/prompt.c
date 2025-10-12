@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:29:16 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/10 13:30:20 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:09:40 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+#define E_QUOTES "Error\nreadline: open quotes detected"
 /* 
  * Char *get_prompt gets the USER env variable and appends it with 
  * the shell_prompt, so that readline may display prompt as example:
@@ -79,7 +80,7 @@ int	get_command(t_shell *shell)
 	}
 	if (quote_opened(line))
 	{
-		write(2, "Error\nPlease, open quotes detected.\n", 31);
+		ft_putendl_fd(E_QUOTES, 2);
 		return (0);
 	}
 	shell->cmd_line = line;
