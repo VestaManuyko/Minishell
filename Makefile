@@ -6,7 +6,7 @@
 #    By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/13 11:54:18 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/13 15:33:22 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,13 +32,19 @@ ENVIRON = env_getid.c env_getvalue.c
 
 INPUT = prompt.c
 
+INIT = init_shell.c
+
+MAIN = main.c
+
 # Add source paths to files 
 STRINGS_SRC = $(addprefix $(SRC_DIR)/strings/, $(STRINGS))
 ENVIRON_SRC = $(addprefix $(SRC_DIR)/environment/, $(ENVIRON))
 INPUT_SRC = $(addprefix $(SRC_DIR)/input/, $(INPUT))
+INIT_SRC = $(addprefix $(SRC_DIR)/init/, $(INIT))
+MAIN_SRC = $(addprefix $(SRC_DIR)/, $(MAIN))
 
 # Collect all the c file in one variable
-SRC = $(STRINGS_SRC) $(ENVIRON_SRC) $(INPUT_SRC)
+SRC = $(STRINGS_SRC) $(ENVIRON_SRC) $(INPUT_SRC) $(INIT_SRC) $(MAIN_SRC)
 OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
 
 LIBFT := $(LIB_DIR)/libft/libft.a
