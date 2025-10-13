@@ -14,14 +14,24 @@
 
 static void	handler(int signum)
 {
-	if (signum == SIGQUIT)
-		return ;
 	if (signum == SIGINT)
 	{
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		write(1, "\n", 1);
 		rl_redisplay();
 	}
+}
+
+static void	signal_set(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = handler;
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 int main(int ac, char **av, char **env)
@@ -29,11 +39,7 @@ int main(int ac, char **av, char **env)
 	t_shell				shell;
 	struct sigaction	sa;
 
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_sigaction = handler;
-	sigaction(SIGQUIT, &sa, NULL);
-	sigaction(SIGINT, &sa, NULL);
+	signal_set();
 	if (!init_shell(&shell, env))
 	{
 		ft_putendl_fd(ER_INIT, 2);

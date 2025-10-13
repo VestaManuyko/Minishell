@@ -14,8 +14,6 @@
 
 static void	handler(int signum)
 {
-	if (signum == SIGQUIT)
-		return ;
 	if (signum == SIGINT)
 	{
 		rl_replace_line("", 0);
@@ -25,17 +23,23 @@ static void	handler(int signum)
 	}
 }
 
-int main(int ac, char **av, char **envp)
+void	signal_set(void)
 {
-	t_shell	shell;
-	char	*line;
 	struct sigaction	sa;
 
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_handler = handler;
-	sigaction(SIGQUIT, &sa, NULL);
 	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+int main(int ac, char **av, char **envp)
+{
+	t_shell	shell;
+	char	*line;
+	
+	signal_set();
 	shell.env = malloc(sizeof(t_arr *));
 	if (!shell.env)
 		return (1);
