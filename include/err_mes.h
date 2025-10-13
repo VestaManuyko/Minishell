@@ -13,7 +13,7 @@
 #ifndef ERR_MES_H
 # define ERR_MES_H
 
-# define ER_INIT "Error/ninit_shell failure"
+# define ER_INIT "Error\ninit_shell failure"
 # define ER_QUOTES "Error\nreadline: open quotes detected"
 # define ER_READLINE "Error\nreadline"
 # define ER_PROMPT "Error\nget_prompt"
