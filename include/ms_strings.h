@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 17:43:26 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/13 16:29:08 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,6 @@ int		tar_putone(t_arr *tar, char *str);
  * - 0 in case the array is empty or the id is beyond the size of the array. 
  */
 int		tar_popone(t_arr *tar, int id);
-
-/* Given the environment array search for the id of the string that 
- * begins with *key.
- * 
- * RETURNS:
- * - the id of the string in the array on success;
- * - -1 in case the *key is not found.
- */
-int		env_getid(char **arr, char *key);
-
-/* Given an id found with env_getid, stores at the address of **str
- * a copy of the value found after the '=' sign.
- *
- * RETURNS:
- * - 1	on success, please note that a NULL is returned if no data 
- * 		is stored as value. 
- * - 0	in case of error.
- */
-int		env_getvalue(char **arr, char **str, int id);
 
 /* Given a string that includes any pair of quotes, a new string 
  * cleared from the paired quotes is returned.

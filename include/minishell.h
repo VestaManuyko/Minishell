@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/13 12:03:38 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/13 16:29:38 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <libft.h>
 # include "ms_structs.h"
 # include "ms_strings.h"
+# include "ms_environment.h"
 # include "err_mes.h"
 
 /*			STRINGS			*/
