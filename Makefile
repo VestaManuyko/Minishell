@@ -6,7 +6,7 @@
 #    By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/11 00:04:17 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/13 11:54:18 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ CC = cc
 # FLAGS = -Wall -Wextra -Werror -g3
 FLAGS = -g3
 INCLUDES = -Iinclude -Ilibs/libft
+LINKS = -lreadline
 
 # Relevant paths
 SRC_DIR := source
@@ -23,7 +24,8 @@ LIB_DIR := libs
 
 # Groups of source files 
 STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
-		  str_clearquotes.c str_split_by_c.c str_isquoted.c \
+		  str_clearquotes.c str_split_by_c.c str_split_by_set.c \
+		  str_isquoted.c \
 		  tar_popone.c tar_init.c tar_putone.c
 
 ENVIRON = env_getid.c env_getvalue.c
@@ -44,7 +46,7 @@ MINI := $(OBJ_DIR)/libmini.a
 NAME := minishell 
 
 $(NAME)  : $(OBJ) $(LIBFT) $(H_FILES) 
-	$(CC) $(FLAGS) $(INCLUDES) $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(FLAGS) $(INCLUDES) $(OBJ) $(LIBFT) $(LINKS) -o $(NAME)
 $(LIBFT) :
 	make -C $(LIB_DIR)/libft libft.a
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
