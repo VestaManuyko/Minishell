@@ -1,9 +1,14 @@
 ______Errors______
 
-In case of system error:
-perror("Error\n[Function name]");
-In function error:
-write(2, "Error\n[Function name] and error_message", length);
+ALl error messages to be defined in "err_mes.h" header file as macros with this design:
+
+# define ER_MACRO "message"
+Correct usage:
+-In case of system error:
+message = "Error\nfunction_name"
+perror(ER_MACRO);
+-In function error:
+message = "Error\nfunction_name:[reason if needed]"
 
 ____File_names____
 
