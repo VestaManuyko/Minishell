@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 16:24:15 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/13 18:11:17 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/13 18:50:40 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ int		env_getvalue(char **arr, char **str, int id);
  * - 0 on error, please note the source env, str will need to be free'd
  *     by the caller. 
  */
-int		env_update(t_arr *env, char *str);
+int		env_entry_update(t_arr *env, char *str);
+
+int		env_entry_remove(t_arr *env, char *key);
 
 char	*env_getkey(char *str);
 

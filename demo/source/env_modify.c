@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 15:21:21 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/13 18:30:58 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/13 18:49:47 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void display_envupdate(t_shell *sh, char *str)
 {
 	int id = -1;
 
-	if (env_update(sh->env, str))
+	if (env_entry_update(sh->env, str))
 	{
 		id = env_getid(sh->env->arr, env_getkey(str));
 		if (id != -1)
@@ -47,6 +47,7 @@ int main(int ac, char **av, char **env)
 	}
 	return (0);
 }
+
 /*
 	char str[] = "cat";
 	display_envupdate(&sh, str);

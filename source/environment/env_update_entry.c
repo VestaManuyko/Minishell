@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_update.c                                       :+:      :+:    :+:   */
+/*   env_update_entry.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 16:09:33 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/13 18:11:17 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/13 18:49:54 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int env_update(t_arr *env, char *str)
+int	env_entry_update(t_arr *env, char *str)
 {
-	int id;
-	char *exp_str;
-	char *key;
+	int		id;
+	char	*exp_str;
+	char	*key;
 
 	exp_str = str_clearquotes(env, str);
 	if (exp_str == NULL)
@@ -31,9 +31,9 @@ int env_update(t_arr *env, char *str)
 			return (0);
 	}
 	else
-	{	
+	{
 		free(env->arr[id]);
-		env->arr[id]=exp_str;
+		env->arr[id] = exp_str;
 	}
 	return (1);
 }

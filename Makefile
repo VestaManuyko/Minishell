@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/13 18:12:48 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/13 18:49:25 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
 		  str_isquoted.c \
 		  tar_popone.c tar_init.c tar_putone.c
 
-ENVIRON = env_getid.c env_getvalue.c env_update.c env_getkey.c
+ENVIRON = env_getid.c env_getvalue.c env_update_entry.c env_getkey.c
 
 INPUT = prompt.c
 
