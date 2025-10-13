@@ -12,10 +12,28 @@
 
 #include <minishell.h>
 
+static void	handler(int signum)
+{
+	if (signum == SIGQUIT)
+		return ;
+	if (signum == SIGINT)
+	{
+		rl_on_new_line();
+		write(1, "\n", 1);
+		rl_redisplay();
+	}
+}
+
 int main(int ac, char **av, char **env)
 {
-	t_shell	shell;
+	t_shell				shell;
+	struct sigaction	sa;
 
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_sigaction = handler;
+	sigaction(SIGQUIT, &sa, NULL);
+	sigaction(SIGINT, &sa, NULL);
 	if (!init_shell(&shell, env))
 	{
 		ft_putendl_fd(ER_INIT, 2);

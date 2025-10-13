@@ -12,11 +12,29 @@
 
 #include <minishell.h>
 
+static void	handler(int signum)
+{
+	if (signum == SIGQUIT)
+		return ;
+	if (signum == SIGINT)
+	{
+		rl_on_new_line();
+		write(1, "\n", 1);
+		rl_redisplay();
+	}
+}
+
 int main(int ac, char **av, char **envp)
 {
 	t_shell	shell;
 	char	*line;
+	struct sigaction	sa;
 
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = handler;
+	sigaction(SIGQUIT, &sa, NULL);
+	sigaction(SIGINT, &sa, NULL);
 	shell.env = malloc(sizeof(t_arr *));
 	if (!shell.env)
 		return (1);
