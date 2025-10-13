@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:29:16 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/10 13:30:20 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/13 11:26:59 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,18 @@ int	get_command(t_shell *shell)
 	prompt = get_prompt(shell->env->arr);
 	if (!prompt)
 	{
-		perror("Error\nget_prompt");
+		perror(ER_PROMPT);
 		exit(EXIT_FAILURE);
 	}
 	line = readline(prompt);
 	if (!line)
 	{
-		perror("Error\nreadline");
+		perror(ER_READLINE);
 		exit (EXIT_FAILURE);
 	}
 	if (quote_opened(line))
 	{
-		write(2, "Error\nPlease, open quotes detected.\n", 31);
+		ft_putendl_fd(ER_QUOTES, 2);
 		return (0);
 	}
 	shell->cmd_line = line;

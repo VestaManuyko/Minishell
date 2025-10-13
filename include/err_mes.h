@@ -1,36 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   err_mes.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 13:34:08 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/13 11:52:04 by vmanuyko         ###   ########.fr       */
+/*   Created: 2025/10/13 11:22:40 by vmanuyko          #+#    #+#             */
+/*   Updated: 2025/10/13 11:28:26 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#ifndef ERR_MES_H
+# define ERR_MES_H
 
-int main(int ac, char **av, char **env)
-{
-	t_shell	shell;
+# define ER_INIT "Error\ninit_shell failure"
+# define ER_QUOTES "Error\nreadline: open quotes detected"
+# define ER_READLINE "Error\nreadline"
+# define ER_PROMPT "Error\nget_prompt"
 
-	if (!init_shell(&shell, env))
-	{
-		ft_putendl_fd(ER_INIT, 2);
-		return (1);
-	}
-	while (1)
-    {
-    	if (get_command(&shell))
-      	{
-        	populate_programs(&shell);
-        	if (validate_programs(&shell))
-			{
-			run_programs(&shell);
-			free_programs(&shell);
-			}
-		}
-    }
-}
+#endif
