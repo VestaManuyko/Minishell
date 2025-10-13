@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/13 11:50:47 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/13 12:03:38 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	*arr_to_str(char **arr);
  * A null terminated array. 
  */
 char	**str_split_by_c(char *str, char c, bool eval_quote);
+char	**str_split_by_set(char *str, char *set, bool eval_quote);
 
 /*			INPUT			*/
 

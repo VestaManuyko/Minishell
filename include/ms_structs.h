@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 15:36:01 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/13 15:45:14 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ typedef struct s_shell
 	int		count;
 	t_prog	*items;
 	t_arr	*env;
-	char	**env_paths;
 }	t_shell;
 
 #endif
