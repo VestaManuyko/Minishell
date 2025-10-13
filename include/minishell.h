@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/10 13:46:53 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/13 11:50:47 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <libft.h>
 # include "ms_structs.h"
 # include "ms_strings.h"
+# include "err_mes.h"
 
 /*			STRINGS			*/
 
@@ -70,5 +71,13 @@ char	**str_split_by_c(char *str, char c, bool eval_quote);
  * 1 if command was got or 0 if no input or error.
  */
 int	get_command(t_shell *shell);
+
+/*			INIT			*/
+/*
+ * Initialisation of the t_shell struct;
+ * RETURN:
+ * 0 on failure, 1 on success;
+ */
+int	init_shell(t_shell *shell, char **env);
 
 #endif
