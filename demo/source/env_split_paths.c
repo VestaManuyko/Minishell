@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_paths.c                                        :+:      :+:    :+:   */
+/*   env_split_paths.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 14:27:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 15:07:19 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/14 12:05:48 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int main(int ac, char **av, char **env)
+int main()
 {
 	char **arr;
-	t_shell	shell;
 
 	arr = str_split_by_c(getenv("PATH"), ':', 1);
 	arr_print(arr);
