@@ -6,12 +6,11 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 15:22:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/10 09:57:58 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/14 13:28:36 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-#include <sys/types.h>
 
 ssize_t	arr_size(char **arr)
 {

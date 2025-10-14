@@ -6,11 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 14:50:06 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/14 13:18:35 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/14 13:28:26 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <minishell.h>
 
 char	**arr_deepcpy(char **src)
