@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/13 16:29:38 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/14 11:17:33 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <asm-generic/errno-base.h>
+# include <errno.h>
 
 # include <libft.h>
 # include "ms_structs.h"
 # include "ms_strings.h"
 # include "ms_environment.h"
+# include "ms_init.h"
 # include "err_mes.h"
 
 /*			STRINGS			*/
@@ -75,6 +78,7 @@ char	**str_split_by_set(char *str, char *set, bool eval_quote);
 int	get_command(t_shell *shell);
 
 /*			INIT			*/
+
 /*
  * Initialisation of the t_shell struct;
  * RETURN:
