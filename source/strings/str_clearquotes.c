@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:36:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/10 10:54:31 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/14 13:28:55 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*expand_dollar_envvar(char *str, char **end, t_quote *data)
 	char	*value;
 
 	*end = str + 1;
-	while (ft_isalnum(*(*end + 1)) && *(*end + 1) != '_')
+	while (*(*end + 1) && (ft_isalnum(*(*end + 1)) || *(*end + 1) == '_'))
 		(*end)++;
 	key = ft_strncpy(str + 1, *end - str);
 	if (key == NULL)
@@ -48,7 +48,7 @@ static char	*expand_dollar_envvar(char *str, char **end, t_quote *data)
 	free(key);
 	if (value != NULL)
 		free(value);
-	if (*(*end + 1) == data->quote)
+	if (*(*end + 1) != '\0' && *(*end + 1) == data->quote)
 		str = *end + 2;
 	else
 		str = *end + 1;
@@ -67,7 +67,7 @@ static char	*save_substr(char *str, char **end, t_quote *data)
 		if (line == NULL)
 			return (NULL);
 		if (!tar_putone(data->expand, line))
-			return (NULL);
+			return (free(line), NULL);
 		free(line);
 	}
 	if (*(*end + 1) == data->quote && data->quote != '\0')
@@ -115,6 +115,10 @@ char	*str_clearquotes(t_arr *env, char *str)
 	char	*line;
 	t_quote	data;
 
+	if (!str)
+		return (NULL);
+	if (*str == '\0')
+		return (ft_strdup(""));
 	line = NULL;
 	data.expand = tar_init(NULL);
 	data.env = env;
