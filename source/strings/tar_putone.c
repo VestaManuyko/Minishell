@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 10:13:09 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 15:53:51 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/14 13:18:45 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**arr_double(char **src, int capacity)
 	char	**arr;
 
 	i = 0;
-	arr = (char **)malloc(capacity * 2 * sizeof(char *));
+	arr = (char **)ft_calloc(capacity * 2, sizeof(char *));
 	if (arr == NULL)
 		return (NULL);
 	while (src[i] != NULL)

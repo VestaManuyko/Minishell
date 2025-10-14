@@ -6,10 +6,11 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 09:57:29 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 15:37:49 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/14 13:22:59 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <minishell.h>
 
 int	arr_cpystr(char **src, char ***dest, int dest_capacity)
@@ -22,10 +23,10 @@ int	arr_cpystr(char **src, char ***dest, int dest_capacity)
 	while (src[i] != NULL)
 	{
 		if (dest_capacity <= i)
-			return (arr_free(*dest), -1);
+			return (arr_free(*dest), 0);
 		(*dest)[i] = ft_strdup(src[i]);
 		if ((*dest)[i] == NULL)
-			return (arr_free(*dest), -1);
+			return (arr_free(*dest), 0);
 		i++;
 	}
 	(*dest)[i] = NULL;
@@ -36,7 +37,7 @@ t_arr	*tar_init(char **src)
 {
 	t_arr	*tarr;
 
-	tarr = (t_arr *)malloc(sizeof(t_arr));
+	tarr = (t_arr *)ft_calloc(1, sizeof(t_arr));
 	if (tarr == NULL)
 		return (NULL);
 	if (src != NULL)
@@ -49,7 +50,7 @@ t_arr	*tar_init(char **src)
 		tarr->size = 0;
 		tarr->capacity = 8;
 	}
-	tarr->arr = (char **)malloc(tarr->capacity * sizeof(char *));
+	tarr->arr = (char **)ft_calloc(tarr->capacity, sizeof(char *));
 	if (tarr->arr == NULL)
 		return (free(tarr), NULL);
 	if (src != NULL)
