@@ -37,7 +37,6 @@ static void	signal_set(void)
 int main(int ac, char **av, char **env)
 {
 	t_shell				shell;
-	struct sigaction	sa;
 
 	signal_set();
 	if (!init_shell(&shell, env))
