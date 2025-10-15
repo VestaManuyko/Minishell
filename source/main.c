@@ -40,10 +40,7 @@ int main(int ac, char **av, char **env)
 
 	signal_set();
 	if (!init_shell(&shell, env))
-	{
-		ft_putendl_fd(ER_INIT, 2);
-		return (1);
-	}
+		return (ft_putendl_fd(ER_INIT, 2), 1);
 	while (1)
     {
     	if (get_command(&shell))
