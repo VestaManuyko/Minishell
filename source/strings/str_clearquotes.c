@@ -6,11 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:36:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/14 13:28:55 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/16 13:21:06 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "clearquotes.h"
 #include <minishell.h>
 
 static char	*expand_dollar_special(char *str, char **end, t_quote *data)
