@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.c                                       :+:      :+:    :+:   */
+/*   tar_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/13 00:23:58 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/16 17:47:05 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/16 17:55:09 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/16 17:58:59 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/*
- * Initialisation of the t_shell struct;
- * RETURN:
- * 0 on failure, 1 on success;
- */
-int	init_shell(t_shell *shell, char **env)
+void	tar_free(t_arr *tar)
 {
-	shell->env = tar_init(env);
-	if (!shell->env)
-		return (0);
-	shell->cmd_line = NULL;
-	shell->count = 0;
-	shell->items = NULL;
-	return (1);
+	if (tar == NULL)
+		return ;
+	if (tar->arr != NULL)
+		arr_free(tar->arr);
+	free(tar);	
 }

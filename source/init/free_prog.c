@@ -6,13 +6,11 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 11:09:09 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/14 11:19:49 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/16 19:18:54 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_strings.h"
 #include <minishell.h>
-#include <stdio.h>
 
 void	free_prog(t_prog item)
 {
@@ -22,4 +20,16 @@ void	free_prog(t_prog item)
 		free(item.f_stdin);
 	if (item.f_stdout != NULL)
 		free(item.f_stdout);
+}
+
+void free_progs(t_prog *items, int size)
+{
+	int i;
+
+	i = 0;
+	while (i < size)
+	{
+		free_prog(items[i]);
+		i++;
+	}
 }

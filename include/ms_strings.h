@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 13:19:17 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/16 17:58:01 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	**arr_deepcpy(char **src);
  * If the parameter is passed as NULL an empty array of size 8 will be built.
  */
 t_arr	*tar_init(char **src);
+
+void	tar_free(t_arr *tar);
 
 /* Add a copy of the given string is appended at the end of the array.
  * if the array reaches it's capacity the funct will automatically double it.
