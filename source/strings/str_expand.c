@@ -6,10 +6,11 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:29:47 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 10:12:21 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/16 12:45:22 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <minishell.h>
 
 char	*str_expand(int (*f)(t_quote *data, char *str), t_arr *env, char *str)
@@ -17,6 +18,10 @@ char	*str_expand(int (*f)(t_quote *data, char *str), t_arr *env, char *str)
 	char	*line;
 	t_quote	data;
 
+	if (str == NULL)
+		return (NULL);
+	if (*str == '\0')
+		return (ft_strdup(""));
 	line = NULL;
 	data.expand = tar_init(NULL);
 	data.env = env;
@@ -25,10 +30,12 @@ char	*str_expand(int (*f)(t_quote *data, char *str), t_arr *env, char *str)
 		return (NULL);
 	if (!f(&data, str))
 		return (arr_free(data.expand->arr), free(data.expand), NULL);
-	line = arr_to_str(data.expand->arr);
+	if (data.expand->size != 0)
+	{
+		line = arr_to_str(data.expand->arr);
+		free(data.expand);
+	}
 	if (line == NULL)
 		return (arr_free(data.expand->arr), free(data.expand), NULL);
-	free(data.expand);
 	return (line);
 }
-

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+         #
+#    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/13 15:33:22 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/16 10:37:25 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ LIB_DIR := libs
 STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
 		  str_clearquotes.c str_split_by_c.c str_split_by_set.c \
 		  str_isquoted.c \
-		  tar_popone.c tar_init.c tar_putone.c
+		  tar_popone.c tar_init.c tar_putone.c \
+		  str_expand.c str_expand_quotes.c str_expand_dollar.c 
 
 ENVIRON = env_getid.c env_getvalue.c
 

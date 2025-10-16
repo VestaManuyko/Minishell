@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:50:13 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 09:59:07 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/16 12:45:30 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	quotes(t_quote *data, char *str)
 	{
 		data->quote = str_isquoted(*end);
 		if (*(end + 1) == data->quote
-			|| (*(end + 1) == '$' && data->quote != '\'' )
+			/*|| (*(end + 1) == '$' && data->quote != '\'' )*/
 			|| (data->quote == 0 && ft_strchr("\'\"", *(end + 1)) != NULL))
 			str = save_substr(str, &end, data);
 		if (str == NULL)

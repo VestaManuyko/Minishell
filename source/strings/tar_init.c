@@ -6,11 +6,13 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 09:57:29 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 15:37:49 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/16 13:05:57 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <minishell.h>
+#include <stdlib.h>
 
 int	arr_cpystr(char **src, char ***dest, int dest_capacity)
 {
@@ -36,7 +38,7 @@ t_arr	*tar_init(char **src)
 {
 	t_arr	*tarr;
 
-	tarr = (t_arr *)malloc(sizeof(t_arr));
+	tarr = (t_arr *)ft_calloc(1, sizeof(t_arr));
 	if (tarr == NULL)
 		return (NULL);
 	if (src != NULL)
@@ -49,7 +51,7 @@ t_arr	*tar_init(char **src)
 		tarr->size = 0;
 		tarr->capacity = 8;
 	}
-	tarr->arr = (char **)malloc(tarr->capacity * sizeof(char *));
+	tarr->arr = (char **)ft_calloc(tarr->capacity, sizeof(char *));
 	if (tarr->arr == NULL)
 		return (free(tarr), NULL);
 	if (src != NULL)
