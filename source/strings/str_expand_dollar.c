@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:50:13 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 13:03:45 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/16 14:18:34 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	dollar(t_quote *data, char *str)
 		{
 			if (*(str + 1) && ft_strchr("?$", *(str + 1)) != NULL)
 				res = expand_dollar_special(&str, &end, data);
-			else if (!ft_isalnum(*(str + 1)))
+			else if (!(ft_isalnum(*(str + 1)) || *(str + 1) == '_'))
 				res = addemptystr(&str, data);
 			else
 				res = expand_dollar_envvar(&str, &end, data);
