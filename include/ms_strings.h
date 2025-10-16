@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 17:43:26 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/16 10:09:40 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MS_STRINGS_H
 
 # include "ms_structs.h"
+# include "ms_structs_support.h"
 # include <sys/types.h>
 
 ssize_t	arr_size(char **arr);
@@ -77,5 +78,9 @@ int		env_getvalue(char **arr, char **str, int id);
  * - a NULL pointer on failure.
  */ 
 char	*str_clearquotes(t_arr *env, char *str);
+
+char	*str_expand(int (*f)(t_quote *data, char *str), t_arr *env, char *str);
+int		quotes(t_quote *data, char *str);
+int		dollar(t_quote *data, char *str);
 
 #endif
