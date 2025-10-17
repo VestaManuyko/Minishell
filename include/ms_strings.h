@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 17:43:26 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/16 17:58:01 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MS_STRINGS_H
 
 # include "ms_structs.h"
+# include "ms_structs_support.h"
 # include <sys/types.h>
 
 ssize_t	arr_size(char **arr);
@@ -26,6 +27,8 @@ char	**arr_deepcpy(char **src);
  * If the parameter is passed as NULL an empty array of size 8 will be built.
  */
 t_arr	*tar_init(char **src);
+
+void	tar_free(t_arr *tar);
 
 /* Add a copy of the given string is appended at the end of the array.
  * if the array reaches it's capacity the funct will automatically double it.
@@ -46,25 +49,6 @@ int		tar_putone(t_arr *tar, char *str);
  */
 int		tar_popone(t_arr *tar, int id);
 
-/* Given the environment array search for the id of the string that 
- * begins with *key.
- * 
- * RETURNS:
- * - the id of the string in the array on success;
- * - -1 in case the *key is not found.
- */
-int		env_getid(char **arr, char *key);
-
-/* Given an id found with env_getid, stores at the address of **str
- * a copy of the value found after the '=' sign.
- *
- * RETURNS:
- * - 1	on success, please note that a NULL is returned if no data 
- * 		is stored as value. 
- * - 0	in case of error.
- */
-int		env_getvalue(char **arr, char **str, int id);
-
 /* Given a string that includes any pair of quotes, a new string 
  * cleared from the paired quotes is returned.
  * In case a '$' sign is found within a region without quotes or within 
@@ -77,5 +61,9 @@ int		env_getvalue(char **arr, char **str, int id);
  * - a NULL pointer on failure.
  */ 
 char	*str_clearquotes(t_arr *env, char *str);
+
+char	*str_expand(int (*f)(t_quote *data, char *str), t_arr *env, char *str);
+int		quotes(t_quote *data, char *str);
+int		dollar(t_quote *data, char *str);
 
 #endif

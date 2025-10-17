@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.c                                       :+:      :+:    :+:   */
+/*   free_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/13 00:23:58 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/16 17:47:05 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/14 11:02:53 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/14 13:36:52 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/*
- * Initialisation of the t_shell struct;
- * RETURN:
- * 0 on failure, 1 on success;
- */
-int	init_shell(t_shell *shell, char **env)
+void free_shell(t_shell *sh)
 {
-	shell->env = tar_init(env);
-	if (!shell->env)
-		return (0);
-	shell->cmd_line = NULL;
-	shell->count = 0;
-	shell->items = NULL;
-	return (1);
+	int i;
+
+	i = 0;
+	if (sh->cmd_line != NULL)
+		free(sh->cmd_line);
+	if (sh->env != NULL)
+	{
+		arr_free(sh->env->arr);
+		free(sh->env);
+	}
+	while (i < sh->count)
+	{
+		if (sh->items + i != NULL)
+			free_prog(sh->items[i]);
+	}
+	sh->items = NULL;
+	sh = NULL;
 }

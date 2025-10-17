@@ -6,12 +6,17 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/10 10:01:34 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 11:28:54 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include "ms_init.h"
+#include "ms_strings.h"
+#include "ms_structs.h"
 #include <minishell.h>
 #include <fcntl.h>
+#include <stdbool.h>
 void tpro_print(t_prog pr)
 {
 	printf("id: %d, go_to: %s \n", pr.id, pr.go_to == end ? "end" : "ispipe");
@@ -19,10 +24,115 @@ void tpro_print(t_prog pr)
 	printf("=================================================================\n");
 }
 
+t_prog *init_progs(int count)
+{
+	t_prog	*proc;
+	proc = (t_prog *)calloc(count, sizeof(t_prog));
+	if (proc == NULL)
+		return (NULL);
+	return (proc);
+}
+
+int	redirection_append(char **str, char **end, t_arr *tar, int *quotes)
+{
+	char *line;
+	if (ft_strchr("<>", *(*end +1)) != NULL)
+		(*end)++;
+	while (**end && (quotes == 0 && ft_isspace(**end)))
+	{
+		(*end)++;
+		*quotes = str_isquoted(**end);
+	}
+	while (**end && (quotes != 0 || !ft_isspace(**end)))
+	{
+		(*end)++;
+		*quotes = str_isquoted(**end);
+	}
+	line = ft_strncpy(*str, *end - *str);
+	if (line == NULL)
+		return (0);
+	if (tar_putone(tar, line))
+		return (free(line), 0);
+	*str = *end;
+	return (1);		
+}
+
+int	redirection_extract(t_prog *proc, char *str)
+{
+	t_arr	fifo[2];
+	char	*end;
+	int		quotes;
+	int		res;
+	
+	end = str;
+	res = 1;
+	while (*str)
+	{
+		quotes = str_isquoted(*end);
+		if (*str && ft_strchr("<>", *str) != NULL && quotes == 0)
+			res = redirection_append(&str, &end, fifo, &quotes);
+		else if (*(end + 1) == '\0' || (ft_strchr("<>", *str) != NULL && quotes == 0))
+			res = clearstr_append(&str, &end, fifo[1], &quotes);
+		if (res == 0)
+			return (tar_free(fifo), tar_free(&fifo[1]), 0);
+		end++;
+	}	
+}
+
+int populate_programs(t_shell *sh)
+{
+	t_arr	*pipes;
+	int		i;
+
+	pipes = tar_init(str_split_by_set(sh->cmd_line, "|", true));
+	if (pipes->size == 0)
+		return (tar_free(pipes), 0);
+	sh->items = init_progs(pipes->size);
+	sh->count = pipes->size;
+	if (sh->items == NULL)
+		return (tar_free(pipes), 0);
+	while (i < pipes->size)
+	{
+		sh->items[i].id = i;
+		if (redirection_extract(&sh->items[i], pipes->arr[i]))
+			return (tar_free(pipes), free_progs(sh->items, pipes->size), 0);
+			
+	}
+}
+
+#include <minishell.h>
+
+int main(int ac, char **av, char **env)
+{
+	t_shell	shell;
+
+	(void)ac;
+	(void)av;
+	if (!init_shell(&shell, env))
+	{
+		ft_putendl_fd(ER_INIT, 2);
+		return (1);
+	}
+	while (1)
+    {
+    	if (get_command(&shell))
+      	{
+        	populate_programs(&shell);
+        	if (validate_programs(&shell))
+			{
+			run_programs(&shell);
+			free_programs(&shell);
+			}
+		}
+    }
+}
+
+
 /* Compile the code then do the following:
  * echo 'cd $HOME $"H"\'O\'M"E" '\\t    ' | ls -a -l -s" | grep *.out |" wc -l' > lines.txt
  * minihell.out lines.txt | cat -e
  */
+ /*
 int main(int ac, char **av, char **env)
 {
 	int fd;
@@ -85,3 +195,4 @@ int main(int ac, char **av, char **env)
 	return (0);
 	
 }
+*/

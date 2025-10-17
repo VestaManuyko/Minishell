@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.c                                       :+:      :+:    :+:   */
+/*   free_prog.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/13 00:23:58 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/16 17:47:05 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/14 11:09:09 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/16 19:18:54 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/*
- * Initialisation of the t_shell struct;
- * RETURN:
- * 0 on failure, 1 on success;
- */
-int	init_shell(t_shell *shell, char **env)
+void	free_prog(t_prog item)
 {
-	shell->env = tar_init(env);
-	if (!shell->env)
-		return (0);
-	shell->cmd_line = NULL;
-	shell->count = 0;
-	shell->items = NULL;
-	return (1);
+	if (item.prog != NULL)
+		arr_free(item.prog);
+	if (item.f_stdin != NULL)
+		free(item.f_stdin);
+	if (item.f_stdout != NULL)
+		free(item.f_stdout);
+}
+
+void free_progs(t_prog *items, int size)
+{
+	int i;
+
+	i = 0;
+	while (i < size)
+	{
+		free_prog(items[i]);
+		i++;
+	}
 }

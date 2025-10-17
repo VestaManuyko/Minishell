@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 10:33:59 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 10:35:17 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,14 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <asm-generic/errno-base.h>
+# include <errno.h>
 
 # include <libft.h>
 # include "ms_structs.h"
 # include "ms_strings.h"
+# include "ms_environment.h"
+# include "ms_init.h"
 # include "err_mes.h"
 
 # define MS_METACHAR " \t\n|&;()<>"
@@ -32,7 +36,8 @@
 
 /*			STRINGS			*/
 
-/* Used while looping through a string confirms if the current section of   
+/* 
+ * Used while looping through a string confirms if the current section of   
  * the given string is being under quotes.
  * 
  * RETURNS 
@@ -41,12 +46,14 @@
  */
 int		str_isquoted(char c);
 
-/* Collapses a NULL terminated array to a single string.
+/* 
+ * Collapses a NULL terminated array to a single string.
  * In the process the memory of the original array is freed
  */
 char	*arr_to_str(char **arr);
 
-/* Given a string, splits it into an array using c as the delimiter.
+/* 
+ * Given a string, splits it into an array using c as the delimiter.
  * The function takes in consideration the status of the quotes. 
  * char c is only taken in consideration if no quotes are open.
  * The quote analisys can be muted with the boolen eval_quote, 
@@ -60,11 +67,27 @@ char	*arr_to_str(char **arr);
  * A null terminated array. 
  */
 char	**str_split_by_c(char *str, char c, bool eval_quote);
+
+/*
+ * Given a string, splits it into an array using a set of chars as the delimiter.
+ * The function takes in consideration the status of the quotes. 
+ * the set is only taken in consideration if no quotes are open.
+ * The quote analisys can be muted with the boolen eval_quote, 
+ * setting it to false to ignore them.
+ * 
+ * Imporant note: 
+ * The function doesn't free the original string. it's the task of the caller
+ * to take care of it.
+ *
+ * RETURNS:
+ * A null terminated array. 
+ */
 char	**str_split_by_set(char *str, char *set, bool eval_quote);
 
 /*			INPUT			*/
 
-/* Calls get_prompt, which gets the USER env variable and appends it with 
+/* 
+ * Calls get_prompt, which gets the USER env variable and appends it with 
  * the shell_prompt, so that readline may display prompt as example:
  * USER/minishell>;
  * then calls readline and appends the returned line to history 
@@ -74,14 +97,15 @@ char	**str_split_by_set(char *str, char *set, bool eval_quote);
  * Return value:
  * 1 if command was got or 0 if no input or error.
  */
-int	get_command(t_shell *shell);
+int		get_command(t_shell *shell);
 
 /*			INIT			*/
+
 /*
  * Initialisation of the t_shell struct;
  * RETURN:
  * 0 on failure, 1 on success;
  */
-int	init_shell(t_shell *shell, char **env);
+int		init_shell(t_shell *shell, char **env);
 
 #endif

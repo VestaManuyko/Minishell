@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.c                                       :+:      :+:    :+:   */
+/*   env_split_paths.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/13 00:23:58 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/16 17:47:05 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/06 14:27:25 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/14 12:05:48 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/*
- * Initialisation of the t_shell struct;
- * RETURN:
- * 0 on failure, 1 on success;
- */
-int	init_shell(t_shell *shell, char **env)
+int main()
 {
-	shell->env = tar_init(env);
-	if (!shell->env)
-		return (0);
-	shell->cmd_line = NULL;
-	shell->count = 0;
-	shell->items = NULL;
-	return (1);
+	char **arr;
+
+	arr = str_split_by_c(getenv("PATH"), ':', 1);
+	arr_print(arr);
 }

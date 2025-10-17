@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clearquotes.h                                      :+:      :+:    :+:   */
+/*   ms_init.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/09 12:37:05 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 13:05:31 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/14 11:10:52 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/16 19:19:50 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLEARQUOTES_H
-# define CLEARQUOTES_H
+#ifndef MS_INIT_H
+# define MS_INIT_H
 
-# include <ms_structs.h>
+#include "ms_structs.h"
 
-typedef struct s_quote
-{
-	t_arr	*env;
-	t_arr	*expand;
-	int		quote;
-}			t_quote;
+void	free_shell(t_shell *sh);
+void	free_progs(t_prog *items, int size);
 
 #endif

@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.c                                       :+:      :+:    :+:   */
+/*   env_entry_update.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/13 00:23:58 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/16 17:47:05 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/13 16:09:33 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/14 11:52:06 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/*
- * Initialisation of the t_shell struct;
- * RETURN:
- * 0 on failure, 1 on success;
- */
-int	init_shell(t_shell *shell, char **env)
+int	env_entry_update(t_arr *env, char *str)
 {
-	shell->env = tar_init(env);
-	if (!shell->env)
+	int		id;
+	char	*exp_str;
+	char	*key;
+
+	exp_str = str_clearquotes(env, str);
+	if (exp_str == NULL)
 		return (0);
-	shell->cmd_line = NULL;
-	shell->count = 0;
-	shell->items = NULL;
+	key = env_getkey(exp_str);
+	if (key == NULL)
+		return (free(exp_str), 0);
+	id = env_getid(env->arr, key);
+	free(key);
+	if (id == -1)
+	{
+		if (!tar_putone(env, exp_str))
+			return (free(exp_str), 0);
+		free(exp_str);
+	}
+	else
+	{
+		free(env->arr[id]);
+		env->arr[id] = exp_str;
+	}
 	return (1);
 }
