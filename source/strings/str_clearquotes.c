@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:36:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 13:21:06 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 13:48:18 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*expand_dollar_special(char *str, char **end, t_quote *data)
 	line = ft_strdup("<< $$ and $? TO BE ADDED!!!>>");
 	if (line == NULL)
 		return (NULL);
-	if (!tar_putone(data->expand, line))
+	if (!tar_putstr(data->expand, line))
 		return (free(line), NULL);
 	free(line);
 	(*end)++;
@@ -37,11 +37,11 @@ static char	*expand_dollar_envvar(char *str, char **end, t_quote *data)
 	key = ft_strncpy(str + 1, *end - str);
 	if (key == NULL)
 		return (NULL);
-	if (!env_getvalue(data->env->arr, &value, env_getid(data->env->arr, key)))
+	if (!env_getvalue((char**)data->env->arr, &value, env_getid((char**)data->env->arr, key)))
 		return (NULL);
 	if (value != NULL)
 	{
-		if (!tar_putone(data->expand, value))
+		if (!tar_putstr(data->expand, value))
 			return (free(key), free(value), NULL);
 	}
 	free(key);
@@ -65,7 +65,7 @@ static char	*save_substr(char *str, char **end, t_quote *data)
 		line = ft_strncpy(str, *end - str + 1);
 		if (line == NULL)
 			return (NULL);
-		if (!tar_putone(data->expand, line))
+		if (!tar_putstr(data->expand, line))
 			return (free(line), NULL);
 		free(line);
 	}
@@ -125,10 +125,10 @@ char	*str_clearquotes(t_arr *env, char *str)
 	if (data.expand == NULL)
 		return (NULL);
 	if (!build_arr(&data, str))
-		return (arr_free(data.expand->arr), free(data.expand), NULL);
-	line = arr_to_str(data.expand->arr);
+		return (arr_free((char**)data.expand->arr), free(data.expand), NULL);
+	line = arr_to_str((char**)data.expand->arr);
 	if (line == NULL)
-		return (arr_free(data.expand->arr), free(data.expand), NULL);
+		return (arr_free((char**)data.expand->arr), free(data.expand), NULL);
 	free(data.expand);
 	return (line);
 }

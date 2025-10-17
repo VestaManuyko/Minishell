@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 17:58:01 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 13:37:35 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	tar_free(t_arr *tar);
  * - 1 on success;
  * - 0 on error, please note the t_arr* is not free'd;
  */
-int		tar_putone(t_arr *tar, char *str);
+int		tar_putstr(t_arr *tar, char *str);
 
 /* Remove an item from the t_arr and rebase all the other strings to keep 
  * the content contiguous.

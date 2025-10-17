@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:50:13 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 12:45:30 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 13:49:20 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*save_substr(char *str, char **end, t_quote *data)
 		line = ft_strncpy(str, *end - str + 1);
 		if (line == NULL)
 			return (NULL);
-		if (!tar_putone(data->expand, line))
+		if (!tar_putstr(data->expand, line))
 			return (NULL);
 		free(line);
 	}

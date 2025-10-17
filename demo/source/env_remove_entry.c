@@ -12,11 +12,11 @@ int main(int ac, char **av, char **env)
 	init_shell(&sh, env);
 	if (sh.env == NULL)
 		return (1);
-	arr_print(sh.env->arr);
+	arr_print((char**)sh.env->arr);
 	env_entry_remove(sh.env, "PATH");
 	env_entry_remove(sh.env, "LS_COLORS");
 	// env_entry_remove(sh.env, "");
-	arr_print(sh.env->arr);
+	arr_print((char**)sh.env->arr);
 	free_shell(&sh);
 	return (0);
 }

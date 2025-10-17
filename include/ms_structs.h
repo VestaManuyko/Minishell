@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/13 15:45:14 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 13:30:28 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_prog
  */
 typedef struct s_arr
 {
-	char	**arr;
+	void	**arr;
 	ssize_t	size;
 	ssize_t	capacity;
 }			t_arr;

@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 15:21:21 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/14 13:37:35 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 13:43:55 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void display_envupdate(t_shell *sh, char *str)
 		exp_str = str_clearquotes(sh->env, str);
 		key = env_getkey(exp_str);
 		free(exp_str);
-		id = env_getid(sh->env->arr, key);
+		id = env_getid((char**)sh->env->arr, key);
 		free(key);
 		if (id != -1)
-			printf("%s\n",sh->env->arr[id]);
+			printf("%s\n",(char*)sh->env->arr[id]);
 		else 
 			printf("Error no id found\n");
 		printf("size: %zd\n", sh->env->size);

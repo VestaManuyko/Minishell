@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:50:13 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 14:18:34 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 13:52:55 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	save_substr(char **str, char **end, t_quote *data)
 	line = ft_strncpy(*str, *end - *str + 1);
 	if (line == NULL)
 		return (0);
-	if (!tar_putone(data->expand, line))
+	if (!tar_putstr(data->expand, line))
 		return (free(line), 0);
 	free(line);
 	*str = *end + 1;
@@ -37,7 +37,7 @@ static int	addemptystr(char **str, t_quote *data)
 	line = ft_strdup("");
 	if (line == NULL)
 		return (0);
-	if (!tar_putone(data->expand, line))
+	if (!tar_putstr(data->expand, line))
 		return (0);
 	free(line);
 	(*str)++;
@@ -51,7 +51,7 @@ static int	expand_dollar_special(char **str, char **end, t_quote *data)
 	line = ft_strdup("<< $$ and $? TO BE ADDED!!!>>");
 	if (line == NULL)
 		return (0);
-	if (!tar_putone(data->expand, line))
+	if (!tar_putstr(data->expand, line))
 		return (free(line), 0);
 	free(line);
 	(*end)++;
@@ -70,16 +70,17 @@ static int	expand_dollar_envvar(char **str, char **end, t_quote *data)
 	key = ft_strncpy(*str + 1, *end - *str);
 	if (key == NULL)
 		return (0);
-	if (!env_getvalue(data->env->arr, &value, env_getid(data->env->arr, key)))
+	if (!env_getvalue((char**)data->env->arr, &value,
+			env_getid((char**)data->env->arr, key)))
 		return (0);
 	if (value != NULL)
 	{
-		if (!tar_putone(data->expand, value))
+		if (!tar_putstr(data->expand, value))
 			return (free(key), free(value), 0);
 		free(value);
 	}
 	else
-		if (!tar_putone(data->expand, ""))
+		if (!tar_putstr(data->expand, ""))
 			return (free(key), 0);
 	free(key);
 	*str = *end + 1;

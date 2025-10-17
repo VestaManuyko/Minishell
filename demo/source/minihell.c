@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 11:28:54 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 13:37:35 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	redirection_append(char **str, char **end, t_arr *tar, int *quotes)
 	line = ft_strncpy(*str, *end - *str);
 	if (line == NULL)
 		return (0);
-	if (tar_putone(tar, line))
+	if (tar_putstr(tar, line))
 		return (free(line), 0);
 	*str = *end;
 	return (1);		

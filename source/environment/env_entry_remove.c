@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 10:55:27 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/14 11:01:54 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 13:41:53 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	env_entry_remove(t_arr *env, char *str)
 	key = env_getkey(exp_str);
 	if (key == NULL)
 		return (free(exp_str), 0);
-	id = env_getid(env->arr, key);
+	id = env_getid((char **)env->arr, key);
 	if (id != -1)
 		tar_popone(env, id);
 	free(key);
