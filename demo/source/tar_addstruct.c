@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 17:45:58 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 18:18:35 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 18:35:08 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int main(int ac, char **av, char **env)
 	i = 0; 
 	while (i < test->size)
 	{
+		printf("type: %d, string: %.50s ", ((t_red *)test->arr)[i].type, ((t_red *)test->arr)[i].val);
 		i++;
 	}
-	
+	tar_free(test);
 }
