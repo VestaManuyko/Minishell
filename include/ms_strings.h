@@ -87,4 +87,6 @@ char	*str_expand(int (*f)(t_quote *data, char *str), t_arr *env, char *str);
 int		quotes(t_quote *data, char *str);
 int		dollar(t_quote *data, char *str);
 
+int		tar_linkone(t_arr *tar, void *item);
+
 #endif
