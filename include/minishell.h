@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 09:54:13 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 10:33:59 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include "err_mes.h"
 
 # define MS_METACHAR " \t\n|&;()<>"
-# define MS_METAERR "&;()"
+# define MS_METAERR "&;()\\[]"
 
 /*			STRINGS			*/
 
