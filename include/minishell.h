@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 13:20:19 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 09:55:57 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # include "ms_environment.h"
 # include "ms_init.h"
 # include "err_mes.h"
+
+# define MS_METACHAR " \t\n|&;()<>"
+# define MS_METAERR "&;()"
 
 /*			STRINGS			*/
 
