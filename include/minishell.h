@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/13 12:03:38 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 09:54:13 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include "ms_structs.h"
 # include "ms_strings.h"
 # include "err_mes.h"
+
+# define MS_METACHAR " \t\n|&;()<>"
+# define MS_METAERR "&;()"
 
 /*			STRINGS			*/
 
