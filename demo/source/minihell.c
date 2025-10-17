@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 19:16:55 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 11:28:54 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	redirection_extract(t_prog *proc, char *str)
 		if (*str && ft_strchr("<>", *str) != NULL && quotes == 0)
 			res = redirection_append(&str, &end, fifo, &quotes);
 		else if (*(end + 1) == '\0' || (ft_strchr("<>", *str) != NULL && quotes == 0))
-			res = clearstr_append(&str, &end, fifo[1]);
+			res = clearstr_append(&str, &end, fifo[1], &quotes);
 		if (res == 0)
 			return (tar_free(fifo), tar_free(&fifo[1]), 0);
 		end++;
