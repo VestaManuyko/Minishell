@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 09:57:29 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 13:31:22 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 16:25:29 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ int	arr_cpystr(char **src, char ***dest, int dest_capacity)
 	return (1);
 }
 
-t_arr	*tar_init(char **src)
+t_arr	*tar_init(char **src, void (*u_free)(void *item))
 {
 	t_arr	*tarr;
 
 	tarr = (t_arr *)ft_calloc(1, sizeof(t_arr));
 	if (tarr == NULL)
 		return (NULL);
+	tarr->u_free = u_free;
 	if (src != NULL)
 	{
 		tarr->size = arr_size(src) - 1;

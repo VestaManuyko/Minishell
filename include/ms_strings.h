@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 13:37:35 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 17:29:40 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,25 @@ void	arr_free(char **arr);
 void	arr_print(char **arr);
 char	**arr_deepcpy(char **src);
 
-/* Initializes a t_arr structure with a deepcopy of the input array.
- * It's the responsibility of the caller to free the source array.
- * If the parameter is passed as NULL an empty array of size 8 will be built.
+/* return an array size that is double the size of the give capacity 
  */
-t_arr	*tar_init(char **src);
+void	**arr_double(void **src, int capacity);
+
+/* Initializes a t_arr structure of a void **arr and its metadata.
+ * If the parameter is passed as NULL an empty array of size 8 *(void *) 
+ * will be built.
+ * If a char **arr is passed to it a deepcopy of the input array 
+ * will be performed and can be used by casting it.
+ * It's the responsibility of the caller to free the source array.
+ * as it is a void type of data also a method to free the items must be
+ * passed to inform the free tool on how to use such data type.
+ * The method should be able to free the content stored in each pointer.
+ */
+t_arr	*tar_init(char **src, void (*u_free)(void *item));
 
 void	tar_free(t_arr *tar);
 
-/* Add a copy of the given string is appended at the end of the array.
+/* Append a copy of the string *str at the end of the t_arr.
  * if the array reaches it's capacity the funct will automatically double it.
  * Please note the original string is not free'd
  * 
@@ -54,7 +64,7 @@ int		tar_popone(t_arr *tar, int id);
  * In case a '$' sign is found within a region without quotes or within 
  * double quotes it's value is searched in the environment and if found
  * returned to the string.
- * special charaters after '$' sign such as '?' or '$' will also be resolved.
+ * special charaters after '$' sign such as '?' will also be resolved.
  *
  * RETURNS:
  * - a pointer to the realized string in case of success;
@@ -62,6 +72,17 @@ int		tar_popone(t_arr *tar, int id);
  */ 
 char	*str_clearquotes(t_arr *env, char *str);
 
+/* 
+ * Given a string returns a new string based on the pointer function given.
+ * currently there are 2 available pointer functions that can be used:
+ * quotes:	to clear the content from any quote type
+ * dollar:	to expand to the env var or special char paired with the $ sign.
+ * 			currently the $$ and $? are not yet returned. 
+ *
+ * RETURNS:
+ * - a pointer to the realized string in case of success;
+ * - a NULL pointer on failure.
+ */
 char	*str_expand(int (*f)(t_quote *data, char *str), t_arr *env, char *str);
 int		quotes(t_quote *data, char *str);
 int		dollar(t_quote *data, char *str);

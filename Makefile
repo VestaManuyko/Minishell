@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/16 13:22:41 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/17 17:28:51 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,11 @@ LIB_DIR := libs
 
 # Groups of source files 
 STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
-		  str_clearquotes.c str_split_by_c.c str_split_by_set.c \
-		  str_isquoted.c \
-		  tar_popone.c tar_init.c tar_putone.c \
-		  str_expand.c str_expand_quotes.c str_expand_dollar.c 
+		  arr_double.c \
+		  str_split_by_set.c str_isquoted.c \
+		  str_clearquotes.c \
+		  str_expand.c str_expand_quotes.c str_expand_dollar.c \
+		  tar_init.c tar_free.c tar_popone.c tar_putstr.c tar_linkone.c\
 
 ENVIRON = env_getid.c env_getkey.c env_getvalue.c \
 		  env_entry_update.c  env_entry_remove.c  

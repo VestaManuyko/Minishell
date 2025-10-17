@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 13:30:28 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 16:23:09 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_arr
 	void	**arr;
 	ssize_t	size;
 	ssize_t	capacity;
+	void	(*u_free)(void *item);
 }			t_arr;
 
 /* This structure represents the entry point to process the shell inputs:

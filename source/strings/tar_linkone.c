@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_shell.c                                       :+:      :+:    :+:   */
+/*   tar_linkone.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 11:02:53 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 16:33:16 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/17 15:58:36 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/17 16:03:42 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_init.h"
 #include <minishell.h>
 
-void	free_shell(t_shell *sh)
+int	tar_linkone(t_arr *tar, void *item)
 {
-	if (sh->cmd_line != NULL)
-		free(sh->cmd_line);
-	if (sh->env != NULL)
+	if (item == NULL || tar == NULL)
+		return (0);
+	if (tar->capacity <= tar->size + 1)
 	{
-		arr_free((char **)sh->env->arr);
-		free(sh->env);
+		tar->arr = arr_double(tar->arr, tar->capacity);
+		if (tar->arr == NULL)
+			return (0);
+		tar->capacity *= 2;
 	}
-	free_progs(sh->items, sh->count);
-	sh->items = NULL;
-	sh = NULL;
+	tar->arr[tar->size] = item;
+	if (tar->arr[tar->size] == NULL)
+		return (0);
+	(tar->size)++;
+	tar->arr[tar->size] = NULL;
+	return (1);
 }

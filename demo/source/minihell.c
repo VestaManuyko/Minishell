@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 13:37:35 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 17:35:08 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int	redirection_extract(t_prog *proc, char *str)
 		quotes = str_isquoted(*end);
 		if (*str && ft_strchr("<>", *str) != NULL && quotes == 0)
 			res = redirection_append(&str, &end, fifo, &quotes);
-		else if (*(end + 1) == '\0' || (ft_strchr("<>", *str) != NULL && quotes == 0))
-			res = clearstr_append(&str, &end, fifo[1], &quotes);
+		// else if (*(end + 1) == '\0' || (ft_strchr("<>", *str) != NULL && quotes == 0))
+		// 	res = clearstr_append(&str, &end, fifo[1], &quotes);
 		if (res == 0)
 			return (tar_free(fifo), tar_free(&fifo[1]), 0);
 		end++;
@@ -84,13 +84,14 @@ int populate_programs(t_shell *sh)
 	t_arr	*pipes;
 	int		i;
 
-	pipes = tar_init(str_split_by_set(sh->cmd_line, "|", true));
+	pipes = tar_init(str_split_by_set(sh->cmd_line, "|", true), free);
 	if (pipes->size == 0)
 		return (tar_free(pipes), 0);
 	sh->items = init_progs(pipes->size);
 	sh->count = pipes->size;
 	if (sh->items == NULL)
 		return (tar_free(pipes), 0);
+	i = 0;
 	while (i < pipes->size)
 	{
 		sh->items[i].id = i;
@@ -98,6 +99,7 @@ int populate_programs(t_shell *sh)
 			return (tar_free(pipes), free_progs(sh->items, pipes->size), 0);
 			
 	}
+	return (1);
 }
 
 #include <minishell.h>
@@ -118,11 +120,11 @@ int main(int ac, char **av, char **env)
     	if (get_command(&shell))
       	{
         	populate_programs(&shell);
-        	if (validate_programs(&shell))
-			{
-			run_programs(&shell);
-			free_programs(&shell);
-			}
+        	// if (validate_programs(&shell))
+			// {
+			// run_programs(&shell);
+			// free_programs(&shell);
+			// }
 		}
     }
 }

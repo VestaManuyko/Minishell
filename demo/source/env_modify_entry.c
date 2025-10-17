@@ -6,11 +6,12 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 15:21:21 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 13:43:55 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 16:54:59 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ms_environment.h"
+#include "ms_strings.h"
 #include <minishell.h>
 
 
@@ -19,11 +20,14 @@ void display_envupdate(t_shell *sh, char *str)
 {
 	int id = -1;
 	char *exp_str;
+	char *exp_$;
 	char *key;
 
 	if (env_entry_update(sh->env, str))
 	{
-		exp_str = str_clearquotes(sh->env, str);
+		exp_$ = str_expand(dollar, sh->env, str);
+		exp_str = str_expand(dollar, sh->env, exp_$);
+		free(exp_$);
 		key = env_getkey(exp_str);
 		free(exp_str);
 		id = env_getid((char**)sh->env->arr, key);

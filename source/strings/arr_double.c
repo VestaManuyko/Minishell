@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_shell.c                                       :+:      :+:    :+:   */
+/*   arr_double.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 11:02:53 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 16:33:16 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/17 16:03:07 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/17 16:34:05 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_init.h"
 #include <minishell.h>
 
-void	free_shell(t_shell *sh)
+void	**arr_double(void **src, int capacity)
 {
-	if (sh->cmd_line != NULL)
-		free(sh->cmd_line);
-	if (sh->env != NULL)
+	int		i;
+	void	**arr;
+
+	i = 0;
+	arr = (void **)ft_calloc(capacity * 2, sizeof(void *));
+	if (arr == NULL)
+		return (NULL);
+	while (src[i] != NULL)
 	{
-		arr_free((char **)sh->env->arr);
-		free(sh->env);
+		arr[i] = src[i];
+		i++;
 	}
-	free_progs(sh->items, sh->count);
-	sh->items = NULL;
-	sh = NULL;
+	arr[i] = NULL;
+	free(src);
+	return (arr);
 }

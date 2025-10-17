@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 10:46:14 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 13:46:11 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 17:35:43 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ void print_tarr(t_arr *tar)
 
 int main(int ac, char **av, char **env)
 {
+	(void)ac;
+	(void)av;
 	t_arr	*sys_env;
 	char	*line = ft_strdup("HELLO LOVELY PEOPLE");
-	sys_env = tar_init(env);
+	sys_env = tar_init(env, free);
 	print_tarr(sys_env);
 	tar_popone(sys_env, 5);
 	print_tarr(sys_env);

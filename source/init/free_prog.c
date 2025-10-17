@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 11:09:09 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 19:18:54 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 16:33:55 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	free_prog(t_prog item)
 		free(item.f_stdout);
 }
 
-void free_progs(t_prog *items, int size)
+void	free_progs(t_prog *items, int size)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < size)

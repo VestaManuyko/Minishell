@@ -6,13 +6,14 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:50:13 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 13:52:55 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 17:28:37 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ms_strings.h"
 #include <minishell.h>
+#include <unistd.h>
 
 static int	save_substr(char **str, char **end, t_quote *data)
 {
@@ -48,7 +49,11 @@ static int	expand_dollar_special(char **str, char **end, t_quote *data)
 {
 	char	*line;
 
-	line = ft_strdup("<< $$ and $? TO BE ADDED!!!>>");
+	line = NULL;
+	if (*(*str + 1) == '$')
+		line = ft_itoa(getpid());
+	else
+		line = ft_strdup("<< $? TO BE ADDED!!!>>");
 	if (line == NULL)
 		return (0);
 	if (!tar_putstr(data->expand, line))
@@ -70,8 +75,8 @@ static int	expand_dollar_envvar(char **str, char **end, t_quote *data)
 	key = ft_strncpy(*str + 1, *end - *str);
 	if (key == NULL)
 		return (0);
-	if (!env_getvalue((char**)data->env->arr, &value,
-			env_getid((char**)data->env->arr, key)))
+	if (!env_getvalue((char **)data->env->arr, &value,
+			env_getid((char **)data->env->arr, key)))
 		return (0);
 	if (value != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 16:43:42 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/17 13:45:20 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 17:35:30 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int main(int ac, char **av, char **envp)
 	t_shell	shell;
 	char	*line;
 
+	(void)ac;
+	(void)av;
 	shell.env = malloc(sizeof(t_arr *));
 	if (!shell.env)
 		return (1);
