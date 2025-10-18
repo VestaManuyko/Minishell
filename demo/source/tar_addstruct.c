@@ -10,33 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_strings.h"
-#include "ms_structs.h"
 #include <minishell.h>
-
-typedef enum e_red_t
-{
-	in_file,
-	in_heredoc,
-	out_new,
-	out_append
-} t_red_t;
-
-typedef struct s_red
-{
-	t_red_t	type;
-	char	*val;
-} t_red;
-
-void red_free(void *item)
-{
-	
-	if (item == NULL)
-		return ;
-	if (((t_red *)item)->val != NULL)
-		free(((t_red *)item)->val);
-	free(item);
-}
 
 int main(int ac, char **av, char **env)
 {
@@ -50,7 +24,7 @@ int main(int ac, char **av, char **env)
 		item = (t_red *)calloc(1, sizeof(t_red));
 		if (item == NULL)
 			return (tar_free(test), 0);
-		item->val = env[i];
+		item->val = ft_strdup(env[i]);
 		item->type = i % 4;
 		tar_linkone(test, item);
 		i++;

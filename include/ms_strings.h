@@ -87,6 +87,13 @@ char	*str_expand(int (*f)(t_quote *data, char *str), t_arr *env, char *str);
 int		quotes(t_quote *data, char *str);
 int		dollar(t_quote *data, char *str);
 
+/* This function is to be considered an itermediate step to build 
+ * functions that are closer to the business level.
+ * the goal of this function is to provide a mechanism to attach any datatype
+ * to a t_arr.
+ */
 int		tar_linkone(t_arr *tar, void *item);
+
+int		tar_putred(t_arr *arr, char *str);
 
 #endif

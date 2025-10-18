@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tar_popone.c                                       :+:      :+:    :+:   */
+/*   red_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/07 10:31:44 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 15:57:29 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/17 23:24:40 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/17 23:24:59 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include "ms_strings.h"
+#include "ms_structs.h"
 #include <minishell.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-int	tar_popone(t_arr *tar, int id)
+t_red	*red_init(t_redtype type, char *str)
 {
-	int	i;
+	t_red *item;
 
-	i = id + 1;
-	if (tar == NULL)
-		return (0);
-	if (id >= tar->size)
-		return (0);
-	if (tar->arr[id] != NULL)
-		tar->u_free(tar->arr[id]);
-	while (i < tar->size)
-		tar->arr[id++] = tar->arr[i++];
-	tar->arr[id] = NULL;
-	tar->size += -1;
-	return (1);
+	item = (t_red *)calloc(1, sizeof(t_red));
+	if (item == NULL)
+		return (NULL);
+	item->type = type;
+	item->val = str;
+	return (item);
 }

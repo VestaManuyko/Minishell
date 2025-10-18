@@ -30,8 +30,10 @@
 # include "ms_environment.h"
 # include "ms_init.h"
 # include "err_mes.h"
+# include "ms_redirections.h"
 
-# define MS_METACHAR " \t\n|&;()<>"
+# define MS_METACHAR "\n|&;()<>"
+# define MS_BLANKS " \t\n"
 # define MS_METAERR "&;()\\[]"
 
 /*			STRINGS			*/

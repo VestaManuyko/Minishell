@@ -33,7 +33,7 @@ t_prog *init_progs(int count)
 	return (proc);
 }
 
-int	redirection_append(char **str, char **end, t_arr *tar, int *quotes)
+int	red_extract(char **str, char **end, t_arr *tar, int *quotes)
 {
 	char *line;
 	if (ft_strchr("<>", *(*end +1)) != NULL)
@@ -43,7 +43,8 @@ int	redirection_append(char **str, char **end, t_arr *tar, int *quotes)
 		(*end)++;
 		*quotes = str_isquoted(**end);
 	}
-	while (**end && (quotes != 0 || !ft_isspace(**end)))
+	while (**end && (quotes != 0 || ft_strchr(MS_METACHAR, **end) == NULL
+			 || ft_strchr(MS_BLANKS, **end) == NULL))
 	{
 		(*end)++;
 		*quotes = str_isquoted(**end);
@@ -51,13 +52,13 @@ int	redirection_append(char **str, char **end, t_arr *tar, int *quotes)
 	line = ft_strncpy(*str, *end - *str);
 	if (line == NULL)
 		return (0);
-	if (tar_putstr(tar, line))
+	if (tar_putred(tar, line))
 		return (free(line), 0);
 	*str = *end;
 	return (1);		
 }
 
-int	redirection_extract(t_prog *proc, char *str)
+int	red_getitem(t_prog *proc, char *str)
 {
 	t_arr	fifo[2];
 	char	*end;
@@ -70,7 +71,7 @@ int	redirection_extract(t_prog *proc, char *str)
 	{
 		quotes = str_isquoted(*end);
 		if (*str && ft_strchr("<>", *str) != NULL && quotes == 0)
-			res = redirection_append(&str, &end, fifo, &quotes);
+			res = red_extract(&str, &end, fifo, &quotes);
 		// else if (*(end + 1) == '\0' || (ft_strchr("<>", *str) != NULL && quotes == 0))
 		// 	res = clearstr_append(&str, &end, fifo[1], &quotes);
 		if (res == 0)
@@ -95,7 +96,7 @@ int populate_programs(t_shell *sh)
 	while (i < pipes->size)
 	{
 		sh->items[i].id = i;
-		if (redirection_extract(&sh->items[i], pipes->arr[i]))
+		if (red_getitem(&sh->items[i], pipes->arr[i]))
 			return (tar_free(pipes), free_progs(sh->items, pipes->size), 0);
 			
 	}

@@ -82,4 +82,47 @@ typedef struct s_shell
 	t_arr	*env;
 }	t_shell;
 
+/*
+ * 							>>>>>	T_ARR ITEMS STRUCTS:
+ * 
+ * The following typedef struct and enum are designed as types of structures 
+ * that a t_arr can host beyond the simple char **.
+ * 
+ */
+
+ /*
+  * t_redtype is a explicit list of the 4 redirection methods that are to be
+  * implemented. they are self expalantory
+  */
+ typedef enum e_redtype
+{
+	in_file,
+	in_heredoc,
+	out_create,
+	out_append,
+	error
+}	t_redtype;
+
+/*
+ * This structure holds direct infomation on the redirection type and
+ * the raw value associated to it.
+ */
+typedef struct s_red
+{
+	t_redtype	type;
+	char		*val;
+}	t_red;
+
+/*
+ * NOT YET IN USE
+ * This structure could holds the key value pairs used to describe the env
+ * The attr might contain bit masking approaches not yet defined.
+ */
+typedef struct s_env
+{
+	int		attr;
+	char	*key;
+	char	*val;
+}	t_env;
+
 #endif

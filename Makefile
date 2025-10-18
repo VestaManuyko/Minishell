@@ -28,7 +28,8 @@ STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
 		  str_split_by_set.c str_isquoted.c \
 		  str_clearquotes.c \
 		  str_expand.c str_expand_quotes.c str_expand_dollar.c \
-		  tar_init.c tar_free.c tar_popone.c tar_putstr.c tar_linkone.c\
+		  tar_init.c tar_free.c tar_popone.c tar_linkone.c \
+		  tar_putstr.c tar_putred.c 
 
 ENVIRON = env_getid.c env_getkey.c env_getvalue.c \
 		  env_entry_update.c  env_entry_remove.c  
@@ -39,15 +40,21 @@ INIT = init_shell.c free_shell.c free_prog.c
 
 MAIN = main.c
 
+REDIRECT = red_init.c red_free.c \
+		   red_perror.c red_str2struct.c \
+		   
+
 # Add source paths to files 
 STRINGS_SRC = $(addprefix $(SRC_DIR)/strings/, $(STRINGS))
 ENVIRON_SRC = $(addprefix $(SRC_DIR)/environment/, $(ENVIRON))
 INPUT_SRC = $(addprefix $(SRC_DIR)/input/, $(INPUT))
+REDIRECT_SRC = $(addprefix $(SRC_DIR)/redirections/, $(REDIRECT))
 INIT_SRC = $(addprefix $(SRC_DIR)/init/, $(INIT))
 MAIN_SRC = $(addprefix $(SRC_DIR)/, $(MAIN))
 
 # Collect all the c file in one variable
-SRC = $(STRINGS_SRC) $(ENVIRON_SRC) $(INPUT_SRC) $(INIT_SRC) $(MAIN_SRC)
+SRC = $(STRINGS_SRC) $(ENVIRON_SRC) $(INPUT_SRC) $(REDIRECT_SRC) \
+	  $(INIT_SRC) $(MAIN_SRC)
 OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
 
 LIBFT := $(LIB_DIR)/libft/libft.a
