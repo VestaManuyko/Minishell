@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:34:08 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 16:45:38 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 11:00:23 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	main(int ac, char **av, char **env)
 {
 	t_shell	shell;
 
+	(void)ac;
+	(void)av;
 	if (!init_shell(&shell, env))
 	{
 		ft_putendl_fd(ER_INIT, 2);
