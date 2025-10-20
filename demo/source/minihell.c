@@ -6,17 +6,19 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 17:35:08 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 14:49:43 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ms_init.h"
+#include "ms_redirections.h"
 #include "ms_strings.h"
 #include "ms_structs.h"
 #include <minishell.h>
 #include <fcntl.h>
 #include <stdbool.h>
+
 void tpro_print(t_prog pr)
 {
 	printf("id: %d, go_to: %s \n", pr.id, pr.go_to == end ? "end" : "ispipe");
@@ -36,31 +38,44 @@ t_prog *init_progs(int count)
 int	red_extract(char **str, char **end, t_arr *tar, int *quotes)
 {
 	char *line;
-	if (ft_strchr("<>", *(*end +1)) != NULL)
+	if ( **end == *(*end +1))
 		(*end)++;
 	while (**end && (quotes == 0 && ft_isspace(**end)))
 	{
 		(*end)++;
 		*quotes = str_isquoted(**end);
 	}
-	while (**end && (quotes != 0 || ft_strchr(MS_METACHAR, **end) == NULL
-			 || ft_strchr(MS_BLANKS, **end) == NULL))
+	while (**end && (quotes != 0 || ft_strchr(MS_METACHAR, *(*end + 1)) == NULL
+			 || ft_strchr(MS_BLANKS, **end) == NULL || *(*end + 1) != '\0'))
 	{
 		(*end)++;
 		*quotes = str_isquoted(**end);
 	}
-	line = ft_strncpy(*str, *end - *str);
+	line = ft_strncpy(*str, *end - *str + 1);
 	if (line == NULL)
 		return (0);
-	if (tar_putred(tar, line))
+	if (!tar_putred(tar, line))
 		return (free(line), 0);
-	*str = *end;
+	free(line);
+	*str = *end + 1;
 	return (1);		
 }
 
-int	red_getitem(t_prog *proc, char *str)
+int cmd_append(char *str, char *end, t_arr *tar)
 {
-	t_arr	fifo[2];
+	char *line;
+
+	line = ft_strncpy(str, end - str +1);
+	if (line == NULL)
+		return (0);
+	if (!tar_putstr(tar, line))
+		return (free(line), 0);
+	free(line);
+	return (1);
+}
+
+int	cmd_splitredirections(t_prog *proc, char *str, t_arr *redirect)
+{
 	char	*end;
 	int		quotes;
 	int		res;
@@ -71,21 +86,134 @@ int	red_getitem(t_prog *proc, char *str)
 	{
 		quotes = str_isquoted(*end);
 		if (*str && ft_strchr("<>", *str) != NULL && quotes == 0)
-			res = red_extract(&str, &end, fifo, &quotes);
-		// else if (*(end + 1) == '\0' || (ft_strchr("<>", *str) != NULL && quotes == 0))
-		// 	res = clearstr_append(&str, &end, fifo[1], &quotes);
+			res = red_extract(&str, &end, redirect, &quotes);
+		else if (*(end + 1) == '\0' || (quotes == 0 && (
+			ft_strchr(MS_METACHAR, *(end + 1)) || ft_strchr(MS_BLANKS, *(end + 1)))))
+		 	res = cmd_append(str, end, proc->prog);
 		if (res == 0)
-			return (tar_free(fifo), tar_free(&fifo[1]), 0);
+			return (0);
 		end++;
-	}	
+	}
+	return (1);
+}
+
+int red_expandvalue(t_red *item, t_arr *env)
+{
+	char *line_$;
+	char *line_q;
+
+	line_$ = str_expand(dollar, env, item->raw);
+	if (line_$ == NULL)
+		return (0);
+	line_q = str_expand(quotes, env, line_$);
+	free(line_$);
+	if (line_q == NULL)
+		return (0);
+	item->val = line_q;
+	return (1);
+}
+
+int red_openfile(t_red *item, t_prog *proc)
+{
+	if (item->type == out_create || item->type == out_append)
+	{
+		if (item->type == out_create)
+			item->fd = open(item->val, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		else if (item->type == out_append)
+			item->fd = open(item->val, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		proc->f_stdout = item->fd;
+	}
+	else
+	{
+		if (item->type == in_file)
+			item->fd = open(item->val, O_RDONLY);
+		else
+		 	item->fd = -1; // TODO: waiting for heredoc function
+		proc->f_stdin = item->fd;
+	}
+	if (item->fd == -1)
+		return (0);
+	return (1);
+}	
+
+int red_closeunusedfd(t_arr *redirect, t_prog *proc)
+{
+	int		i;
+	t_red	*tmp;
+	
+	i = 0;
+	while (i < redirect->size)
+	{
+		tmp = (t_red *)redirect->arr[i];
+		if (tmp->type == out_create || tmp->type == out_append)
+		{
+			if (tmp->fd != proc->f_stdout)
+			{
+				tmp->fd = close(tmp->fd);
+				if (tmp->fd == -1)
+				return (0);	
+			}
+		}
+		else
+		{
+			if (tmp->fd != proc->f_stdin)
+			{
+				tmp->fd = close(tmp->fd);
+				if ( tmp->fd == -1)
+				return (0);	
+			}
+		}
+		i++;
+	}
+	return (1);
+}
+
+
+int cmd_openredirections(t_arr *redirect, t_prog *proc, t_arr *env)
+{
+	int		i;
+	t_red	*tmp;
+	
+	i = 0;
+	while (i < redirect->size)
+	{
+		tmp = (t_red *)redirect->arr[i];
+		if (!red_expandvalue(tmp, env))
+			return (0);
+		if (!red_openfile(tmp, proc))
+			return (0);
+		i++;
+	}
+	if (!red_closeunusedfd(redirect, proc))
+		return (0);
+	return (1);		
+}
+
+int	cmd_getredirections(t_prog *proc, char *str, t_shell *sh)
+{
+	t_arr	*redirect;
+	
+	redirect = tar_init(NULL, red_free);
+	proc->prog = tar_init(NULL, free);
+	if (!cmd_splitredirections(proc, str, redirect))
+		return (tar_free(redirect), tar_free(proc->prog), 0);
+	if (!cmd_openredirections(redirect, proc, sh->env))
+		return (tar_free(redirect), tar_free(proc->prog), 0);
+	tar_free(redirect);
+	return (1);
 }
 
 int populate_programs(t_shell *sh)
 {
 	t_arr	*pipes;
+	char	**arr;
 	int		i;
 
-	pipes = tar_init(str_split_by_set(sh->cmd_line, "|", true), free);
+	arr = str_split_by_set(sh->cmd_line, "|", true);
+	if (arr == NULL)
+		return (0);
+	pipes = tar_init(arr, free);
+	arr_free(arr);
 	if (pipes->size == 0)
 		return (tar_free(pipes), 0);
 	sh->items = init_progs(pipes->size);
@@ -96,9 +224,9 @@ int populate_programs(t_shell *sh)
 	while (i < pipes->size)
 	{
 		sh->items[i].id = i;
-		if (red_getitem(&sh->items[i], pipes->arr[i]))
+		if (!cmd_getredirections(&sh->items[i], pipes->arr[i], sh))
 			return (tar_free(pipes), free_progs(sh->items, pipes->size), 0);
-			
+		i++;
 	}
 	return (1);
 }
