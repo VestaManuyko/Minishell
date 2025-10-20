@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 17:45:58 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 10:46:45 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 10:59:29 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int main(int ac, char **av, char **env)
 	t_red *item;
 	int i = 0;
 	
+	(void)ac;
+	(void)av;
 	/*important set which is the free function for the ites of the array!!*/
 	test = tar_init(NULL, red_free);
 	while (env[i] != NULL)

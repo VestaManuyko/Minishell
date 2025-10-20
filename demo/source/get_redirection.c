@@ -19,7 +19,8 @@ int main(int ac, char **av, char **env)
 	t_arr *me;
 	int i;
 
-
+	(void)ac;
+	(void)av;
 	init_shell(&sh, env);
 	while (1)
 	{
