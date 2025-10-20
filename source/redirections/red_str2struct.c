@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 02:55:10 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/18 02:55:14 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 13:10:02 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ t_red *red_str2struct(char *str)
 		return (NULL);
 	if (item->type == error)
 		return  (NULL);
-	item->val = extract_value(item, str);
-	if (item->val == NULL) 
+	item->raw = extract_value(item, str);
+	if (item->raw == NULL) 
 		return (free(item), NULL);
 	return (item);
 }		

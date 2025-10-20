@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 17:45:58 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 10:59:29 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 13:10:02 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int main(int ac, char **av, char **env)
 		if (item == NULL)
 			return (tar_free(test), 0);
 		/* here I'm just leveraging the env array to feed some string*/
-		item->val = ft_strdup(env[i]);
+		item->raw = ft_strdup(env[i]);
 		/* here I'm assigning one of the 4 types as an example */
 		item->type = i % 4;
 		/* here the built item is linked in the array */
@@ -43,7 +43,7 @@ int main(int ac, char **av, char **env)
 	i = 0; 
 	while (i < test->size)
 	{
-		printf("type: %d, string: %.50s \n", ((t_red *)test->arr[i])->type, ((t_red *)test->arr[i])->val);
+		printf("type: %d, string: %.50s \n", ((t_red *)test->arr[i])->type, ((t_red *)test->arr[i])->raw);
 		i++;
 	}
 	tar_free(test);

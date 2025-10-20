@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 02:12:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/18 02:12:12 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 13:10:54 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void red_free(void *item)
 	
 	if (item == NULL)
 		return ;
+	if (((t_red *)item)->raw != NULL)
+		free(((t_red *)item)->raw);
 	if (((t_red *)item)->val != NULL)
 		free(((t_red *)item)->val);
 	free(item);

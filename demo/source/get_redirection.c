@@ -52,7 +52,7 @@ int main(int ac, char **av, char **env)
 			while (i < me->size)
 			{
 				printf("type: %d, string: %.50s \n", 
-					((t_red *)me->arr[i])->type, ((t_red *)me->arr[i])->val);
+					((t_red *)me->arr[i])->type, ((t_red *)me->arr[i])->raw);
 				i++;
 			}
 		}

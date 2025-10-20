@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 16:23:09 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 13:30:26 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,20 @@ typedef enum e_pipe
 	ispipe,
 	end
 }	t_pipe;
+
+/* This structure provides flexible metadata to extend an array.
+ * arr:			the current character array
+ * size:		current amount of used pointers;
+ * capacity:	maximum amount of pointers that can be stored 
+ * 				before the array has to be expanded;
+ */
+typedef struct s_arr
+{
+	void	**arr;
+	ssize_t	size;
+	ssize_t	capacity;
+	void	(*u_free)(void *item);
+}			t_arr;
 
 /* This structure represents the core items required to execute a program:
  * - id:		current program id (from the list that needs execution).
@@ -45,26 +59,12 @@ typedef struct s_prog
 	int		id;
 	int		cpid;
 	t_pipe	go_to;
-	char	*f_stdin;
-	char	*f_stdout;
+	int		f_stdin;
+	int		f_stdout;
 	int		fd_io[2];
-	char	**prog;
+	t_arr	*prog;
 	int		complete;
 }	t_prog;
-
-/* This structure provides flexible metadata to extend an array.
- * arr:			the current character array
- * size:		current amount of used pointers;
- * capacity:	maximum amount of pointers that can be stored 
- * 				before the array has to be expanded;
- */
-typedef struct s_arr
-{
-	void	**arr;
-	ssize_t	size;
-	ssize_t	capacity;
-	void	(*u_free)(void *item);
-}			t_arr;
 
 /* This structure represents the entry point to process the shell inputs:
  * cmd_str:		raw string received as input;
@@ -110,7 +110,9 @@ typedef struct s_shell
 typedef struct s_red
 {
 	t_redtype	type;
+	char		*raw;
 	char		*val;
+	int			fd;
 }	t_red;
 
 /*
