@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 18:29:49 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 18:50:43 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		tar_popone(t_arr *tar, int id);
  * - a pointer to the realized string in case of success;
  * - a NULL pointer on failure.
  */ 
-char	*str_clearquotes(t_arr *env, char *str, int ign_quote);
+char	*str_clearquotes(t_arr *env, char *str, int use_quote);
 
 /* 
  * Given a string returns a new string based on the pointer function given.
@@ -83,10 +83,10 @@ char	*str_clearquotes(t_arr *env, char *str, int ign_quote);
  * - a pointer to the realized string in case of success;
  * - a NULL pointer on failure.
  */
-char	*str_expand(int (*f)(t_quote *data, char *str, int ign_quote),
-				t_arr *env, char *str, int ign_quote);
-int		quotes(t_quote *data, char *str, int ign_quote);
-int		dollar(t_quote *data, char *str, int ign_quote);
+char	*str_expand(int (*f)(t_quote *data, char *str, int use_quote),
+				t_arr *env, char *str, int use_quote);
+int		quotes(t_quote *data, char *str, int use_quote);
+int		dollar(t_quote *data, char *str, int use_quote);
 
 /* This function is to be considered an itermediate step to build 
  * functions that are closer to the business level.
