@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:55:09 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 16:32:57 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 09:55:23 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ void	tar_free(t_arr *tar)
 	if (tar->arr != NULL)
 		voidarr_free(tar->arr, tar->u_free);
 	free(tar);
+	tar = NULL;
 }
