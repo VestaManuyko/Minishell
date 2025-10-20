@@ -6,12 +6,15 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 14:27:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 17:31:43 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 10:39:36 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/* This little demostrator uses the split by set with only one item to demonstrate
+ * that it has an identical behavior to the split by char.
+ */
 int main()
 {
 	char **arr;

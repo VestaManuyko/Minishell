@@ -3,6 +3,9 @@
 #include "ms_strings.h"
 #include <minishell.h>
 
+
+/* this small demostrator remove from the env the key PATH and LS_COLORS
+ */
 int main(int ac, char **av, char **env)
 {
 	t_shell	sh;

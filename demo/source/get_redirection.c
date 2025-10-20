@@ -3,7 +3,10 @@
 #include "ms_strings.h"
 #include "ms_structs.h"
 
-/* use this string as first example: 
+/* 
+ * This demosntrator showcase how to build the array of redirection 
+ * for each t_prog (or string already split by pipe).
+ * use this string as first example: 
  * "<$he'll'o" "<<'you'" ">b' 'la" ">>blabla" "<<<"
  * furthermore you can also use this:
  * "<< end" "<<    EOF" "<<'    EOF'" "<<$HOME" "<<'$HOME'"

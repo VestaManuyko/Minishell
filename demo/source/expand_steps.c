@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 10:20:15 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 13:44:22 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 10:40:36 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void display_envupdate(t_shell *sh, char *str)
 		free(exp_quotes);
 }
 
+/* Demonstrate how the string is cleared by the dollars and quotes*/
 int main(int ac, char **av, char **env)
 {
 

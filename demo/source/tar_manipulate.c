@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 10:46:14 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 17:35:43 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 10:50:59 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void print_tarr(t_arr *tar)
 	arr_print((char**)tar->arr);
 	printf("tarr\nsize: %zu, capacity: %zu\n", tar->size, tar->capacity);
 }
-
+/* Demo how to grow and shrink a t_arr of type char** 
+ */
 int main(int ac, char **av, char **env)
 {
 	(void)ac;

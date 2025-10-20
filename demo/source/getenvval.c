@@ -6,12 +6,13 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:51:37 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 16:43:34 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 10:52:07 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/* Demonstrate how to get a value directly from a copy of the environment*/
 int main(int ac, char **av, char **env)
 {
 	char	*line;
