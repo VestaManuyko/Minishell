@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:50:13 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 13:49:20 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 18:17:43 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ static char	*save_substr(char *str, char **end, t_quote *data)
 	return (str);
 }
 
-int	quotes(t_quote *data, char *str)
+int	quotes(t_quote *data, char *str, int ign_quote)
 {
 	char	*end;
 
+	(void)ign_quote;
 	end = str;
 	while (*str)
 	{

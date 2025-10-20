@@ -41,7 +41,7 @@ int main(int ac, char **av, char **env)
 				/* Here I'm just clearing the quotes that wrap the original cmd_line string
 				 * to simulate that multiple redirection can happen on the same array.
 				 */
-				line = str_expand(quotes, sh.env, arr[i]);
+				line = str_expand(quotes, sh.env, arr[i],0);
 				
 				if (!tar_putred(me, line))
 					printf("item %d not added\n", i);

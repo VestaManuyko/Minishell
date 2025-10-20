@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 10:20:15 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 10:40:36 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 18:38:56 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void display_envupdate(t_shell *sh, char *str)
 	char *exp_quotes;
 	char *exp_dollar;
 
-		exp_dollar = str_expand(dollar, sh->env, str);
-		exp_quotes = str_expand(quotes, sh->env, exp_dollar);
-		// exp_quotes = str_expand(quotes, sh->env, str);
+		exp_dollar = str_expand(dollar, sh->env, str,1);
+		exp_quotes = str_expand(quotes, sh->env, exp_dollar,0);
+		// exp_quotes = str_expand(quotes, sh->env, str,0);
 		free(exp_dollar);
 		printf("%s\n", exp_quotes);
 		free(exp_quotes);

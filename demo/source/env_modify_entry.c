@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 15:21:21 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 10:37:56 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 18:28:06 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void display_envupdate(t_shell *sh, char *str)
 		/* this whole block is built just to find the key for printing purposes.
 		 * all the work needed is executed in the previous line.
 		 */
-		exp_$ = str_expand(dollar, sh->env, str);
-		exp_str = str_expand(dollar, sh->env, exp_$);
+		exp_$ = str_expand(dollar, sh->env, str,0);
+		exp_str = str_expand(dollar, sh->env, exp_$,0);
 		free(exp_$);
 		key = env_getkey(exp_str);
 		free(exp_str);

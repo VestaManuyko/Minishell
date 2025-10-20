@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 16:09:33 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 13:42:27 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 18:40:43 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	env_entry_update(t_arr *env, char *str)
 	char	*exp_str;
 	char	*key;
 
-	exp_str = str_clearquotes(env, str);
+	exp_str = str_clearquotes(env, str, 0);
 	if (exp_str == NULL)
 		return (0);
 	key = env_getkey(exp_str);

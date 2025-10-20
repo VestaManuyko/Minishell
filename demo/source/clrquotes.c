@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 14:07:37 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 10:34:11 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 18:30:20 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int main(int ac, char **av, char **env)
 	char example[] = "$USER$TESTNOTFOUND$HOME$WTF$PWD";
 	printf("%s\n===================================================\n", example);
 	/* First expansion $ (takes in account quotes type)*/
-	line =  str_expand(dollar, myenv, example);
+	line =  str_expand(dollar, myenv, example, 0);
 	printf("%s", line);
 	/* Second expand quotes */
-	q = str_expand(quotes, myenv, line);
-	free(line);
+	q = str_expand(quotes, myenv, line, 0);
+	free(line); 
 	tar_free(myenv);
 	free(q);
 	return (0);

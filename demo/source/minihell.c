@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 14:49:43 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 18:37:55 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 void tpro_print(t_prog pr)
 {
 	printf("id: %d, go_to: %s \n", pr.id, pr.go_to == end ? "end" : "ispipe");
-	arr_print(pr.prog);
+	arr_print((char **)pr.prog->arr);
 	printf("=================================================================\n");
 }
 
@@ -102,11 +102,17 @@ int red_expandvalue(t_red *item, t_arr *env)
 	char *line_$;
 	char *line_q;
 
-	line_$ = str_expand(dollar, env, item->raw);
-	if (line_$ == NULL)
-		return (0);
-	line_q = str_expand(quotes, env, line_$);
-	free(line_$);
+	if (item->type != in_heredoc)
+	{
+		line_$ = str_expand(dollar, env, item->raw, 0);
+		if (line_$ == NULL)
+			return (0);
+	}
+	else 
+		line_$ = item->raw;
+	line_q = str_expand(quotes, env, line_$, 0);
+	if (item->type != in_heredoc)
+		free(line_$);
 	if (line_q == NULL)
 		return (0);
 	item->val = line_q;
