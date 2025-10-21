@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/21 11:56:46 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/21 15:22:11 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_prog
 	t_pipe	go_to;
 	int		f_stdin;
 	int		f_stdout;
+	t_arr	*redirect;
 	int		fd_io[2];
 	t_arr	*prog;
 	int		complete;

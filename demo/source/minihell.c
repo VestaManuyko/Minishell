@@ -6,19 +6,34 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/21 14:46:50 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/21 15:44:35 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include "ms_structs.h"
 #include <minishell.h>
 
 void tpro_print(t_prog pr)
 {
-	printf("id: %d, go_to: %s \n", pr.id, pr.go_to == end ? "end" : "ispipe");
-	printf("fi: %d fo: %d\n", pr.f_stdin, pr.f_stdout);
-	printf("===========================PROG ARRAY============================\n");
+	int i = -1;
+	t_red *tmp;
+	
+	printf("=========================>> PROG id:%3d <<========================\n", pr.id );
+	printf("go_to: 		%s \n", pr.go_to == end ? "end" : "ispipe");
+	printf("redirections: 	\n");
+	while (++i < pr.redirect->size)
+	{
+		tmp = (t_red *)pr.redirect->arr[i];
+		if (tmp->type == out_append || tmp->type == out_create)
+			 printf("                fo: %s\n", tmp->val);
+		else 
+			 printf("                fi: %s\n", tmp->val);		
+	}
+	// printf("fi: %d fo: %d\n", pr.f_stdin, pr.f_stdout);
+	printf("===========================>> ARRAY <<============================\n");
 	arr_print((char **)pr.prog->arr);
-	printf("=================================================================\n");
+	printf("\n\n");
 }
 
 void print_programs(t_shell sh)
@@ -189,6 +204,37 @@ int red_closeunusedfd(t_arr *redirect, t_prog *proc)
 	return (1);
 }
 
+int	red_fillheredoc(t_red *tmp)
+{
+	char *path;
+
+	// path = heredoc(tmp->raw, tmp->val);
+	path = ft_strdup("MISSING HEREDOC");
+	if (path == NULL)
+		return (0);
+	free(tmp->val);
+	tmp->val = path;
+	return (1);
+}
+
+int cmd_parseredirect(t_arr *redirect, t_prog *proc, t_arr *env)
+{
+	int		i;
+	t_red	*tmp;
+	
+	i = 0;
+	while (i < redirect->size)
+	{
+		tmp = (t_red *)redirect->arr[i];
+		if (!red_expandvalue(tmp, env))
+			return (0);
+		if (tmp->type == in_heredoc)
+			if (!red_fillheredoc(tmp))
+				return (0);
+		i++;
+	}
+	return (1);
+}
 
 int cmd_openredirections(t_arr *redirect, t_prog *proc, t_arr *env)
 {
@@ -222,9 +268,9 @@ int	cmd_getredirections(t_prog *proc, char *str, t_shell *sh)
 	proc->prog = tar_init(NULL, free);
 	if (!cmd_splitredirections(proc, str, redirect))
 		return (tar_free(redirect), tar_free(proc->prog), 0);
-	if (!cmd_openredirections(redirect, proc, sh->env))
+	if (!cmd_parseredirect(redirect, proc, sh->env))
 		return (tar_free(redirect), tar_free(proc->prog), 0);
-	tar_free(redirect);
+	proc->redirect = redirect;	
 	return (1);
 }
 
