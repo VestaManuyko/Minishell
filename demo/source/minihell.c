@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/21 12:26:52 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/21 14:46:50 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	red_extract(char **str, char **end, t_arr *tar, int *quotes)
 	char *line;
 	if ( **end == *(*end +1))
 		(*end)++;
-	while (**end && (quotes == 0 && ft_isspace(**end)))
+	while (**end && (*quotes == 0 && ft_isspace(*(*end + 1))))
 	{
 		(*end)++;
 		*quotes = str_isquoted(**end);
@@ -131,6 +131,9 @@ int red_expandvalue(t_red *item, t_arr *env)
 	return (1);
 }
 
+/* this function must be replaced with a different one that does the dup2 directly at child execution
+ * it is much safer in case of sig coming in  there are no risks of keeping fd's open by chance.
+ */
 int red_openfile(t_red *item, t_prog *proc)
 {
 	if (item->type == out_create || item->type == out_append)
@@ -207,6 +210,10 @@ int cmd_openredirections(t_arr *redirect, t_prog *proc, t_arr *env)
 	return (1);		
 }
 
+/* this can actually become a pointer to the t_arr redirect included in the 
+ * t_prog instead of the single fi | fo. at tge ebd if the day we have to
+ * open all of them anyway...
+ */
 int	cmd_getredirections(t_prog *proc, char *str, t_shell *sh)
 {
 	t_arr	*redirect;
