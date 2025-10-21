@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/21 15:22:11 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/21 17:08:24 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ typedef struct s_shell
   */
  typedef enum e_redtype
 {
+	none,
 	in_file,
 	in_heredoc,
 	out_create,
-	out_append,
-	error
+	out_append
 }	t_redtype;
 
 /*

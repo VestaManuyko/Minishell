@@ -6,11 +6,12 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/21 15:44:35 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/21 17:17:48 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "ms_strings.h"
 #include "ms_structs.h"
 #include <minishell.h>
 
@@ -96,7 +97,7 @@ int cmd_append(char *str, char *end, t_arr *tar)
 	return (1);
 }
 
-int	cmd_splitredirections(t_prog *proc, char *str, t_arr *redirect)
+int	cmd_splitredirect(t_prog *proc, char *str, t_arr *redirect)
 {
 	char	*end;
 	int		quotes;
@@ -124,87 +125,7 @@ int	cmd_splitredirections(t_prog *proc, char *str, t_arr *redirect)
 	return (1);
 }
 
-int red_expandvalue(t_red *item, t_arr *env)
-{
-	char *line_$;
-	char *line_q;
-
-	if (item->type != in_heredoc)
-	{
-		line_$ = str_expand(dollar, env, item->raw, 0);
-		if (line_$ == NULL)
-			return (0);
-	}
-	else 
-		line_$ = item->raw;
-	line_q = str_expand(quotes, env, line_$, 0);
-	if (item->type != in_heredoc)
-		free(line_$);
-	if (line_q == NULL)
-		return (0);
-	item->val = line_q;
-	return (1);
-}
-
-/* this function must be replaced with a different one that does the dup2 directly at child execution
- * it is much safer in case of sig coming in  there are no risks of keeping fd's open by chance.
- */
-int red_openfile(t_red *item, t_prog *proc)
-{
-	if (item->type == out_create || item->type == out_append)
-	{
-		if (item->type == out_create)
-			item->fd = open(item->val, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		else if (item->type == out_append)
-			item->fd = open(item->val, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		proc->f_stdout = item->fd;
-	}
-	else
-	{
-		if (item->type == in_file)
-			item->fd = open(item->val, O_RDONLY);
-		else
-		 	item->fd = -1; // TODO: waiting for heredoc function
-		proc->f_stdin = item->fd;
-	}
-	if (item->fd == -1)
-		return (0);
-	return (1);
-}	
-
-int red_closeunusedfd(t_arr *redirect, t_prog *proc)
-{
-	int		i;
-	t_red	*tmp;
-	
-	i = 0;
-	while (i < redirect->size)
-	{
-		tmp = (t_red *)redirect->arr[i];
-		if (tmp->type == out_create || tmp->type == out_append)
-		{
-			if (tmp->fd != proc->f_stdout)
-			{
-				tmp->fd = close(tmp->fd);
-				if (tmp->fd == -1)
-				return (0);	
-			}
-		}
-		else
-		{
-			if (tmp->fd != proc->f_stdin)
-			{
-				tmp->fd = close(tmp->fd);
-				if ( tmp->fd == -1)
-				return (0);	
-			}
-		}
-		i++;
-	}
-	return (1);
-}
-
-int	red_fillheredoc(t_red *tmp)
+int	cmd_fillheredoc(t_red *tmp)
 {
 	char *path;
 
@@ -222,38 +143,19 @@ int cmd_parseredirect(t_arr *redirect, t_prog *proc, t_arr *env)
 	int		i;
 	t_red	*tmp;
 	
+	(void)proc;
 	i = 0;
 	while (i < redirect->size)
 	{
 		tmp = (t_red *)redirect->arr[i];
-		if (!red_expandvalue(tmp, env))
+		if (!red_raw2val(tmp, env))
 			return (0);
 		if (tmp->type == in_heredoc)
-			if (!red_fillheredoc(tmp))
+			if (!cmd_fillheredoc(tmp))
 				return (0);
 		i++;
 	}
 	return (1);
-}
-
-int cmd_openredirections(t_arr *redirect, t_prog *proc, t_arr *env)
-{
-	int		i;
-	t_red	*tmp;
-	
-	i = 0;
-	while (i < redirect->size)
-	{
-		tmp = (t_red *)redirect->arr[i];
-		if (!red_expandvalue(tmp, env))
-			return (0);
-		if (!red_openfile(tmp, proc))
-			return (0);
-		i++;
-	}
-	if (!red_closeunusedfd(redirect, proc))
-		return (0);
-	return (1);		
 }
 
 /* this can actually become a pointer to the t_arr redirect included in the 
@@ -262,15 +164,12 @@ int cmd_openredirections(t_arr *redirect, t_prog *proc, t_arr *env)
  */
 int	cmd_getredirections(t_prog *proc, char *str, t_shell *sh)
 {
-	t_arr	*redirect;
-	
-	redirect = tar_init(NULL, red_free);
+	proc->redirect = tar_init(NULL, red_free);
 	proc->prog = tar_init(NULL, free);
-	if (!cmd_splitredirections(proc, str, redirect))
-		return (tar_free(redirect), tar_free(proc->prog), 0);
-	if (!cmd_parseredirect(redirect, proc, sh->env))
-		return (tar_free(redirect), tar_free(proc->prog), 0);
-	proc->redirect = redirect;	
+	if (!cmd_splitredirect(proc, str, proc->redirect))
+		return (0);
+	if (!cmd_parseredirect(proc->redirect, proc, sh->env))
+		return (0);
 	return (1);
 }
 
@@ -301,6 +200,7 @@ int populate_programs(t_shell *sh)
 			return (tar_free(pipes), free_progs(&sh->items, pipes->size), 0);
 		i++;
 	}
+	tar_free(pipes);
 	return (1);
 }
 

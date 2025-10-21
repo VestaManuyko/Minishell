@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/17 17:28:51 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/21 16:57:39 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ MAIN = main.c
 
 REDIRECT = red_init.c red_free.c \
 		   red_perror.c red_str2struct.c \
+		   red_raw2val.c 
 		   
 
 # Add source paths to files 
