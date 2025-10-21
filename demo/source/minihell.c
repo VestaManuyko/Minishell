@@ -6,24 +6,30 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 18:37:55 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/21 12:26:52 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "ms_init.h"
-#include "ms_redirections.h"
-#include "ms_strings.h"
-#include "ms_structs.h"
 #include <minishell.h>
-#include <fcntl.h>
-#include <stdbool.h>
 
 void tpro_print(t_prog pr)
 {
 	printf("id: %d, go_to: %s \n", pr.id, pr.go_to == end ? "end" : "ispipe");
+	printf("fi: %d fo: %d\n", pr.f_stdin, pr.f_stdout);
+	printf("===========================PROG ARRAY============================\n");
 	arr_print((char **)pr.prog->arr);
 	printf("=================================================================\n");
+}
+
+void print_programs(t_shell sh)
+{
+	int i = 0;
+
+	while (i <sh.count)
+	{
+		tpro_print(sh.items[i]);
+		i++;
+	}
 }
 
 t_prog *init_progs(int count)
@@ -45,8 +51,9 @@ int	red_extract(char **str, char **end, t_arr *tar, int *quotes)
 		(*end)++;
 		*quotes = str_isquoted(**end);
 	}
-	while (**end && (quotes != 0 || ft_strchr(MS_METACHAR, *(*end + 1)) == NULL
-			 || ft_strchr(MS_BLANKS, **end) == NULL || *(*end + 1) != '\0'))
+	while ((**end && *(*end + 1) != '\0') && ( *quotes != 0 
+			|| (ft_strchr(MS_METACHAR, *(*end + 1)) == NULL
+			&& ft_strchr(MS_BLANKS, *(*end + 1)) == NULL)))
 	{
 		(*end)++;
 		*quotes = str_isquoted(**end);
@@ -85,11 +92,16 @@ int	cmd_splitredirections(t_prog *proc, char *str, t_arr *redirect)
 	while (*str)
 	{
 		quotes = str_isquoted(*end);
-		if (*str && ft_strchr("<>", *str) != NULL && quotes == 0)
+		if (*end && ft_strchr(MS_BLANKS, *end) != NULL)
+			str++;
+		else if (*str && ft_strchr("<>", *str) != NULL && quotes == 0)
 			res = red_extract(&str, &end, redirect, &quotes);
 		else if (*(end + 1) == '\0' || (quotes == 0 && (
 			ft_strchr(MS_METACHAR, *(end + 1)) || ft_strchr(MS_BLANKS, *(end + 1)))))
-		 	res = cmd_append(str, end, proc->prog);
+		{
+			res = cmd_append(str, end, proc->prog);
+			str = end + 1;
+		}
 		if (res == 0)
 			return (0);
 		end++;
@@ -230,106 +242,47 @@ int populate_programs(t_shell *sh)
 	while (i < pipes->size)
 	{
 		sh->items[i].id = i;
+		if (i == pipes->size -1)
+			sh->items[i].go_to = end;
 		if (!cmd_getredirections(&sh->items[i], pipes->arr[i], sh))
-			return (tar_free(pipes), free_progs(sh->items, pipes->size), 0);
+			return (tar_free(pipes), free_progs(&sh->items, pipes->size), 0);
 		i++;
 	}
 	return (1);
 }
 
-#include <minishell.h>
+void reset_shell(t_shell *sh)
+{
+	if (sh == NULL)
+		return ;
+	if (sh->cmd_line != NULL)
+		free(sh->cmd_line);
+	free_progs(&sh->items, sh->count);
+}
 
 int main(int ac, char **av, char **env)
 {
-	t_shell	shell;
+	t_shell	sh;
 
 	(void)ac;
 	(void)av;
-	if (!init_shell(&shell, env))
+	if (!init_shell(&sh, env))
 	{
 		ft_putendl_fd(ER_INIT, 2);
 		return (1);
 	}
 	while (1)
     {
-    	if (get_command(&shell))
+    	if (get_command(&sh))
       	{
-        	populate_programs(&shell);
-        	// if (validate_programs(&shell))
+        	populate_programs(&sh);
+			print_programs(sh);
+        	// if (validate_programs(&sh))
 			// {
-			// run_programs(&shell);
-			// free_programs(&shell);
+			// 	run_programs(&sh);
 			// }
+			reset_shell(&sh);
 		}
     }
+	free_shell(&sh);
 }
-
-
-/* Compile the code then do the following:
- * echo 'cd $HOME $"H"\'O\'M"E" '\\t    ' | ls -a -l -s" | grep *.out |" wc -l' > lines.txt
- * minihell.out lines.txt | cat -e
- */
- /*
-int main(int ac, char **av, char **env)
-{
-	int fd;
-	char *line;
-	char *expanded_line;
-	t_arr *proc_line;
-	t_arr *my_env = tar_init(env);
-	t_prog *proc;
-	t_shell shell;
-	int i = 0;
-	int j = 0;
-
-	if (ac != 2)
-	{
-		printf("usage: minihell.out {file_with_commans}\n");
-		return (0);
-	}
-	fd = open(av[1], O_RDONLY);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (line == NULL)
-			break;
-		proc_line = tar_init(str_split_by_c(line, '|', 1));
-//		arr_print(proc_line->arr);
-		printf("commands: %s \n", line);
-		proc = (t_prog *)malloc((proc_line->size + 1) * sizeof(t_prog));
-		while (i < proc_line->size)
-		{
-			j = 0;
-			(proc + i)->id = i;
-			if (i < proc_line->size -1)
-				(proc + i)->go_to = ispipe;
-			else
-				(proc + i)->go_to = end;
-			(proc + i)->prog = str_split_by_c((proc_line->arr)[i], ' ', 1);
-			while ((proc + i)->prog[j] != NULL)
-			{
-				expanded_line = (proc+ i)->prog[j];
-				expanded_line = str_clearquotes(my_env, (proc+ i)->prog[j]);
-				free((proc + i)->prog[j]);
-				(proc + i)->prog[j] = expanded_line;
-				j++;
-			}
-			(proc + i)->complete = 0;
-			(proc + i)->cpid = 0;
-			i++;
-		}
-		i = 0;
-		while (i < proc_line->size)
-		{
-			tpro_print(proc[i]);
-			i++;
-		}
-		free(line);
-		arr_free(proc_line->arr);
-		free(proc_line);
-		free(proc);
-	}
-	return (0);
-	
-}
-*/

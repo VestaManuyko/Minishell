@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/17 10:35:17 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/21 12:18:43 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <readline/history.h>
 # include <asm-generic/errno-base.h>
 # include <errno.h>
+# include <fcntl.h>
 
 # include <libft.h>
 # include "ms_structs.h"
