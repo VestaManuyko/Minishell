@@ -6,11 +6,11 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 02:55:10 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 13:10:02 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/21 16:30:33 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <minishell.h>
+#include <minishell.h>
 
 t_redtype	red_settype(char *str)
 {
@@ -25,13 +25,13 @@ t_redtype	red_settype(char *str)
 	else if (str[0] == '>' && str[1] != '>')
 		type = out_create;
 	else
-		type = error;
+		type = none;
 	return (type);
 }
 
-char *string_start(char *str)
+char	*string_start(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] && ft_strchr(MS_BLANKS, str[i]) != NULL)
@@ -41,7 +41,7 @@ char *string_start(char *str)
 	return (&str[i]);
 }
 
-char *extract_value(t_red *item, char *str)
+char	*extract_value(t_red *item, char *str)
 {
 	char		*start;
 	char		*tmp;
@@ -55,20 +55,19 @@ char *extract_value(t_red *item, char *str)
 		return (NULL);
 	tmp = ft_strdup(start);
 	return (tmp);
-
 }
 
-t_red *red_str2struct(char *str)
+t_red	*red_str2struct(char *str)
 {
 	t_red		*item;
 
 	item = red_init(red_settype(str), NULL);
 	if (item == NULL)
 		return (NULL);
-	if (item->type == error)
-		return  (NULL);
+	if (item->type == none)
+		return (NULL);
 	item->raw = extract_value(item, str);
-	if (item->raw == NULL) 
+	if (item->raw == NULL)
 		return (free(item), NULL);
 	return (item);
-}		
+}
