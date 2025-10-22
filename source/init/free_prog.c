@@ -6,28 +6,25 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 11:09:09 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/21 16:09:27 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/22 12:28:46 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ms_strings.h"
 #include <minishell.h>
 
-void	free_prog(t_prog item)
-{
-	if (item.prog != NULL)
-		tar_free(item.prog);
-	if (item.redirect != NULL)
-		tar_free(item.redirect);	
-}
-
 void	free_progs(t_prog **items, int count)
 {
-	if (*items == NULL)
+	int	i;
+
+	i = 0;
+	if (items == NULL || *items == NULL)
 		return ;
-	while (count-- > 0)
+	while (i < count)
 	{
-		free_prog((*items)[count]);
+		tar_free(items[i]->prog);
+		tar_free(items[i]->redirect);
+		i++;
 	}
 	free(*items);
 	*items = NULL;

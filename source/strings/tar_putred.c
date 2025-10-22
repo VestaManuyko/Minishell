@@ -1,12 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tar_putred.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/22 12:29:51 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/22 12:29:56 by fpaglia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "ms_redirections.h"
-#include "ms_strings.h"
-#include "ms_structs.h"
 #include <minishell.h>
 
-int tar_putred(t_arr *arr, char *str)
+int	tar_putred(t_arr *arr, char *str)
 {
-	t_red *item;
+	t_red	*item;
 
 	item = red_str2struct(str);
 	if (item == NULL)
