@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/21 16:57:39 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/22 15:49:31 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,17 +44,20 @@ REDIRECT = red_init.c red_free.c \
 		   red_perror.c red_str2struct.c \
 		   red_raw2val.c 
 		   
+COMMANDS = cmd_validate_pipes.c
 
 # Add source paths to files 
 STRINGS_SRC = $(addprefix $(SRC_DIR)/strings/, $(STRINGS))
 ENVIRON_SRC = $(addprefix $(SRC_DIR)/environment/, $(ENVIRON))
 INPUT_SRC = $(addprefix $(SRC_DIR)/input/, $(INPUT))
 REDIRECT_SRC = $(addprefix $(SRC_DIR)/redirections/, $(REDIRECT))
+COMMANDS_SRC = $(addprefix $(SRC_DIR)/commands/, $(COMMANDS))
 INIT_SRC = $(addprefix $(SRC_DIR)/init/, $(INIT))
 MAIN_SRC = $(addprefix $(SRC_DIR)/, $(MAIN))
 
 # Collect all the c file in one variable
 SRC = $(STRINGS_SRC) $(ENVIRON_SRC) $(INPUT_SRC) $(REDIRECT_SRC) \
+	  $(COMMANDS_SRC) \
 	  $(INIT_SRC) $(MAIN_SRC)
 OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
 

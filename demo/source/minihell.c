@@ -6,21 +6,20 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/21 17:17:48 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/22 15:38:17 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "ms_strings.h"
 #include "ms_structs.h"
 #include <minishell.h>
 
-void tpro_print(t_prog pr)
+void print_a_prog(t_prog pr)
 {
 	int i = -1;
 	t_red *tmp;
 	
-	printf("=========================>> PROG id:%3d <<========================\n", pr.id );
+	printf("\n==================>> PROG id:%2d <<==================\n", pr.id);
 	printf("go_to: 		%s \n", pr.go_to == end ? "end" : "ispipe");
 	printf("redirections: 	\n");
 	while (++i < pr.redirect->size)
@@ -32,18 +31,18 @@ void tpro_print(t_prog pr)
 			 printf("                fi: %s\n", tmp->val);		
 	}
 	// printf("fi: %d fo: %d\n", pr.f_stdin, pr.f_stdout);
-	printf("===========================>> ARRAY <<============================\n");
+	printf("\n------------------->> ARRAY <<---------------------\n");
 	arr_print((char **)pr.prog->arr);
-	printf("\n\n");
+	printf("\n");
 }
 
-void print_programs(t_shell sh)
+void programs_print(t_shell sh)
 {
 	int i = 0;
 
 	while (i <sh.count)
 	{
-		tpro_print(sh.items[i]);
+		print_a_prog(sh.items[i]);
 		i++;
 	}
 }
@@ -57,7 +56,7 @@ t_prog *init_progs(int count)
 	return (proc);
 }
 
-int	red_extract(char **str, char **end, t_arr *tar, int *quotes)
+int	extract_red(char **str, char **end, t_arr *tar, int *quotes)
 {
 	char *line;
 	if ( **end == *(*end +1))
@@ -84,7 +83,7 @@ int	red_extract(char **str, char **end, t_arr *tar, int *quotes)
 	return (1);		
 }
 
-int cmd_append(char *str, char *end, t_arr *tar)
+int append_prog(char *str, char *end, t_arr *tar)
 {
 	char *line;
 
@@ -97,7 +96,7 @@ int cmd_append(char *str, char *end, t_arr *tar)
 	return (1);
 }
 
-int	cmd_splitredirect(t_prog *proc, char *str, t_arr *redirect)
+int	cmd_split_redirect(t_prog *proc, char *str, t_arr *redirect)
 {
 	char	*end;
 	int		quotes;
@@ -111,11 +110,11 @@ int	cmd_splitredirect(t_prog *proc, char *str, t_arr *redirect)
 		if (*end && ft_strchr(MS_BLANKS, *end) != NULL)
 			str++;
 		else if (*str && ft_strchr("<>", *str) != NULL && quotes == 0)
-			res = red_extract(&str, &end, redirect, &quotes);
+			res = extract_red(&str, &end, redirect, &quotes);
 		else if (*(end + 1) == '\0' || (quotes == 0 && (
 			ft_strchr(MS_METACHAR, *(end + 1)) || ft_strchr(MS_BLANKS, *(end + 1)))))
 		{
-			res = cmd_append(str, end, proc->prog);
+			res = append_prog(str, end, proc->prog);
 			str = end + 1;
 		}
 		if (res == 0)
@@ -130,7 +129,7 @@ int	cmd_fillheredoc(t_red *tmp)
 	char *path;
 
 	// path = heredoc(tmp->raw, tmp->val);
-	path = ft_strdup("MISSING HEREDOC");
+	path = ft_strjoin("MISSING HEREDOC | pattern: ", tmp->val);
 	if (path == NULL)
 		return (0);
 	free(tmp->val);
@@ -138,7 +137,16 @@ int	cmd_fillheredoc(t_red *tmp)
 	return (1);
 }
 
-int cmd_parseredirect(t_arr *redirect, t_prog *proc, t_arr *env)
+/* With the exclusion of heredoc, for each redirection 
+ * takes the string saved in the raw param and expands it 
+ * substituting first the env var then clearing the quotes
+ * into the val param of the t_red struct.
+ * 
+ * In case the redirection is an heredoc,
+ * the heredoc procedure is called and the path to the 
+ * written file is returned.
+ */
+int cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_arr *env)
 {
 	int		i;
 	t_red	*tmp;
@@ -158,49 +166,71 @@ int cmd_parseredirect(t_arr *redirect, t_prog *proc, t_arr *env)
 	return (1);
 }
 
-/* this can actually become a pointer to the t_arr redirect included in the 
- * t_prog instead of the single fi | fo. at tge ebd if the day we have to
- * open all of them anyway...
+/* separate the incoming string of a single process into 
+ * 2 separated arrays:
+ * - redirect:	t_arr that stores all the redirections
+ * - prog:		t_arr that stores all the separated tokens that form the
+ * 				char** to pass to execve
+ * 
+ * RETURNS:
+ * - 1 on success
+ * - 0 on error.
  */
 int	cmd_getredirections(t_prog *proc, char *str, t_shell *sh)
 {
 	proc->redirect = tar_init(NULL, red_free);
 	proc->prog = tar_init(NULL, free);
-	if (!cmd_splitredirect(proc, str, proc->redirect))
+	if (!cmd_split_redirect(proc, str, proc->redirect))
 		return (0);
-	if (!cmd_parseredirect(proc->redirect, proc, sh->env))
+	if (!cmd_parse_redirect(proc->redirect, proc, sh->env))
 		return (0);
 	return (1);
 }
 
-int populate_programs(t_shell *sh)
+
+
+t_arr *split_commands(char *str)
 {
-	t_arr	*pipes;
+	t_arr	*cmds;
 	char	**arr;
+	
+	arr = str_split_by_set(str, "|", true);
+	if (arr == NULL)
+		return (NULL);
+	cmds = tar_init(arr, free);
+	arr_free(arr);
+	if (cmds == NULL)
+		return (NULL);
+	if (cmds->size == 0)
+		return (tar_free(cmds), NULL);
+	return (cmds);
+}
+
+int programs_populate(t_shell *sh)
+{
+	t_arr	*cmds;
 	int		i;
 
-	arr = str_split_by_set(sh->cmd_line, "|", true);
-	if (arr == NULL)
+	if (!cmd_validate_pipes(sh->cmd_line))
 		return (0);
-	pipes = tar_init(arr, free);
-	arr_free(arr);
-	if (pipes->size == 0)
-		return (tar_free(pipes), 0);
-	sh->items = init_progs(pipes->size);
-	sh->count = pipes->size;
+	cmds = split_commands(sh->cmd_line);
+	sh->items = init_progs(cmds->size);
 	if (sh->items == NULL)
-		return (tar_free(pipes), 0);
+		return (0);
+	sh->count = cmds->size;
+	if (sh->items == NULL)
+		return (tar_free(cmds), 0);
 	i = 0;
-	while (i < pipes->size)
+	while (i < cmds->size)
 	{
 		sh->items[i].id = i;
-		if (i == pipes->size -1)
+		if (i == cmds->size -1)
 			sh->items[i].go_to = end;
-		if (!cmd_getredirections(&sh->items[i], pipes->arr[i], sh))
-			return (tar_free(pipes), free_progs(&sh->items, pipes->size), 0);
+		if (!cmd_getredirections(&sh->items[i], cmds->arr[i], sh))
+			return (tar_free(cmds), free_progs(&sh->items, cmds->size), 0);
 		i++;
 	}
-	tar_free(pipes);
+	tar_free(cmds);
 	return (1);
 }
 
@@ -210,12 +240,47 @@ void reset_shell(t_shell *sh)
 		return ;
 	if (sh->cmd_line != NULL)
 		free(sh->cmd_line);
+	sh->cmd_line = NULL;
 	free_progs(&sh->items, sh->count);
+}
+
+int validate_programs()
+{
+	/*in this stage we must verify that each first item is a 
+	 * proper program.
+	 * cases like "." or "/" or "./" > return errors and moves to
+	 * the next pipe item.
+	 * here some insightfull examples :
+		paglia@c1r1p5:~$ |
+		bash: syntax error near unexpected token `|'
+		fpaglia@c1r1p5:~$ a | |
+		bash: syntax error near unexpected token `|'
+		fpaglia@c1r1p5:~$ a | .|
+		> 
+		> a
+		bash: .: filename argument required
+		.: usage: . filename [arguments]
+		a: command not found
+		a: command not found
+		fpaglia@c1r1p5:~$ .
+		bash: .: filename argument required
+		.: usage: . filename [arguments]
+		fpaglia@c1r1p5:~$ /
+		bash: /: Is a directory
+		fpaglia@c1r1p5:~$ ./
+		bash: ./: Is a directory
+		fpaglia@c1r1p5:~$ a | ./
+		bash: ./: Is a directory
+		a: command not found
+
+	 */
+	return (1);
 }
 
 int main(int ac, char **av, char **env)
 {
 	t_shell	sh;
+	int i = 0;
 
 	(void)ac;
 	(void)av;
@@ -224,18 +289,24 @@ int main(int ac, char **av, char **env)
 		ft_putendl_fd(ER_INIT, 2);
 		return (1);
 	}
-	while (1)
+	while (i < 1)
     {
     	if (get_command(&sh))
       	{
-        	populate_programs(&sh);
-			print_programs(sh);
+			
+			{
+			if (!programs_populate(&sh))
+				return (free_shell(&sh), 1);
+			programs_print(sh);
+			}
         	// if (validate_programs(&sh))
 			// {
 			// 	run_programs(&sh);
 			// }
 			reset_shell(&sh);
 		}
+		i++;
     }
 	free_shell(&sh);
+	return (0);
 }
