@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 11:22:40 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/13 11:28:26 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/22 13:53:43 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 # define ER_QUOTES "Error\nreadline: open quotes detected"
 # define ER_READLINE "Error\nreadline"
 # define ER_PROMPT "Error\nget_prompt"
+# define ER_SIGACT "Error\nsigaction"
 
 #endif
