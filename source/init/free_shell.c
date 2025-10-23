@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 11:02:53 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/21 12:20:57 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 12:32:50 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	free_shell(t_shell *sh)
 		arr_free((char **)sh->env->arr);
 		free(sh->env);
 	}
-	free_progs(&sh->items, sh->count);
+	if (sh->items != NULL)
+		programs_free(sh->items, sh->count);
 	sh->items = NULL;
 	sh = NULL;
 }

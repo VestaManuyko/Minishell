@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/17 17:28:51 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/23 13:05:30 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,24 +36,32 @@ ENVIRON = env_getid.c env_getkey.c env_getvalue.c \
 
 INPUT = prompt.c
 
-INIT = init_shell.c free_shell.c free_prog.c
+INIT = init_shell.c free_shell.c reset_shell.c
 
 MAIN = main.c
 
 REDIRECT = red_init.c red_free.c \
 		   red_perror.c red_str2struct.c \
+		   red_raw2val.c 
 		   
+COMMANDS = programs_init.c programs_free.c \
+		   programs_populate.c  programs_validate.c programs_print.c \
+		   cmd_validate_pipes.c \
+		   cmd_str2prog.c cmd_split_tokens.c  cmd_parse_redirect.c \
+		   cmd_fillheredoc.c 
 
 # Add source paths to files 
 STRINGS_SRC = $(addprefix $(SRC_DIR)/strings/, $(STRINGS))
 ENVIRON_SRC = $(addprefix $(SRC_DIR)/environment/, $(ENVIRON))
 INPUT_SRC = $(addprefix $(SRC_DIR)/input/, $(INPUT))
 REDIRECT_SRC = $(addprefix $(SRC_DIR)/redirections/, $(REDIRECT))
+COMMANDS_SRC = $(addprefix $(SRC_DIR)/commands/, $(COMMANDS))
 INIT_SRC = $(addprefix $(SRC_DIR)/init/, $(INIT))
 MAIN_SRC = $(addprefix $(SRC_DIR)/, $(MAIN))
 
 # Collect all the c file in one variable
 SRC = $(STRINGS_SRC) $(ENVIRON_SRC) $(INPUT_SRC) $(REDIRECT_SRC) \
+	  $(COMMANDS_SRC) \
 	  $(INIT_SRC) $(MAIN_SRC)
 OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
 

@@ -6,270 +6,22 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/21 14:46:50 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 12:58:10 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void tpro_print(t_prog pr)
-{
-	printf("id: %d, go_to: %s \n", pr.id, pr.go_to == end ? "end" : "ispipe");
-	printf("fi: %d fo: %d\n", pr.f_stdin, pr.f_stdout);
-	printf("===========================PROG ARRAY============================\n");
-	arr_print((char **)pr.prog->arr);
-	printf("=================================================================\n");
-}
-
-void print_programs(t_shell sh)
-{
-	int i = 0;
-
-	while (i <sh.count)
-	{
-		tpro_print(sh.items[i]);
-		i++;
-	}
-}
-
-t_prog *init_progs(int count)
-{
-	t_prog	*proc;
-	proc = (t_prog *)calloc(count, sizeof(t_prog));
-	if (proc == NULL)
-		return (NULL);
-	return (proc);
-}
-
-int	red_extract(char **str, char **end, t_arr *tar, int *quotes)
-{
-	char *line;
-	if ( **end == *(*end +1))
-		(*end)++;
-	while (**end && (*quotes == 0 && ft_isspace(*(*end + 1))))
-	{
-		(*end)++;
-		*quotes = str_isquoted(**end);
-	}
-	while ((**end && *(*end + 1) != '\0') && ( *quotes != 0 
-			|| (ft_strchr(MS_METACHAR, *(*end + 1)) == NULL
-			&& ft_strchr(MS_BLANKS, *(*end + 1)) == NULL)))
-	{
-		(*end)++;
-		*quotes = str_isquoted(**end);
-	}
-	line = ft_strncpy(*str, *end - *str + 1);
-	if (line == NULL)
-		return (0);
-	if (!tar_putred(tar, line))
-		return (free(line), 0);
-	free(line);
-	*str = *end + 1;
-	return (1);		
-}
-
-int cmd_append(char *str, char *end, t_arr *tar)
-{
-	char *line;
-
-	line = ft_strncpy(str, end - str +1);
-	if (line == NULL)
-		return (0);
-	if (!tar_putstr(tar, line))
-		return (free(line), 0);
-	free(line);
-	return (1);
-}
-
-int	cmd_splitredirections(t_prog *proc, char *str, t_arr *redirect)
-{
-	char	*end;
-	int		quotes;
-	int		res;
-	
-	end = str;
-	res = 1;
-	while (*str)
-	{
-		quotes = str_isquoted(*end);
-		if (*end && ft_strchr(MS_BLANKS, *end) != NULL)
-			str++;
-		else if (*str && ft_strchr("<>", *str) != NULL && quotes == 0)
-			res = red_extract(&str, &end, redirect, &quotes);
-		else if (*(end + 1) == '\0' || (quotes == 0 && (
-			ft_strchr(MS_METACHAR, *(end + 1)) || ft_strchr(MS_BLANKS, *(end + 1)))))
-		{
-			res = cmd_append(str, end, proc->prog);
-			str = end + 1;
-		}
-		if (res == 0)
-			return (0);
-		end++;
-	}
-	return (1);
-}
-
-int red_expandvalue(t_red *item, t_arr *env)
-{
-	char *line_$;
-	char *line_q;
-
-	if (item->type != in_heredoc)
-	{
-		line_$ = str_expand(dollar, env, item->raw, 0);
-		if (line_$ == NULL)
-			return (0);
-	}
-	else 
-		line_$ = item->raw;
-	line_q = str_expand(quotes, env, line_$, 0);
-	if (item->type != in_heredoc)
-		free(line_$);
-	if (line_q == NULL)
-		return (0);
-	item->val = line_q;
-	return (1);
-}
-
-/* this function must be replaced with a different one that does the dup2 directly at child execution
- * it is much safer in case of sig coming in  there are no risks of keeping fd's open by chance.
+/* 
+ * This demo is a replica of the actual main.c. 
+ * core difference is that the programs are not executed but their construction
+ * are printed for debugging purposes
+ * 
  */
-int red_openfile(t_red *item, t_prog *proc)
-{
-	if (item->type == out_create || item->type == out_append)
-	{
-		if (item->type == out_create)
-			item->fd = open(item->val, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		else if (item->type == out_append)
-			item->fd = open(item->val, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		proc->f_stdout = item->fd;
-	}
-	else
-	{
-		if (item->type == in_file)
-			item->fd = open(item->val, O_RDONLY);
-		else
-		 	item->fd = -1; // TODO: waiting for heredoc function
-		proc->f_stdin = item->fd;
-	}
-	if (item->fd == -1)
-		return (0);
-	return (1);
-}	
-
-int red_closeunusedfd(t_arr *redirect, t_prog *proc)
-{
-	int		i;
-	t_red	*tmp;
-	
-	i = 0;
-	while (i < redirect->size)
-	{
-		tmp = (t_red *)redirect->arr[i];
-		if (tmp->type == out_create || tmp->type == out_append)
-		{
-			if (tmp->fd != proc->f_stdout)
-			{
-				tmp->fd = close(tmp->fd);
-				if (tmp->fd == -1)
-				return (0);	
-			}
-		}
-		else
-		{
-			if (tmp->fd != proc->f_stdin)
-			{
-				tmp->fd = close(tmp->fd);
-				if ( tmp->fd == -1)
-				return (0);	
-			}
-		}
-		i++;
-	}
-	return (1);
-}
-
-
-int cmd_openredirections(t_arr *redirect, t_prog *proc, t_arr *env)
-{
-	int		i;
-	t_red	*tmp;
-	
-	i = 0;
-	while (i < redirect->size)
-	{
-		tmp = (t_red *)redirect->arr[i];
-		if (!red_expandvalue(tmp, env))
-			return (0);
-		if (!red_openfile(tmp, proc))
-			return (0);
-		i++;
-	}
-	if (!red_closeunusedfd(redirect, proc))
-		return (0);
-	return (1);		
-}
-
-/* this can actually become a pointer to the t_arr redirect included in the 
- * t_prog instead of the single fi | fo. at tge ebd if the day we have to
- * open all of them anyway...
- */
-int	cmd_getredirections(t_prog *proc, char *str, t_shell *sh)
-{
-	t_arr	*redirect;
-	
-	redirect = tar_init(NULL, red_free);
-	proc->prog = tar_init(NULL, free);
-	if (!cmd_splitredirections(proc, str, redirect))
-		return (tar_free(redirect), tar_free(proc->prog), 0);
-	if (!cmd_openredirections(redirect, proc, sh->env))
-		return (tar_free(redirect), tar_free(proc->prog), 0);
-	tar_free(redirect);
-	return (1);
-}
-
-int populate_programs(t_shell *sh)
-{
-	t_arr	*pipes;
-	char	**arr;
-	int		i;
-
-	arr = str_split_by_set(sh->cmd_line, "|", true);
-	if (arr == NULL)
-		return (0);
-	pipes = tar_init(arr, free);
-	arr_free(arr);
-	if (pipes->size == 0)
-		return (tar_free(pipes), 0);
-	sh->items = init_progs(pipes->size);
-	sh->count = pipes->size;
-	if (sh->items == NULL)
-		return (tar_free(pipes), 0);
-	i = 0;
-	while (i < pipes->size)
-	{
-		sh->items[i].id = i;
-		if (i == pipes->size -1)
-			sh->items[i].go_to = end;
-		if (!cmd_getredirections(&sh->items[i], pipes->arr[i], sh))
-			return (tar_free(pipes), free_progs(&sh->items, pipes->size), 0);
-		i++;
-	}
-	return (1);
-}
-
-void reset_shell(t_shell *sh)
-{
-	if (sh == NULL)
-		return ;
-	if (sh->cmd_line != NULL)
-		free(sh->cmd_line);
-	free_progs(&sh->items, sh->count);
-}
-
 int main(int ac, char **av, char **env)
 {
 	t_shell	sh;
+	int i = 0;
 
 	(void)ac;
 	(void)av;
@@ -278,18 +30,21 @@ int main(int ac, char **av, char **env)
 		ft_putendl_fd(ER_INIT, 2);
 		return (1);
 	}
-	while (1)
+	while (i < 1)
     {
     	if (get_command(&sh))
       	{
-        	populate_programs(&sh);
-			print_programs(sh);
-        	// if (validate_programs(&sh))
+			if (!programs_populate(&sh))
+				return (free_shell(&sh), 1);
+			programs_print(sh);
+        	// if (programs_validate(&sh))
 			// {
-			// 	run_programs(&sh);
+			// 	programs_run(&sh);
 			// }
 			reset_shell(&sh);
 		}
+		i++;
     }
 	free_shell(&sh);
+	return (0);
 }

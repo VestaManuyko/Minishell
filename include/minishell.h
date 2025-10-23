@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/21 12:18:43 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/22 15:42:34 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@
 # include "ms_init.h"
 # include "err_mes.h"
 # include "ms_redirections.h"
+# include "ms_commands.h"
 
 # define MS_METACHAR "\n|&;()<>"
 # define MS_BLANKS " \t\n"
-# define MS_METAERR "&;()\\[]"
+# define MS_METAERR "&;()\\"
 
 /*			STRINGS			*/
 
