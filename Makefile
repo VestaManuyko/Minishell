@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/22 15:49:31 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/23 09:52:14 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ ENVIRON = env_getid.c env_getkey.c env_getvalue.c \
 
 INPUT = prompt.c
 
-INIT = init_shell.c free_shell.c free_prog.c
+INIT = init_shell.c free_shell.c free_prog.c reset_shell.c
 
 MAIN = main.c
 

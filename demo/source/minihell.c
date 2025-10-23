@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/22 15:38:17 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 09:53:26 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,15 +234,7 @@ int programs_populate(t_shell *sh)
 	return (1);
 }
 
-void reset_shell(t_shell *sh)
-{
-	if (sh == NULL)
-		return ;
-	if (sh->cmd_line != NULL)
-		free(sh->cmd_line);
-	sh->cmd_line = NULL;
-	free_progs(&sh->items, sh->count);
-}
+
 
 int validate_programs()
 {
