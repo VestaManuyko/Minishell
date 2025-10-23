@@ -6,17 +6,17 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:44:48 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 12:45:56 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 13:38:31 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_arr *split_commands(char *str)
+t_arr	*split_commands(char *str)
 {
 	t_arr	*cmds;
 	char	**arr;
-	
+
 	arr = str_split_by_set(str, "|", true);
 	if (arr == NULL)
 		return (NULL);
@@ -29,7 +29,7 @@ t_arr *split_commands(char *str)
 	return (cmds);
 }
 
-int programs_populate(t_shell *sh)
+int	programs_populate(t_shell *sh)
 {
 	t_arr	*cmds;
 	int		i;

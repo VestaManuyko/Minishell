@@ -6,15 +6,13 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:51:58 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 12:54:22 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 13:48:34 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_structs.h"
 #include <minishell.h>
 
-
-int programs_validate(t_shell *sh)
+int	programs_validate(t_shell *sh)
 {
 	(void)sh;
 	/*in this stage we must verify that each first item is a 

@@ -6,15 +6,15 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 10:03:00 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 10:09:13 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 13:53:08 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <sys/types.h>
-#include "ms_structs.h"
-
 #ifndef MS_STRUCTS_SUPPORT_H
 # define MS_STRUCTS_SUPPORT_H
+
+# include <sys/types.h>
+# include "ms_structs.h"
 
 /*
  * 							>>>>>	DISCLAIMER:

@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/21 17:08:24 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 13:52:22 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,11 @@ typedef struct s_shell
  * 
  */
 
- /*
-  * t_redtype is a explicit list of the 4 redirection methods that are to be
-  * implemented. they are self expalantory
-  */
- typedef enum e_redtype
+/*
+* t_redtype is a explicit list of the 4 redirection methods that are to be
+* implemented. they are self expalantory
+*/
+typedef enum e_redtype
 {
 	none,
 	in_file,

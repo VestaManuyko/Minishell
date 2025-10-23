@@ -6,13 +6,13 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 09:51:48 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 12:32:50 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 13:49:32 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void reset_shell(t_shell *sh)
+void	reset_shell(t_shell *sh)
 {
 	if (sh == NULL)
 		return ;

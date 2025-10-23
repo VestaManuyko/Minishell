@@ -6,17 +6,17 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:12:07 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 12:12:33 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 13:32:47 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_arr *env)
+int	cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_arr *env)
 {
 	int		i;
 	t_red	*tmp;
-	
+
 	(void)proc;
 	i = 0;
 	while (i < redirect->size)

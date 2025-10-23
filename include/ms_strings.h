@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 18:50:43 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 13:50:59 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		tar_popone(t_arr *tar, int id);
  * RETURNS:
  * - a pointer to the realized string in case of success;
  * - a NULL pointer on failure.
- */ 
+ */
 char	*str_clearquotes(t_arr *env, char *str, int use_quote);
 
 /* 
@@ -84,7 +84,7 @@ char	*str_clearquotes(t_arr *env, char *str, int use_quote);
  * - a NULL pointer on failure.
  */
 char	*str_expand(int (*f)(t_quote *data, char *str, int use_quote),
-				t_arr *env, char *str, int use_quote);
+			t_arr *env, char *str, int use_quote);
 int		quotes(t_quote *data, char *str, int use_quote);
 int		dollar(t_quote *data, char *str, int use_quote);
 
