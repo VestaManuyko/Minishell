@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 12:58:10 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 14:17:10 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main(int ac, char **av, char **env)
 		ft_putendl_fd(ER_INIT, 2);
 		return (1);
 	}
-	while (i < 1)
+	while (i < 10)
     {
     	if (get_command(&sh))
       	{
