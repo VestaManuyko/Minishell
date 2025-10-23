@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 09:53:26 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 11:51:40 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int append_prog(char *str, char *end, t_arr *tar)
 {
 	char *line;
 
-	line = ft_strncpy(str, end - str +1);
+	line = ft_strncpy(str, end - str + 1);
 	if (line == NULL)
 		return (0);
 	if (!tar_putstr(tar, line))
@@ -124,6 +124,11 @@ int	cmd_split_redirect(t_prog *proc, char *str, t_arr *redirect)
 	return (1);
 }
 
+/* 
+ * Takes the path returned by the heredoc function and substitute
+ * the value param (originally the EOF pattern) with the 
+ * newly created file.
+ */
 int	cmd_fillheredoc(t_red *tmp)
 {
 	char *path;
@@ -137,7 +142,7 @@ int	cmd_fillheredoc(t_red *tmp)
 	return (1);
 }
 
-/* With the exclusion of heredoc, for each redirection 
+/* For each redirection but heredoc, the funciton 
  * takes the string saved in the raw param and expands it 
  * substituting first the env var then clearing the quotes
  * into the val param of the t_red struct.
@@ -166,8 +171,8 @@ int cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_arr *env)
 	return (1);
 }
 
-/* separate the incoming string of a single process into 
- * 2 separated arrays:
+/* separate the incoming string of a single process (pipe separated) into 
+ * 2 arrays:
  * - redirect:	t_arr that stores all the redirections
  * - prog:		t_arr that stores all the separated tokens that form the
  * 				char** to pass to execve
@@ -176,18 +181,20 @@ int cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_arr *env)
  * - 1 on success
  * - 0 on error.
  */
-int	cmd_getredirections(t_prog *proc, char *str, t_shell *sh)
+int	cmd_str2prog(t_prog *proc, char *str, t_shell *sh)
 {
 	proc->redirect = tar_init(NULL, red_free);
+	if (proc->redirect == NULL)
+		return (0);
 	proc->prog = tar_init(NULL, free);
+	if (proc->prog == NULL)
+		return (0);
 	if (!cmd_split_redirect(proc, str, proc->redirect))
 		return (0);
 	if (!cmd_parse_redirect(proc->redirect, proc, sh->env))
 		return (0);
 	return (1);
 }
-
-
 
 t_arr *split_commands(char *str)
 {
@@ -214,10 +221,10 @@ int programs_populate(t_shell *sh)
 	if (!cmd_validate_pipes(sh->cmd_line))
 		return (0);
 	cmds = split_commands(sh->cmd_line);
-	sh->items = init_progs(cmds->size);
-	if (sh->items == NULL)
+	if (cmds == NULL)
 		return (0);
 	sh->count = cmds->size;
+	sh->items = init_progs(cmds->size);
 	if (sh->items == NULL)
 		return (tar_free(cmds), 0);
 	i = 0;
@@ -226,8 +233,8 @@ int programs_populate(t_shell *sh)
 		sh->items[i].id = i;
 		if (i == cmds->size -1)
 			sh->items[i].go_to = end;
-		if (!cmd_getredirections(&sh->items[i], cmds->arr[i], sh))
-			return (tar_free(cmds), free_progs(&sh->items, cmds->size), 0);
+		if (!cmd_str2prog(&sh->items[i], cmds->arr[i], sh))
+			return (tar_free(cmds), free_progs(sh->items, cmds->size), 0);
 		i++;
 	}
 	tar_free(cmds);

@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:55:09 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/22 12:09:06 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 11:19:43 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	voidarr_free(void **arr, void (*u_free)(void *item), ssize_t size)
 		return ;
 	while (i < size)
 	{
-		u_free(arr[i]);
+		if (arr[i] != NULL)
+			u_free(arr[i]);
 		i++;
 	}
 	free(arr);
