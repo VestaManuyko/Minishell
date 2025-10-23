@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_split_paths.c                                  :+:      :+:    :+:   */
+/*   tar_linkone.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/06 14:27:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 10:39:36 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/17 15:58:36 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/17 16:03:42 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/* This little demostrator uses the split by set with only one item to demonstrate
- * that it has an identical behavior to the split by char.
- */
-int main()
+int	tar_linkone(t_arr *tar, void *item)
 {
-	char **arr;
-
-	arr = str_split_by_set(getenv("PATH"), ":", 1);
-	arr_print(arr);
+	if (item == NULL || tar == NULL)
+		return (0);
+	if (tar->capacity <= tar->size + 1)
+	{
+		tar->arr = arr_double(tar->arr, tar->capacity);
+		if (tar->arr == NULL)
+			return (0);
+		tar->capacity *= 2;
+	}
+	tar->arr[tar->size] = item;
+	if (tar->arr[tar->size] == NULL)
+		return (0);
+	(tar->size)++;
+	tar->arr[tar->size] = NULL;
+	return (1);
 }

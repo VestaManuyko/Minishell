@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_split_paths.c                                  :+:      :+:    :+:   */
+/*   cmd_str2prog.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/06 14:27:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 10:39:36 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/23 12:10:47 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/23 12:19:52 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/* This little demostrator uses the split by set with only one item to demonstrate
- * that it has an identical behavior to the split by char.
- */
-int main()
+int	cmd_str2prog(t_prog *proc, char *str, t_shell *sh)
 {
-	char **arr;
-
-	arr = str_split_by_set(getenv("PATH"), ":", 1);
-	arr_print(arr);
+	proc->redirect = tar_init(NULL, red_free);
+	if (proc->redirect == NULL)
+		return (0);
+	proc->prog = tar_init(NULL, free);
+	if (proc->prog == NULL)
+		return (0);
+	if (!cmd_split_tokens(proc, str, proc->redirect))
+		return (0);
+	if (!cmd_parse_redirect(proc->redirect, proc, sh->env))
+		return (0);
+	return (1);
 }

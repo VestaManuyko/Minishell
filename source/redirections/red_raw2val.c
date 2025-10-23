@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_split_paths.c                                  :+:      :+:    :+:   */
+/*   red_raw2val.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/06 14:27:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 10:39:36 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/21 16:19:46 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/21 16:21:26 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/* This little demostrator uses the split by set with only one item to demonstrate
- * that it has an identical behavior to the split by char.
- */
-int main()
+int	red_raw2val(t_red *item, t_arr *env)
 {
-	char **arr;
+	char	*line_d;
+	char	*line_q;
 
-	arr = str_split_by_set(getenv("PATH"), ":", 1);
-	arr_print(arr);
+	if (item->type != in_heredoc)
+	{
+		line_d = str_expand(dollar, env, item->raw, 1);
+		if (line_d == NULL)
+			return (0);
+	}
+	else
+		line_d = item->raw;
+	line_q = str_expand(quotes, env, line_d, 0);
+	if (item->type != in_heredoc)
+		free(line_d);
+	if (line_q == NULL)
+		return (0);
+	item->val = line_q;
+	return (1);
 }

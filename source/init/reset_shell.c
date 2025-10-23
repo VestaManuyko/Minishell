@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_split_paths.c                                  :+:      :+:    :+:   */
+/*   reset_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/06 14:27:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 10:39:36 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/23 09:51:48 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/23 12:32:50 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/* This little demostrator uses the split by set with only one item to demonstrate
- * that it has an identical behavior to the split by char.
- */
-int main()
+void reset_shell(t_shell *sh)
 {
-	char **arr;
-
-	arr = str_split_by_set(getenv("PATH"), ":", 1);
-	arr_print(arr);
+	if (sh == NULL)
+		return ;
+	if (sh->cmd_line != NULL)
+		free(sh->cmd_line);
+	sh->cmd_line = NULL;
+	programs_free(sh->items, sh->count);
+	sh->items = NULL;
 }

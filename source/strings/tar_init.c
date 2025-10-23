@@ -6,10 +6,11 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 09:57:29 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 13:18:27 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/22 12:39:52 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ms_strings.h"
 #include <minishell.h>
 
 int	arr_cpystr(char **src, char ***dest, int dest_capacity)
@@ -18,7 +19,7 @@ int	arr_cpystr(char **src, char ***dest, int dest_capacity)
 
 	i = 0;
 	if (src == NULL || *dest == NULL)
-		return (-1);
+		return (0);
 	while (src[i] != NULL)
 	{
 		if (dest_capacity <= i)
@@ -32,13 +33,8 @@ int	arr_cpystr(char **src, char ***dest, int dest_capacity)
 	return (1);
 }
 
-t_arr	*tar_init(char **src)
+void	set_dimensions(t_arr *tarr, char **src)
 {
-	t_arr	*tarr;
-
-	tarr = (t_arr *)ft_calloc(1, sizeof(t_arr));
-	if (tarr == NULL)
-		return (NULL);
 	if (src != NULL)
 	{
 		tarr->size = arr_size(src) - 1;
@@ -49,13 +45,26 @@ t_arr	*tar_init(char **src)
 		tarr->size = 0;
 		tarr->capacity = 8;
 	}
-	tarr->arr = (char **)ft_calloc(tarr->capacity, sizeof(char *));
+}
+
+t_arr	*tar_init(char **src, void (*u_free)(void *item))
+{
+	t_arr	*tarr;
+
+	if (u_free == NULL)
+		return (NULL);
+	tarr = (t_arr *)ft_calloc(1, sizeof(t_arr));
+	if (tarr == NULL)
+		return (NULL);
+	tarr->u_free = u_free;
+	set_dimensions(tarr, src);
+	tarr->arr = (void **)ft_calloc(tarr->capacity, sizeof(void *));
 	if (tarr->arr == NULL)
 		return (free(tarr), NULL);
 	if (src != NULL)
 	{
-		if (arr_cpystr(src, &tarr->arr, tarr->capacity) == 0)
-			return (NULL);
+		if (arr_cpystr(src, (char ***)&tarr->arr, tarr->capacity) == 0)
+			return (tar_free(tarr), NULL);
 	}
 	return (tarr);
 }

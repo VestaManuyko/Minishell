@@ -17,5 +17,6 @@
 # define ER_QUOTES "Error\nreadline: open quotes detected"
 # define ER_READLINE "Error\nreadline"
 # define ER_PROMPT "Error\nget_prompt"
+# define ER_SINTAX "Error\nminishell:  syntax error near unexpected token `"
 
 #endif

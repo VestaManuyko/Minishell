@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_split_paths.c                                  :+:      :+:    :+:   */
+/*   arr_double.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/06 14:27:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 10:39:36 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/17 16:03:07 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/17 16:34:05 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/* This little demostrator uses the split by set with only one item to demonstrate
- * that it has an identical behavior to the split by char.
- */
-int main()
+void	**arr_double(void **src, int capacity)
 {
-	char **arr;
+	int		i;
+	void	**arr;
 
-	arr = str_split_by_set(getenv("PATH"), ":", 1);
-	arr_print(arr);
+	i = 0;
+	arr = (void **)ft_calloc(capacity * 2, sizeof(void *));
+	if (arr == NULL)
+		return (NULL);
+	while (src[i] != NULL)
+	{
+		arr[i] = src[i];
+		i++;
+	}
+	arr[i] = NULL;
+	free(src);
+	return (arr);
 }
