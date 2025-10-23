@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:48:37 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 13:48:12 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 15:55:41 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	print_a_prog(t_prog pr)
 	line = set_end(pr.go_to);
 	if (line != NULL)
 		printf("go_to: 		%s \n", line);
+	free(line);
 	printf("redirections: 	\n");
 	while (++i < pr.redirect->size)
 	{
