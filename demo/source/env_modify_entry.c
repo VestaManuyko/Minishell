@@ -6,15 +6,11 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 15:21:21 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 12:09:16 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/24 12:15:10 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_environment.h"
-#include "ms_strings.h"
 #include <minishell.h>
-
-
 
 void display_envupdate(t_shell *sh, char *str)
 {
@@ -47,6 +43,14 @@ void display_envupdate(t_shell *sh, char *str)
 
 /* Demonstrates how the environments get modified by the function env_entry_update.
  * just pass a key or keyvalue pair to the shell to see how it's added.
+ * imagine it should behave similarly to export ...
+ * the only difference is that you don't have to use the export at the beginning..
+ * as this is the built in function still to be added.
+ * At prompt type any word.
+ * if it's not found will be added in the environment
+ * if it's found will update the environment.
+ * example usage:
+ *		myvar=$USER
  */
 int main(int ac, char **av, char **env)
 {
