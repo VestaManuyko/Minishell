@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/13 12:03:38 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/24 16:11:11 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,10 @@ int	get_command(t_shell *shell);
  * 0 on failure, 1 on success;
  */
 int	init_shell(t_shell *shell, char **env);
+
+/*
+ * Signal handling for the main shell
+*/
+void	signal_set(void);
 
 #endif
