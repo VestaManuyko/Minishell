@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:41:04 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 12:53:27 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/24 11:08:14 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int		cmd_validate_pipes(char *str);
  */
 int		cmd_str2prog(t_prog *proc, char *str, t_shell *sh);
 
+int		cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect);
+
 /* For each redirection but heredoc, the funciton 
  * takes the string saved in the raw param and expands it 
  * substituting first the env var then clearing the quotes
@@ -55,7 +57,7 @@ int		cmd_str2prog(t_prog *proc, char *str, t_shell *sh);
  */
 int		cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_arr *env);
 
-int		cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect);
+int		cmd_parse_progs(t_prog *proc, t_arr *env);
 
 /* 
  * Takes the path returned by the heredoc function and substitute

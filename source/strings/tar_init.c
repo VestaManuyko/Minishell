@@ -6,14 +6,14 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 09:57:29 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/22 12:39:52 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/24 11:19:23 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ms_strings.h"
 #include <minishell.h>
 
-int	arr_cpystr(char **src, char ***dest, int dest_capacity)
+static int	arr_cpystr(char **src, char ***dest, int dest_capacity)
 {
 	int	i;
 
@@ -33,11 +33,11 @@ int	arr_cpystr(char **src, char ***dest, int dest_capacity)
 	return (1);
 }
 
-void	set_dimensions(t_arr *tarr, char **src)
+static void	set_dimensions(t_arr *tarr, char **src)
 {
 	if (src != NULL)
 	{
-		tarr->size = arr_size(src) - 1;
+		tarr->size = arr_size(src);
 		tarr->capacity = tarr->size + 1;
 	}
 	else

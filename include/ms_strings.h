@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 13:50:59 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/24 10:55:18 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	**arr_double(void **src, int capacity);
 t_arr	*tar_init(char **src, void (*u_free)(void *item));
 
 void	tar_free(t_arr *tar);
+void	tar_print_char(t_arr *tar);
 
 /* Append a copy of the string *str at the end of the t_arr.
  * if the array reaches it's capacity the funct will automatically double it.
