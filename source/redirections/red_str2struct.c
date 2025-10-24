@@ -6,13 +6,13 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 02:55:10 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/21 16:30:33 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/24 11:19:54 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_redtype	red_settype(char *str)
+static t_redtype	red_settype(char *str)
 {
 	t_redtype	type;
 
@@ -29,7 +29,7 @@ t_redtype	red_settype(char *str)
 	return (type);
 }
 
-char	*string_start(char *str)
+static char	*string_start(char *str)
 {
 	int	i;
 
@@ -41,7 +41,7 @@ char	*string_start(char *str)
 	return (&str[i]);
 }
 
-char	*extract_value(t_red *item, char *str)
+static char	*extract_value(t_red *item, char *str)
 {
 	char		*start;
 	char		*tmp;

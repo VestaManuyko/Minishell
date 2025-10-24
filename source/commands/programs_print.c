@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:48:37 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 15:55:41 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/24 11:20:32 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ms_structs.h"
 #include <minishell.h>
 
-char	*set_end(t_pipe val)
+static char	*set_end(t_pipe val)
 {
 	char	*line;
 
@@ -28,7 +28,7 @@ char	*set_end(t_pipe val)
 	return (line);
 }
 
-void	print_a_prog(t_prog pr)
+static void	print_a_prog(t_prog pr)
 {
 	int		i;
 	t_red	*tmp;
