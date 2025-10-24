@@ -6,13 +6,13 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:18:08 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 14:31:17 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/24 11:21:15 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	extract_red(char **str, char **end, t_arr *tar, int *quotes)
+static int	extract_red(char **str, char **end, t_arr *tar, int *quotes)
 {
 	char	*line;
 
@@ -40,7 +40,7 @@ int	extract_red(char **str, char **end, t_arr *tar, int *quotes)
 	return (1);
 }
 
-int	append_prog(char *str, char *end, t_arr *tar)
+static int	append_prog(char *str, char *end, t_arr *tar)
 {
 	char	*line;
 
@@ -64,7 +64,7 @@ int	cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect)
 	while (*str)
 	{
 		quotes = str_isquoted(*end);
-		if (*end && ft_strchr(MS_BLANKS, *end) != NULL)
+		if (*end && quotes == 0 && ft_strchr(MS_BLANKS, *end) != NULL)
 			str++;
 		else if (*str && ft_strchr("<>", *str) != NULL && quotes == 0)
 			res = extract_red(&str, &end, redirect, &quotes);
