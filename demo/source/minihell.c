@@ -6,10 +6,11 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 17:48:20 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 14:21:44 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/24 13:47:16 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ms_init.h"
 #include <minishell.h>
 
 /* 
@@ -36,8 +37,9 @@ int main(int ac, char **av, char **env)
       	{
 			if (!programs_populate(&sh))
 				return (free_shell(&sh), 1);
+        	if (!programs_validate(&sh))
+				return (free_shell(&sh), 1);
 			programs_print(sh);
-        	// if (programs_validate(&sh))
 			// {
 			// 	programs_run(&sh);
 			// }

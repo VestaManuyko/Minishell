@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_mes.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 11:22:40 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/13 11:28:26 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/24 14:51:04 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,7 @@
 # define ER_READLINE "Error\nreadline"
 # define ER_PROMPT "Error\nget_prompt"
 # define ER_SINTAX "Error\nminishell:  syntax error near unexpected token `"
+# define ER_CMD ": command not found"
+# define ER_PERM "Error\nvalidate"
 
 #endif

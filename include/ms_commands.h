@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:41:04 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 11:08:14 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/24 14:21:14 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	programs_print(t_shell sh);
 
 int		programs_populate(t_shell *sh);
 int		programs_validate(t_shell *sh);
+
+void	cmd_perror(char *str);
 
 /*
  * Given a string evaluates if there are some chars between the portion of it 
