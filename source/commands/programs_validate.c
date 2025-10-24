@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:51:58 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 15:00:41 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/24 18:39:37 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 #include "ms_strings.h"
 #include "ms_structs.h"
 #include <minishell.h>
+#include <stddef.h>
 #include <stdio.h>
+#include <time.h>
 #include <unistd.h>
 
 
@@ -50,10 +52,27 @@ built in!
 	*/
 
 int is_path(char *exec)
-{}
+{
+	if (ft_strchr(exec, '/') != NULL)
+		return (1);
+	return (0);
+}
 
-int is_builtin(char *exec)
-{}
+int is_builtin(t_shell *sh, t_prog *pr, char *exec)
+{
+	int		i;
+	size_t	size;
+	
+	size = ft_strlen(exec);
+	i = 0;
+	while (i < MS_BUILTINS)
+	{
+		if (ft_strncmp(sh->bltn[i].name, exec, size) == 0)
+			return (pr->bltin = &sh->bltn[i], 1);
+		i++;
+	}
+	return (0);
+}
 
 char **env_getpaths(t_arr *env)
 {
@@ -73,7 +92,9 @@ char **env_getpaths(t_arr *env)
 
 int is_valid_path(char *exec)
 {
-	return (1);	
+	if (exec[0] == '.')
+		return(0);
+	return (1);
 }
 
 int find_binary(t_arr *env, char **exec)
@@ -120,8 +141,8 @@ int	programs_validate(t_shell *sh)
 		exec = sh->items[i].prog->arr[0];
 		if (!is_path(exec))
 		{
-			if (is_builtin(exec))
-				sh->items[i].bltin = 1;
+			if (is_builtin(sh, &sh->items[i], exec))
+				;
 			else if (find_binary(sh->env, &exec) != 1)
 				perror(ER_PERM);
 			else 

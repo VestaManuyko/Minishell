@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 10:40:04 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/24 18:10:39 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define MS_METACHAR "\n|&;()<>"
 # define MS_BLANKS " \t\n"
 # define MS_METAERR "&;()\\"
+
 
 /*			STRINGS			*/
 
@@ -118,5 +119,13 @@ int		get_command(t_shell *shell);
  * 0 on failure, 1 on success;
  */
 int		init_shell(t_shell *shell, char **env);
+
+int		bltn_echo(t_arr *args, t_arr *env);
+int		bltn_cd(t_arr *args, t_arr *env);
+int		bltn_pwd(t_arr *args, t_arr *env);
+int		bltn_export(t_arr *args, t_arr *env);
+int		bltn_unset(t_arr *args, t_arr *env);
+int		bltn_env(t_arr *args, t_arr *env);
+int		bltn_exit(t_arr *args, t_arr *env);
 
 #endif
