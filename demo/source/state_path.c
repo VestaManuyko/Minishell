@@ -2,7 +2,8 @@
  * a directory, a file or doesn't exist at all.
  */
 
- #include "ms_structs.h"
+ #include "libft.h"
+#include "ms_structs.h"
 #include <stdio.h>
 #include <sys/stat.h>
  #include <minishell.h>
@@ -15,7 +16,11 @@
 	
 	init_shell(&sh, env);
 	get_command(&sh);
-	ret = stat(sh.cmd_line, &info);
+	char *line = ft_strtrim(sh.cmd_line, MS_BLANKS);
+	ret = lstat(line, &info);
+	for (size_t i = 0; i < strlen(sh.cmd_line); i++)
+    	printf("%02X ", (unsigned char)sh.cmd_line[i]);
+	printf("' (len=%zu)\n", strlen(sh.cmd_line));
 	if (ret == -1)
 		perror("stat");
 	else
