@@ -37,7 +37,7 @@ ENVIRON = env_getid.c env_getkey.c env_getvalue.c \
 
 INPUT = prompt.c
 
-INIT = init_shell.c free_shell.c reset_shell.c
+INIT = init_shell.c free_shell.c reset_shell.c init_builtin.c bltn.c
 
 MAIN = main.c
 
@@ -47,6 +47,7 @@ REDIRECT = red_init.c red_free.c \
 		   
 COMMANDS = programs_init.c programs_free.c \
 		   programs_populate.c  programs_validate.c programs_print.c \
+		   cmd_perror.c \
 		   cmd_validate_pipes.c \
 		   cmd_str2prog.c \
 		   cmd_split_tokens.c cmd_parse_progs.c cmd_parse_redirect.c \
