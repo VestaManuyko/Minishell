@@ -4,9 +4,11 @@
 
  #include "libft.h"
 #include "ms_structs.h"
+#include <errno.h>
 #include <stdio.h>
 #include <sys/stat.h>
  #include <minishell.h>
+#include <unistd.h>
 
  int main(int ac, char **av, char **env)
  {
@@ -16,14 +18,19 @@
 	
 	init_shell(&sh, env);
 	get_command(&sh);
-	char *line = ft_strtrim(sh.cmd_line, MS_BLANKS);
-	ret = lstat(line, &info);
-	for (size_t i = 0; i < strlen(sh.cmd_line); i++)
-    	printf("%02X ", (unsigned char)sh.cmd_line[i]);
-	printf("' (len=%zu)\n", strlen(sh.cmd_line));
+	char **line = str_split_by_set(sh.cmd_line, MS_BLANKS, 0);
+	ret = stat(line[0], &info);
 	if (ret == -1)
 		perror("stat");
 	else
 		printf("%d\n", ret);
+	if S_ISDIR(info.st_mode)
+		printf("minishell: %s Is a directory\n", line[0]);
+	if (!(S_ISREG(info.st_mode) || S_ISLNK(info.st_mode)))
+		printf("Minishell: %s permissione denied\n", line[0]);
+	if (access(line[0], X_OK) == -1)
+		printf("Minishell: %s permissione denied\n", line[0]);
+	if (execve(av[1], line, env) == -1)
+		perror("minishell"), printf("errno: %d\n", errno);
 	return (0);
  }
