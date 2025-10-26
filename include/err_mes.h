@@ -18,5 +18,6 @@
 # define ER_READLINE "Error\nreadline"
 # define ER_PROMPT "Error\nget_prompt"
 # define ER_SIGACT "Error\nsigaction"
+# define ER_SINTAX "Error\nminishell:  syntax error near unexpected token `"
 
 #endif

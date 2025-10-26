@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:29:16 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/13 11:26:59 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/17 17:33:03 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	get_command(t_shell *shell)
 	char	*line;
 	char	*prompt;
 
-	prompt = get_prompt(shell->env->arr);
+	prompt = get_prompt((char **)shell->env->arr);
 	if (!prompt)
 		perror_exit(ER_PROMPT);
 	line = readline(prompt);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   arr_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 18:36:53 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/07 12:10:23 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/17 16:32:48 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	arr_free(char **arr)
 	int	i;
 
 	i = 0;
-	if (arr == NULL)
+	if (arr == NULL || *arr == NULL)
 		return ;
 	while (arr[i] != NULL)
 	{

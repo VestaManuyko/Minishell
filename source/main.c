@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:34:08 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 16:09:34 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/20 11:00:23 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	t_shell				shell;
 
@@ -20,15 +20,15 @@ int main(int ac, char **av, char **env)
 	if (!init_shell(&shell, env))
 		return (ft_putendl_fd(ER_INIT, 2), 1);
 	while (1)
-    {
-    	if (get_command(&shell))
-      	{
-        	populate_programs(&shell);
-        	if (validate_programs(&shell))
+	{
+		if (get_command(&shell))
+		{
+			populate_programs(&shell);
+			if (validate_programs(&shell))
 			{
-			run_programs(&shell);
-			free_programs(&shell);
+				run_programs(&shell);
+				free_programs(&shell);
 			}
 		}
-    }
+	}
 }

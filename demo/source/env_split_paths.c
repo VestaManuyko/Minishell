@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clearquotes.h                                      :+:      :+:    :+:   */
+/*   env_split_paths.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/09 12:37:05 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 13:05:31 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/06 14:27:25 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/20 10:39:36 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CLEARQUOTES_H
-# define CLEARQUOTES_H
+#include <minishell.h>
 
-# include <ms_structs.h>
-
-typedef struct s_quote
+/* This little demostrator uses the split by set with only one item to demonstrate
+ * that it has an identical behavior to the split by char.
+ */
+int main()
 {
-	t_arr	*env;
-	t_arr	*expand;
-	int		quote;
-}			t_quote;
+	char **arr;
 
-#endif
+	arr = str_split_by_set(getenv("PATH"), ":", 1);
+	arr_print(arr);
+}

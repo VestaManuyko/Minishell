@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 14:50:06 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/09 15:34:04 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 15:45:36 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**arr_deepcpy(char **src)
 	if (src == NULL)
 		return (NULL);
 	size = arr_size(src);
-	arr = (char **)malloc((size + 1) * sizeof(char *));
+	arr = (char **)ft_calloc((size + 1), sizeof(char *));
 	if (arr == NULL)
 		return (NULL);
 	i = 0;

@@ -22,7 +22,7 @@ int	tar_popone(t_arr *tar, int id)
 	if (id >= tar->size)
 		return (0);
 	if (tar->arr[id] != NULL)
-		free(tar->arr[id]);
+		tar->u_free(tar->arr[id]);
 	while (i < tar->size)
 		tar->arr[id++] = tar->arr[i++];
 	tar->arr[id] = NULL;
