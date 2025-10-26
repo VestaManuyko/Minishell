@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/16 13:22:41 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/24 11:15:26 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,29 +24,47 @@ LIB_DIR := libs
 
 # Groups of source files 
 STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
-		  str_clearquotes.c str_split_by_c.c str_split_by_set.c \
-		  str_isquoted.c \
-		  tar_popone.c tar_init.c tar_putone.c \
-		  str_expand.c str_expand_quotes.c str_expand_dollar.c 
+		  arr_double.c \
+		  str_split_by_set.c str_isquoted.c \
+		  str_clearquotes.c \
+		  str_expand.c str_expand_quotes.c str_expand_dollar.c \
+		  tar_init.c tar_free.c tar_print.c \
+		  tar_popone.c tar_linkone.c \
+		  tar_putstr.c tar_putred.c 
 
 ENVIRON = env_getid.c env_getkey.c env_getvalue.c \
 		  env_entry_update.c  env_entry_remove.c  
 
 INPUT = prompt.c
 
-INIT = init_shell.c free_shell.c free_prog.c
+INIT = init_shell.c free_shell.c reset_shell.c
 
 MAIN = main.c
+
+REDIRECT = red_init.c red_free.c \
+		   red_perror.c red_str2struct.c \
+		   red_raw2val.c 
+		   
+COMMANDS = programs_init.c programs_free.c \
+		   programs_populate.c  programs_validate.c programs_print.c \
+		   cmd_validate_pipes.c \
+		   cmd_str2prog.c \
+		   cmd_split_tokens.c cmd_parse_progs.c cmd_parse_redirect.c \
+		   cmd_fillheredoc.c 
 
 # Add source paths to files 
 STRINGS_SRC = $(addprefix $(SRC_DIR)/strings/, $(STRINGS))
 ENVIRON_SRC = $(addprefix $(SRC_DIR)/environment/, $(ENVIRON))
 INPUT_SRC = $(addprefix $(SRC_DIR)/input/, $(INPUT))
+REDIRECT_SRC = $(addprefix $(SRC_DIR)/redirections/, $(REDIRECT))
+COMMANDS_SRC = $(addprefix $(SRC_DIR)/commands/, $(COMMANDS))
 INIT_SRC = $(addprefix $(SRC_DIR)/init/, $(INIT))
 MAIN_SRC = $(addprefix $(SRC_DIR)/, $(MAIN))
 
 # Collect all the c file in one variable
-SRC = $(STRINGS_SRC) $(ENVIRON_SRC) $(INPUT_SRC) $(INIT_SRC) $(MAIN_SRC)
+SRC = $(STRINGS_SRC) $(ENVIRON_SRC) $(INPUT_SRC) $(REDIRECT_SRC) \
+	  $(COMMANDS_SRC) \
+	  $(INIT_SRC) $(MAIN_SRC)
 OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
 
 LIBFT := $(LIB_DIR)/libft/libft.a

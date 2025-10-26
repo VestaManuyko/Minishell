@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/13 15:45:14 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/23 13:52:22 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,20 @@ typedef enum e_pipe
 	ispipe,
 	end
 }	t_pipe;
+
+/* This structure provides flexible metadata to extend an array.
+ * arr:			the current character array
+ * size:		current amount of used pointers;
+ * capacity:	maximum amount of pointers that can be stored 
+ * 				before the array has to be expanded;
+ */
+typedef struct s_arr
+{
+	void	**arr;
+	ssize_t	size;
+	ssize_t	capacity;
+	void	(*u_free)(void *item);
+}			t_arr;
 
 /* This structure represents the core items required to execute a program:
  * - id:		current program id (from the list that needs execution).
@@ -45,25 +59,13 @@ typedef struct s_prog
 	int		id;
 	int		cpid;
 	t_pipe	go_to;
-	char	*f_stdin;
-	char	*f_stdout;
+	int		f_stdin;
+	int		f_stdout;
+	t_arr	*redirect;
 	int		fd_io[2];
-	char	**prog;
+	t_arr	*prog;
 	int		complete;
 }	t_prog;
-
-/* This structure provides flexible metadata to extend an array.
- * arr:			the current character array
- * size:		current amount of used pointers;
- * capacity:	maximum amount of pointers that can be stored 
- * 				before the array has to be expanded;
- */
-typedef struct s_arr
-{
-	char	**arr;
-	ssize_t	size;
-	ssize_t	capacity;
-}			t_arr;
 
 /* This structure represents the entry point to process the shell inputs:
  * cmd_str:		raw string received as input;
@@ -80,5 +82,50 @@ typedef struct s_shell
 	t_prog	*items;
 	t_arr	*env;
 }	t_shell;
+
+/*
+ * 							>>>>>	T_ARR ITEMS STRUCTS:
+ * 
+ * The following typedef struct and enum are designed as types of structures 
+ * that a t_arr can host beyond the simple char **.
+ * 
+ */
+
+/*
+* t_redtype is a explicit list of the 4 redirection methods that are to be
+* implemented. they are self expalantory
+*/
+typedef enum e_redtype
+{
+	none,
+	in_file,
+	in_heredoc,
+	out_create,
+	out_append
+}	t_redtype;
+
+/*
+ * This structure holds direct infomation on the redirection type and
+ * the raw value associated to it.
+ */
+typedef struct s_red
+{
+	t_redtype	type;
+	char		*raw;
+	char		*val;
+	int			fd;
+}	t_red;
+
+/*
+ * NOT YET IN USE
+ * This structure could holds the key value pairs used to describe the env
+ * The attr might contain bit masking approaches not yet defined.
+ */
+typedef struct s_env
+{
+	int		attr;
+	char	*key;
+	char	*val;
+}	t_env;
 
 #endif

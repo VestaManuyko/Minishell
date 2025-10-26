@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:50:13 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 12:45:30 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/20 18:51:18 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*save_substr(char *str, char **end, t_quote *data)
 		line = ft_strncpy(str, *end - str + 1);
 		if (line == NULL)
 			return (NULL);
-		if (!tar_putone(data->expand, line))
+		if (!tar_putstr(data->expand, line))
 			return (NULL);
 		free(line);
 	}
@@ -38,10 +38,11 @@ static char	*save_substr(char *str, char **end, t_quote *data)
 	return (str);
 }
 
-int	quotes(t_quote *data, char *str)
+int	quotes(t_quote *data, char *str, int use_quote)
 {
 	char	*end;
 
+	(void)use_quote;
 	end = str;
 	while (*str)
 	{

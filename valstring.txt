@@ -1,0 +1,1 @@
+val --suppressions=suppress.supp  --show-leak-kinds=all minihell.out 

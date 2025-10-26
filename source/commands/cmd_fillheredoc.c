@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_prog.c                                        :+:      :+:    :+:   */
+/*   cmd_fillheredoc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 11:09:09 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/16 19:18:54 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/23 12:21:33 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/23 13:32:18 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	free_prog(t_prog item)
+int	cmd_fillheredoc(t_red *tmp)
 {
-	if (item.prog != NULL)
-		arr_free(item.prog);
-	if (item.f_stdin != NULL)
-		free(item.f_stdin);
-	if (item.f_stdout != NULL)
-		free(item.f_stdout);
-}
+	char	*path;
 
-void free_progs(t_prog *items, int size)
-{
-	int i;
-
-	i = 0;
-	while (i < size)
-	{
-		free_prog(items[i]);
-		i++;
-	}
+	// path = heredoc(tmp->raw, tmp->val);
+	path = ft_strjoin("MISSING HEREDOC | pattern: ", tmp->val);
+	if (path == NULL)
+		return (0);
+	free(tmp->val);
+	tmp->val = path;
+	return (1);
 }

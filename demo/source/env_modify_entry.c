@@ -6,30 +6,33 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 15:21:21 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/14 13:37:35 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/24 12:15:10 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_environment.h"
 #include <minishell.h>
-
-
 
 void display_envupdate(t_shell *sh, char *str)
 {
 	int id = -1;
 	char *exp_str;
+	char *exp_$;
 	char *key;
 
 	if (env_entry_update(sh->env, str))
 	{
-		exp_str = str_clearquotes(sh->env, str);
+		/* this whole block is built just to find the key for printing purposes.
+		 * all the work needed is executed in the previous line.
+		 */
+		exp_$ = str_expand(dollar, sh->env, str,1);
+		exp_str = str_expand(dollar, sh->env, exp_$,0);
+		free(exp_$);
 		key = env_getkey(exp_str);
 		free(exp_str);
-		id = env_getid(sh->env->arr, key);
+		id = env_getid((char**)sh->env->arr, key);
 		free(key);
 		if (id != -1)
-			printf("%s\n",sh->env->arr[id]);
+			printf("%s\n",(char*)sh->env->arr[id]);
 		else 
 			printf("Error no id found\n");
 		printf("size: %zd\n", sh->env->size);
@@ -38,7 +41,17 @@ void display_envupdate(t_shell *sh, char *str)
 		perror("minishell: export");
 }
 
-
+/* Demonstrates how the environments get modified by the function env_entry_update.
+ * just pass a key or keyvalue pair to the shell to see how it's added.
+ * imagine it should behave similarly to export ...
+ * the only difference is that you don't have to use the export at the beginning..
+ * as this is the built in function still to be added.
+ * At prompt type any word.
+ * if it's not found will be added in the environment
+ * if it's found will update the environment.
+ * example usage:
+ *		myvar=$USER
+ */
 int main(int ac, char **av, char **env)
 {
 
