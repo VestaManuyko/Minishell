@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 11:16:42 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/26 20:13:38 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/27 12:52:17 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,23 +87,27 @@ static char	*get_filename(int *fd, int *expand, char *raw_limiter)
 	char		*tmp_filename;
 	static int	nbr = 0;
 	char		*path;
+	char		*temp;
 	
 	*expand = 1;
 	if (is_quoted(raw_limiter))
 		*expand = 0;
-	nbr++;
-	if (nbr == 2147483645)
+	if (nbr++ == 2147483645)
 		nbr = 0;
-	path = ft_strjoin("/tmp/heredoc_", ft_itoa(nbr));
+	temp = ft_itoa(nbr);
+	path = ft_strjoin("/tmp/heredoc_", temp);
+	free(temp);
 	if (!path)
 		return (NULL);
-	tmp_filename = ft_strjoin(path, ft_itoa(getpid()));
+	temp = ft_itoa(getpid());
+	tmp_filename = ft_strjoin(path, temp);
+	free(temp);
+	free(path);
 	if (!tmp_filename)
 		return (NULL);
 	*fd = open(tmp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (*fd == -1)
 		return (NULL);
-	printf("Tmp_filename: %s", tmp_filename);
 	return (tmp_filename);
 }
 
