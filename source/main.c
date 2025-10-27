@@ -6,17 +6,17 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:34:08 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/27 18:19:04 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 18:30:39 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int g_return = 0;
+int	g_return = 0;
 
-int programs_run(t_shell *sh)
+int	programs_run(t_shell *sh)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < sh->count)
@@ -27,7 +27,7 @@ int programs_run(t_shell *sh)
 	return (1);
 }
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	t_shell	sh;
 
@@ -37,9 +37,9 @@ int main(int ac, char **av, char **env)
 		return (ft_putendl_fd(ER_INIT, 2), 1);
 	signal_set();
 	while (g_return != -1)
-    {
-    	if (get_command(&sh))
-      	{
+	{
+		if (get_command(&sh))
+		{
 			if (programs_populate(&sh))
 			{
 				programs_run(&sh);
@@ -47,7 +47,7 @@ int main(int ac, char **av, char **env)
 				reset_shell(&sh);
 			}
 		}
-    }
+	}
 	free_shell(&sh);
 	return (0);
 }

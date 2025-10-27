@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:51:58 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/27 18:07:35 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 18:34:56 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
  * 1 on function match;
  * 0 on no match encountered.
  */
-static int is_builtin(t_shell *sh, t_prog *pr, char *exec)
+static int	is_builtin(t_shell *sh, t_prog *pr, char *exec)
 {
 	int		i;
 	size_t	size;
-	
+
 	size = ft_strlen(exec);
 	i = 0;
 	while (i < MS_BUILTINS)
@@ -54,7 +54,7 @@ static int	is_valid_path(char *exec)
 {
 	int			ret;
 	struct stat	info;
-	
+
 	ret = stat(exec, &info);
 	if (ret == -1)
 		return (0);
@@ -84,7 +84,7 @@ static int	check_exec_withpath(char *path, char *slash, void **exec)
 		return (0);
 	if (access(full_path, F_OK) == 0)
 	{
-		if (access(full_path, X_OK) == 0) 
+		if (access(full_path, X_OK) == 0)
 		{
 			free(*exec);
 			*exec = full_path;
@@ -120,7 +120,7 @@ int	is_executable(t_arr *env, void **exec)
 	int		i;
 	char	**paths;
 	char	*slash;
-	
+
 	slash = ft_strjoin("/", (char *)*exec);
 	if (slash == NULL)
 		return (0);
@@ -148,13 +148,12 @@ int	programs_validate(t_shell *sh, t_prog *proc)
 
 	exec = &proc->prog->arr[0];
 	if (!(ft_strchr(*exec, '/') != NULL))
-	
 	{
 		is_builtin(sh, proc, *exec);
 		if (proc->bltin == NULL)
 		{
 			if (!is_executable(sh->env, exec))
-				return (0);		
+				return (0);
 		}
 	}
 	else if (!is_valid_path(*exec))

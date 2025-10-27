@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/27 14:42:31 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/27 18:37:53 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ MAIN_SRC = $(addprefix $(SRC_DIR)/, $(MAIN))
 # Collect all the c file in one variable
 SRC = $(STRINGS_SRC) $(ENVIRON_SRC) $(INPUT_SRC) $(REDIRECT_SRC) \
 	  $(COMMANDS_SRC) \
-	  $(INIT_SRC) $(MAIN_SRC)
+	  $(INIT_SRC) 
 OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
 
 LIBFT := $(LIB_DIR)/libft/libft.a
@@ -75,7 +75,7 @@ MINI := $(OBJ_DIR)/libmini.a
 NAME := minishell 
 
 $(NAME)  : $(OBJ) $(LIBFT) $(H_FILES) 
-	$(CC) $(FLAGS) $(INCLUDES) $(OBJ) $(LIBFT) $(LINKS) -o $(NAME)
+	$(CC) $(FLAGS) $(INCLUDES) $(MAIN_SRC) $(OBJ) $(LIBFT) $(LINKS) -o $(NAME)
 $(LIBFT) :
 	make -C $(LIB_DIR)/libft libft.a
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c

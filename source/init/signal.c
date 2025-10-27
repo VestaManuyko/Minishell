@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:09:53 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/27 18:18:41 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 18:35:36 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	handler(int signum)
 		rl_on_new_line();
 		write(1, "\n", 1);
 		rl_redisplay();
-		g_ret_value = -1;
+		g_return = -1;
 	}
 }
 
