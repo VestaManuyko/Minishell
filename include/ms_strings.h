@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 10:55:18 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 11:08:15 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,54 @@
 # include "ms_structs_support.h"
 # include <sys/types.h>
 
+/****************************************************************************
+ *                     STRINGS, ARRAYS & META ARRAYS (t_arr)                *
+ *                                                                          *
+ * This file includes the definition of the functions that manipulate       *
+ * strings (char*), array of strings (char**) and arrays that can accept    *
+ * any type of content. The array itself is type defined as t_arr* and      *
+ * its function are prefixed with tar.                                      *
+ *                                                                          *
+ ***************************************************************************/
+
+/************************************************
+ *                    STRINGS                   *
+ ***********************************************/
+
+/* Given a string that includes any pair of quotes, a new string 
+ * cleared from the paired quotes is returned.
+ * In case a '$' sign is found within a region without quotes or within 
+ * double quotes it's value is searched in the environment and if found
+ * returned to the string.
+ * special charaters after '$' sign such as '?' will also be resolved.
+ *
+ * RETURNS:
+ * - a pointer to the realized string in case of success;
+ * - a NULL pointer on failure.
+ */
+char	*str_clearquotes(t_arr *env, char *str, int use_quote);
+
+/* 
+ * Given a string returns a new string based on the pointer function given.
+ * currently there are 2 available pointer functions that can be used:
+ * quotes:	to clear the content from any quote type
+ * dollar:	to expand to the env var or special char paired with the $ sign.
+ * 			currently the $$ and $? are not yet returned. 
+ *
+ * RETURNS:
+ * - a pointer to the realized string in case of success;
+ * - a NULL pointer on failure.
+ */
+char	*str_expand(int (*f)(t_quote *data, char *str, int use_quote),
+			t_arr *env, char *str, int use_quote);
+int		quotes(t_quote *data, char *str, int use_quote);
+int		dollar(t_quote *data, char *str, int use_quote);
+
+/*
+ ************************************************
+ *                    ARRAYS                    *
+ ***********************************************/
+
 ssize_t	arr_size(char **arr);
 void	arr_free(char **arr);
 void	arr_print(char **arr);
@@ -25,6 +73,11 @@ char	**arr_deepcpy(char **src);
 /* return an array size that is double the size of the give capacity 
  */
 void	**arr_double(void **src, int capacity);
+
+/*
+ ************************************************
+ *                META ARRAYS (TAR)             *
+ ***********************************************/
 
 /* Initializes a t_arr structure of a void **arr and its metadata.
  * If the parameter is passed as NULL an empty array of size 8 *(void *) 
@@ -59,35 +112,6 @@ int		tar_putstr(t_arr *tar, char *str);
  * - 0 in case the array is empty or the id is beyond the size of the array. 
  */
 int		tar_popone(t_arr *tar, int id);
-
-/* Given a string that includes any pair of quotes, a new string 
- * cleared from the paired quotes is returned.
- * In case a '$' sign is found within a region without quotes or within 
- * double quotes it's value is searched in the environment and if found
- * returned to the string.
- * special charaters after '$' sign such as '?' will also be resolved.
- *
- * RETURNS:
- * - a pointer to the realized string in case of success;
- * - a NULL pointer on failure.
- */
-char	*str_clearquotes(t_arr *env, char *str, int use_quote);
-
-/* 
- * Given a string returns a new string based on the pointer function given.
- * currently there are 2 available pointer functions that can be used:
- * quotes:	to clear the content from any quote type
- * dollar:	to expand to the env var or special char paired with the $ sign.
- * 			currently the $$ and $? are not yet returned. 
- *
- * RETURNS:
- * - a pointer to the realized string in case of success;
- * - a NULL pointer on failure.
- */
-char	*str_expand(int (*f)(t_quote *data, char *str, int use_quote),
-			t_arr *env, char *str, int use_quote);
-int		quotes(t_quote *data, char *str, int use_quote);
-int		dollar(t_quote *data, char *str, int use_quote);
 
 /* This function is to be considered an itermediate step to build 
  * functions that are closer to the business level.
