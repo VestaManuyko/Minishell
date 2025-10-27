@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 15:09:03 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/27 18:06:37 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/27 18:14:55 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	exec_single(t_shell *shell)
 	pid_t	pid;
 	int		exit_status;
 	
-	//block parent signals before fork and while in child process
+	//block parent signals before fork
 	pid = fork();
 	if (pid == -1)
 		return (perror(ER_FORK), 0);
@@ -27,6 +27,7 @@ int	exec_single(t_shell *shell)
 	}
 	else
 	{
+		signal_set(2);
 		if (waitpid(pid, &exit_status) == -1)
 			return (perror(ER_WAITPID), 0);
 		shell->items->complete = exit_status;

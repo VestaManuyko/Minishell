@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:09:53 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/27 18:00:07 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/27 18:14:38 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,10 @@ void	signal_set(int is_child)
 	sigemptyset(&sa.sa_mask);
 	if (!is_child)
 		sa.sa_handler = handler;
-	else
+	if (is_child)
 		sa.sa_handler = SIG_DFL;
+	else
+		sa.sa_handler = SIG_IGN;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 	{
 		perror(ER_SIGACT);
