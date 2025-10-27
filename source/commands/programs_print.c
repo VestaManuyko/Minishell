@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   programs_print.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:48:37 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 11:20:32 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 16:27:39 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ static void	print_a_prog(t_prog pr)
 	{
 		tmp = (t_red *)pr.redirect->arr[i];
 		if (tmp->type == out_append || tmp->type == out_create)
-			printf("                fo: %s\n", tmp->val);
+			printf("                fdo: %s\n", tmp->val);
 		else
-			printf("                fi: %s\n", tmp->val);
+			printf("                fdi: %s\n", tmp->val);
 	}
 	printf("\n------------------->> ARRAY <<---------------------\n");
 	arr_print((char **)pr.prog->arr);

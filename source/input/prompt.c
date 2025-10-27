@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:29:16 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/17 17:33:03 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 16:24:27 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*get_prompt(char **env)
 		if (!user)
 			return (NULL);
 	}
-	prompt = ft_strjoin(user, "/minishell>");
+	prompt = ft_strjoin(user, "/minishell> ");
 	free(user);
 	return (prompt);
 }

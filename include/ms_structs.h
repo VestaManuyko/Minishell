@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_structs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 13:52:22 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 16:08:45 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ typedef struct s_prog
 	int		id;
 	int		cpid;
 	t_pipe	go_to;
-	int		f_stdin;
-	int		f_stdout;
 	t_arr	*redirect;
 	int		fd_io[2];
 	t_arr	*prog;
