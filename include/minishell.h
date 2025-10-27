@@ -19,6 +19,7 @@
 # include <sys/types.h>
 # include <stdbool.h>
 # include <signal.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <asm-generic/errno-base.h>
@@ -118,5 +119,10 @@ int		get_command(t_shell *shell);
  * 0 on failure, 1 on success;
  */
 int		init_shell(t_shell *shell, char **env);
+
+/*
+ * Signal handling for the main shell
+*/
+void	signal_set(void);
 
 #endif

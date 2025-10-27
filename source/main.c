@@ -14,15 +14,11 @@
 
 int	main(int ac, char **av, char **env)
 {
-	t_shell	shell;
+	t_shell				shell;
 
-	(void)ac;
-	(void)av;
+	signal_set();
 	if (!init_shell(&shell, env))
-	{
-		ft_putendl_fd(ER_INIT, 2);
-		return (1);
-	}
+		return (ft_putendl_fd(ER_INIT, 2), 1);
 	while (1)
 	{
 		if (get_command(&shell))
