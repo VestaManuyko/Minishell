@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 11:16:42 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/27 12:52:17 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/27 13:40:03 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static char	*get_filename(int *fd, int *expand, char *raw_limiter)
 	free(path);
 	if (!tmp_filename)
 		return (NULL);
-	*fd = open(tmp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	*fd = open(tmp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (*fd == -1)
 		return (NULL);
 	return (tmp_filename);
