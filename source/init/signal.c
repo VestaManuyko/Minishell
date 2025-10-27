@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:09:53 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/24 16:10:20 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/27 09:28:16 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	handler(int signum)
+static void	handler(int signum)
 {
 	if (signum == SIGINT)
 	{
