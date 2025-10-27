@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 18:10:39 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 10:26:49 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/types.h>
 # include <stdbool.h>
 # include <signal.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <asm-generic/errno-base.h>
@@ -127,5 +128,10 @@ int		bltn_export(t_arr *args, t_arr *env);
 int		bltn_unset(t_arr *args, t_arr *env);
 int		bltn_env(t_arr *args, t_arr *env);
 int		bltn_exit(t_arr *args, t_arr *env);
+
+/*
+ * Signal handling for the main shell
+ */
+void	signal_set(void);
 
 #endif

@@ -1,34 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/10 13:34:08 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 11:00:23 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/24 16:09:53 by vmanuyko          #+#    #+#             */
+/*   Updated: 2025/10/27 09:28:16 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	main(int ac, char **av, char **env)
+static void	handler(int signum)
 {
-	t_shell				shell;
-
-	signal_set();
-	if (!init_shell(&shell, env))
-		return (ft_putendl_fd(ER_INIT, 2), 1);
-	while (1)
+	if (signum == SIGINT)
 	{
-		if (get_command(&shell))
-		{
-			populate_programs(&shell);
-			if (validate_programs(&shell))
-			{
-				run_programs(&shell);
-				free_programs(&shell);
-			}
-		}
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		write(1, "\n", 1);
+		rl_redisplay();
 	}
+}
+
+void	signal_set(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = handler;
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+	{
+		perror(ER_SIGACT);
+		exit(1);
+	}
+	signal(SIGQUIT, SIG_IGN);
 }

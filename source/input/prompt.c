@@ -60,6 +60,12 @@ static int	quote_opened(char *line)
 }
 //FIX change exit for clean_up
 
+static void	perror_exit(char *message)
+{
+	perror(message);
+	exit(EXIT_FAILURE);
+}
+
 int	get_command(t_shell *shell)
 {
 	char	*line;
@@ -67,21 +73,17 @@ int	get_command(t_shell *shell)
 
 	prompt = get_prompt((char **)shell->env->arr);
 	if (!prompt)
-	{
-		perror(ER_PROMPT);
-		exit(EXIT_FAILURE);
-	}
+		perror_exit(ER_PROMPT);
 	line = readline(prompt);
 	if (!line)
 	{
-		perror(ER_READLINE);
-		exit (EXIT_FAILURE);
+		if (errno != 0)
+			perror_exit(ER_READLINE);
+		write(1, "exit\n", 5);
+		exit(EXIT_SUCCESS);
 	}
 	if (quote_opened(line))
-	{
-		ft_putendl_fd(ER_QUOTES, 2);
-		return (0);
-	}
+		return (ft_putendl_fd(ER_QUOTES, 2), 0);
 	shell->cmd_line = line;
 	if (*line)
 		add_history(line);
