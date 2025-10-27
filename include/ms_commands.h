@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:41:04 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 14:21:14 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 14:22:21 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	programs_free(t_prog *items, int count);
 void	programs_print(t_shell sh);
 
 int		programs_populate(t_shell *sh);
-int		programs_validate(t_shell *sh);
+int		programs_validate(t_shell *sh, t_prog *proc);
 
-void	cmd_perror(char *str);
+void	cmd_perror(char *pre, char *str, char *err);
 
 /*
  * Given a string evaluates if there are some chars between the portion of it 

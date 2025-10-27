@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 16:24:15 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/14 16:05:28 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 14:27:32 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,11 @@ int		env_entry_remove(t_arr *env, char *key);
  * - NULL in case the the key is wrongly doesn't respect the convention. 
  */
 char	*env_getkey(char *str);
+
+/*
+ * From the t_arr environment structure returns a char **array of all
+ * the paths included in the environment and separated by the ':' character.
+ */
+char	**env_getpaths(t_arr *env);
 
 #endif

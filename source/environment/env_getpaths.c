@@ -1,40 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   env_getpaths.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/24 16:09:53 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/27 18:18:41 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/27 14:24:12 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/27 14:25:00 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	handler(int signum)
+char	**env_getpaths(t_arr *env)
 {
-	if (signum == SIGINT)
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		write(1, "\n", 1);
-		rl_redisplay();
-		g_ret_value = -1;
-	}
-}
+	char	*value;
+	char	**arr;
 
-void	signal_set(void)
-{
-	struct sigaction	sa;
-
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_handler = handler;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-	{
-		perror(ER_SIGACT);
-		exit(1);
-	}
-	signal(SIGQUIT, SIG_IGN);
+	env_getvalue((char **)env->arr, &value,
+		env_getid((char **)env->arr, "PATH"));
+	if (value == NULL)
+		return (NULL);
+	arr = str_split_by_set(value, ":", 1);
+	free(value);
+	if (arr == NULL)
+		return (NULL);
+	return (arr);
 }

@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 11:22:40 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/27 10:26:10 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 13:27:58 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@
 # define ER_SINTAX "Error\nminishell:  syntax error near unexpected token `"
 # define ER_CMD ": command not found"
 # define ER_PERM "Error\nvalidate"
+# define ER_MINI "Error\nminishell: "
 
 #endif

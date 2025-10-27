@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/27 10:26:49 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 18:19:04 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <sys/types.h>
+# include <sys/stat.h>
 # include <stdbool.h>
 # include <signal.h>
 # include <errno.h>
@@ -39,6 +40,7 @@
 # define MS_BLANKS " \t\n"
 # define MS_METAERR "&;()\\"
 
+extern int	g_return;
 
 /*			STRINGS			*/
 
