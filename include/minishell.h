@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 10:40:04 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 18:06:11 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,6 @@ int		init_shell(t_shell *shell, char **env);
 /*
  * Signal handling for the main shell
 */
-void	signal_set(void);
+void	signal_set(int is_child);
 
 #endif

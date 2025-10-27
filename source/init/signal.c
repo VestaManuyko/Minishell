@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:09:53 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/27 17:22:14 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/27 18:00:07 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,29 @@ static void	handler(int signum)
 	}
 }
 
-void	signal_set(void)
+void	signal_set(int is_child)
 {
 	struct sigaction	sa;
 
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
-	sa.sa_handler = handler;
+	if (!is_child)
+		sa.sa_handler = handler;
+	else
+		sa.sa_handler = SIG_DFL;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 	{
 		perror(ER_SIGACT);
 		exit(1);
 	}
-	signal(SIGQUIT, SIG_IGN);
+	if (!is_child)
+		signal(SIGQUIT, SIG_IGN);
+	else
+	{
+		if (sigaction(SIGQUIT, &sa, NULL) == -1)
+		{
+			perror(ER_SIGACT);
+			exit(1);
+		}
+	}
 }

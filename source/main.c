@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:34:08 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 11:00:23 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 18:05:36 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_shell				shell;
 
-	signal_set();
+	signal_set(0);
 	if (!init_shell(&shell, env))
 		return (ft_putendl_fd(ER_INIT, 2), 1);
 	while (1)
