@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 11:16:42 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/28 12:57:59 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/28 13:23:08 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ static int	is_quoted(char *str)
  * Return value:
  * -1 on error, 0 on success.
 */
-static int	process_line(char **line, t_shell *shell, int expand)
+static int	process_line(char **line, t_arr *env, int expand)
 {
 	char	*expand_line;
 
-	expand_line = str_expand(dollar, shell->env, *line, expand);
+	expand_line = str_expand(dollar, env, *line, expand);
 	if (!expand_line)
 		return (-1);
 	free (*line);
@@ -106,7 +106,7 @@ static char	*get_filename(int *fd, int *expand, char *raw_limiter)
 	return (tmp_filename);
 }
 
-char	*heredoc(char *raw_limiter, char *limiter, t_shell *shell)
+char	*heredoc(char *raw_limiter, char *limiter, t_arr *env)
 {
 	int		expand;
 	int		fd;
@@ -123,7 +123,7 @@ char	*heredoc(char *raw_limiter, char *limiter, t_shell *shell)
 			return (readline_eof(fd, limiter, tmp_filename));
 		if (ft_strchr(line, '$') && expand == 1)
 		{
-			if (process_line(&line, shell, expand) == -1)
+			if (process_line(&line, env, expand) == -1)
 				return (free(line), free(tmp_filename), close (fd), NULL);
 		}
 		if (!ft_strncmp(line, limiter, ft_strlen(limiter) + 1))

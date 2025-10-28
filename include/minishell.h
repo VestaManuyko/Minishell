@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/28 13:13:58 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/28 13:29:58 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,14 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <asm-generic/errno-base.h>
-# include <errno.h>
 # include <fcntl.h>
 
 # include <libft.h>
 # include "ms_structs.h"
+# include "err_mes.h"
 # include "ms_strings.h"
 # include "ms_environment.h"
 # include "ms_init.h"
-# include "err_mes.h"
 # include "ms_redirections.h"
 # include "ms_commands.h"
 
@@ -122,7 +121,7 @@ int		get_command(t_shell *shell);
  * on success a freeable ointer to a string with the name 
  * of the tmp_file where heredoc input was written.
 */
-char	*heredoc(char *raw_limiter, char *limiter, t_shell *shell);
+char	*heredoc(char *raw_limiter, char *limiter, t_arr *env);
 
 /*			INIT			*/
 

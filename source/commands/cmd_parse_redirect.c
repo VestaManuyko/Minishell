@@ -6,10 +6,11 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:12:07 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 13:32:47 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/28 13:25:18 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ms_structs.h"
 #include <minishell.h>
 
 int	cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_arr *env)
@@ -25,7 +26,7 @@ int	cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_arr *env)
 		if (!red_raw2val(tmp, env))
 			return (0);
 		if (tmp->type == in_heredoc)
-			if (!cmd_fillheredoc(tmp))
+			if (!cmd_fillheredoc(tmp, env))
 				return (0);
 		i++;
 	}
