@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_eval.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 12:50:21 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/27 12:50:09 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/28 12:51:40 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ int	main(int argc, char **argv, char **envp)
 	if (!limiter)
 		return (1);
 	tmp_filename = heredoc(argv[1], limiter, &shell);
+	free(limiter);
 	if (!tmp_filename)
-		return (free(limiter), 1);
+		return (1);
 	fd = open (tmp_filename, O_RDONLY);
 	unlink(tmp_filename);
 	free (tmp_filename);
 	if (fd == -1)
-		return (free(limiter), 1);
+		return (1);
 	else
 	{
 		while (1)
@@ -50,5 +51,5 @@ int	main(int argc, char **argv, char **envp)
 		}
 	}
 	free_shell(&shell);
-	return (free(limiter), 0);
+	return (0);
 }
