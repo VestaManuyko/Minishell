@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 11:16:42 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/27 13:40:03 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/28 12:57:59 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+char	*create_filename(int nbr, char *prefix);
 
 /*
  * Checks weather the given str contains quotes.
@@ -53,6 +55,7 @@ static int	process_line(char **line, t_shell *shell, int expand)
 	*line = expand_line;
 	return (0);
 }
+
 /*
  * Displays an eof message if reached eof, otherwise closes
  * write fd and returns.
@@ -63,7 +66,8 @@ static char	*readline_eof(int fd, char *limiter, char *tmp_filename)
 {
 	if (errno == 0)
 	{
-		printf("minishell: here-doc delimited by eof (wanted `%s')\n", limiter);
+		printf("minishell: here-doc delimited by eof (wanted `%s')\n",
+			limiter);
 		close (fd);
 		return (tmp_filename);
 	}
@@ -73,6 +77,7 @@ static char	*readline_eof(int fd, char *limiter, char *tmp_filename)
 		return (NULL);
 	}
 }
+
 /*
  * Get_filename sets the expand flag for the heredoc function if
  * quotes are found within the raw limiter value. Creates a string with
@@ -86,23 +91,13 @@ static char	*get_filename(int *fd, int *expand, char *raw_limiter)
 {
 	char		*tmp_filename;
 	static int	nbr = 0;
-	char		*path;
-	char		*temp;
-	
+
 	*expand = 1;
 	if (is_quoted(raw_limiter))
 		*expand = 0;
 	if (nbr++ == 2147483645)
 		nbr = 0;
-	temp = ft_itoa(nbr);
-	path = ft_strjoin("/tmp/heredoc_", temp);
-	free(temp);
-	if (!path)
-		return (NULL);
-	temp = ft_itoa(getpid());
-	tmp_filename = ft_strjoin(path, temp);
-	free(temp);
-	free(path);
+	tmp_filename = create_filename(nbr, "/tmp/heredoc_");
 	if (!tmp_filename)
 		return (NULL);
 	*fd = open(tmp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);

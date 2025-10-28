@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+         #
+#    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/27 11:49:42 by vmanuyko         ###   ########.fr        #
+#    Updated: 2025/10/28 12:45:18 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
 ENVIRON = env_getid.c env_getkey.c env_getvalue.c \
 		  env_entry_update.c  env_entry_remove.c  
 
-INPUT = prompt.c heredoc.c
+INPUT = prompt.c heredoc.c create_filename.c 
 
 INIT = init_shell.c free_shell.c reset_shell.c signal.c
 
