@@ -1,1 +1,3 @@
-val --suppressions=suppress.supp  --show-leak-kinds=all minihell.out 
+valgrind --suppressions=suppress.supp  --show-leak-kinds=all minihell.out 
+valgrind --suppressions=suppress.supp --show-leak-kinds=all --leak-check=full ./demo
+/bin/heredoc_eval.out l

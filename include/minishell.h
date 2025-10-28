@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/27 18:19:04 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/28 13:13:58 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,16 @@ char	**str_split_by_set(char *str, char *set, bool eval_quote);
  * 1 if command was got or 0 if no input or error.
  */
 int		get_command(t_shell *shell);
+
+/*
+ * Reads input from stdin until a limiter is met.
+ * If limiter was quoted expands the environment variables
+ * Return value:
+ * On error NULL;
+ * on success a freeable ointer to a string with the name 
+ * of the tmp_file where heredoc input was written.
+*/
+char	*heredoc(char *raw_limiter, char *limiter, t_shell *shell);
 
 /*			INIT			*/
 
