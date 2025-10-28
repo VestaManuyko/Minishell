@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:29:16 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/28 14:52:28 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/28 15:21:08 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int	get_command(t_shell *shell)
 		if (errno != 0)
 			perror_exit(ER_READLINE);
 		write(1, "exit\n", 5);
-		exit(EXIT_SUCCESS);
+		// exit(EXIT_SUCCESS);
+		return (0);
 	}
 	if (quote_opened(line))
 		return (ft_putendl_fd(ER_QUOTES, 2), 0);
