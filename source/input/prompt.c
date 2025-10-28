@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:29:16 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/17 17:33:03 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/28 14:52:28 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	get_command(t_shell *shell)
 	if (!prompt)
 		perror_exit(ER_PROMPT);
 	line = readline(prompt);
+	free(prompt);
 	if (!line)
 	{
 		if (errno != 0)
@@ -87,6 +88,5 @@ int	get_command(t_shell *shell)
 	shell->cmd_line = line;
 	if (*line)
 		add_history(line);
-	free(prompt);
 	return (1);
 }
