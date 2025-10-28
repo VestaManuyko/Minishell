@@ -6,13 +6,15 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 15:27:03 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 10:33:29 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/28 11:47:32 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "ms_strings.h"
 #include <minishell.h>
 #include <fcntl.h>
+#include <unistd.h>
 
 /* Small demonstrator to convert an array to a single string.
  */
@@ -29,9 +31,9 @@ int main(int ac, char **av)
 		return (1);
 	}
 	fd = open(av[2], O_RDONLY);
-	arr = (char **)ft_calloc(20, sizeof(char *));
+	arr = (char **)ft_calloc(21, sizeof(char *));
 	arr[0] = get_next_line(fd);
-	/* get at most 18 lines from any file targeted as the first parameter in the command call*/
+	/* get at most 19 lines from any file targeted as the first parameter in the command call*/
 	while (i < 20 && arr[i] != NULL)
 	{
 		i++;
@@ -40,8 +42,9 @@ int main(int ac, char **av)
 	if (arr[i]!= NULL)
 		free (arr[i]);
 	arr[i] = NULL;
+	close(fd);
 	i = 0;
-	while (arr[i])
+	while (arr[i] != NULL)
 	{
 		printf("--------------------------\n");
 		printf("%s", arr[i]);
@@ -51,5 +54,6 @@ int main(int ac, char **av)
 	line = arr_to_str(arr, ft_atoi(av[1]));
 	printf("|||||||||| arr2str  |||||||||||||||||\n%s", line);
 	free(line);
+	// arr_free(arr);
 	return (0);
 }

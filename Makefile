@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/27 18:37:53 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/28 11:30:24 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,7 @@ LIBFT := $(LIB_DIR)/libft/libft.a
 MINI := $(OBJ_DIR)/libmini.a
 NAME := minishell 
 
-$(NAME)  : $(OBJ) $(LIBFT) $(H_FILES) 
+$(NAME)  : $(LIBFT) $(OBJ) $(H_FILES) 
 	$(CC) $(FLAGS) $(INCLUDES) $(MAIN_SRC) $(OBJ) $(LIBFT) $(LINKS) -o $(NAME)
 $(LIBFT) :
 	make -C $(LIB_DIR)/libft libft.a
