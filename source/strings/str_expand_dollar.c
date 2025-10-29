@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:50:13 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/29 11:06:11 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/29 11:49:56 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	expand_dollar_envvar(char **str, char **end, t_quote *data)
 	return (1);
 }
 
-static int which_dollar_exp(char *str, int quote)
+static int	which_dollar_exp(char *str, int quote)
 {
 	if (*str == '$' && quote != '\'' && *(str + 1))
 	{
