@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:51:58 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/27 18:34:56 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/29 12:01:31 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,8 @@ int	programs_validate(t_shell *sh, t_prog *proc)
 {
 	void	**exec;
 
+	if (proc->prog->size == 0)
+		return (0);
 	exec = &proc->prog->arr[0];
 	if (!(ft_strchr(*exec, '/') != NULL))
 	{
