@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:50:13 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 18:51:10 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/29 11:06:11 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,6 @@ static int	save_substr(char **str, char **end, t_quote *data)
 	return (1);
 }
 
-static int	addemptystr(char **str, t_quote *data)
-{
-	char	*line;
-
-	line = ft_strdup("");
-	if (line == NULL)
-		return (0);
-	if (!tar_putstr(data->expand, line))
-		return (0);
-	free(line);
-	(*str)++;
-	return (1);
-}
-
 static int	expand_dollar_special(char **str, char **end, t_quote *data)
 {
 	char	*line;
@@ -53,7 +39,7 @@ static int	expand_dollar_special(char **str, char **end, t_quote *data)
 	if (*(*str + 1) == '$')
 		line = ft_itoa(getpid());
 	else
-		line = ft_strdup("<< $? TO BE ADDED!!!>>");
+		line = ft_strdup("<<_$?_TO_BE_ADDED!!!>>");
 	if (line == NULL)
 		return (0);
 	if (!tar_putstr(data->expand, line))
@@ -92,25 +78,34 @@ static int	expand_dollar_envvar(char **str, char **end, t_quote *data)
 	return (1);
 }
 
+static int which_dollar_exp(char *str, int quote)
+{
+	if (*str == '$' && quote != '\'' && *(str + 1))
+	{
+		if (ft_strchr("?$", *(str + 1)) != NULL)
+			return (1);
+		else if (ft_isalnum(*(str + 1)) || *(str + 1) == '_')
+			return (2);
+	}
+	return (0);
+}
+
 int	dollar(t_quote *data, char *str, int use_quote)
 {
 	char	*end;
 	int		res;
+	int		d_type;
 
 	res = 1;
 	end = str;
 	while (*str)
 	{
 		data->quote = str_isquoted(*end) * use_quote;
-		if (*str == '$' && data->quote != '\'')
-		{
-			if (*(str + 1) && ft_strchr("?$", *(str + 1)) != NULL)
-				res = expand_dollar_special(&str, &end, data);
-			else if (!(ft_isalnum(*(str + 1)) || *(str + 1) == '_'))
-				res = addemptystr(&str, data);
-			else
-				res = expand_dollar_envvar(&str, &end, data);
-		}
+		d_type = which_dollar_exp(str, data->quote);
+		if (d_type == 1)
+			res = expand_dollar_special(&str, &end, data);
+		else if (d_type == 2)
+			res = expand_dollar_envvar(&str, &end, data);
 		else if (!(*(end + 1)) || (*(end + 1) == '$' && data->quote != '\''))
 			res = save_substr(&str, &end, data);
 		if (res == 0)
