@@ -22,6 +22,9 @@ SRC_DIR := source
 OBJ_DIR := build
 LIB_DIR := libs
 
+# All the h_files
+H_INCLUDES = minishell.h err_mes.h ms_commands.h ms_environment.h ms_init.h \
+			ms_redirections.h ms_strings.h ms_structs_support.h ms_structs.h
 # Groups of source files 
 STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
 		  arr_double.c \
@@ -70,9 +73,11 @@ SRC = $(STRINGS_SRC) $(ENVIRON_SRC) $(INPUT_SRC) $(REDIRECT_SRC) \
 	  $(INIT_SRC) 
 OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
 
+H_FILES = $(addprefix include/, $(H_INCLUDES))
+
 LIBFT := $(LIB_DIR)/libft/libft.a
 MINI := $(OBJ_DIR)/libmini.a
-NAME := minishell 
+NAME := minishell
 
 $(NAME)  : $(LIBFT) $(OBJ) $(H_FILES) 
 	$(CC) $(FLAGS) $(INCLUDES) $(MAIN_SRC) $(OBJ) $(LIBFT) $(LINKS) -o $(NAME)

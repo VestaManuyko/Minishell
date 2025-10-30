@@ -19,7 +19,7 @@
 # define ER_PROMPT "Error\nget_prompt"
 # define ER_SIGACT "Error\nsigaction"
 # define ER_SINTAX "Error\nminishell:  syntax error near unexpected token `"
-# define ER_CMD ": command not found"
+# define ER_CMD "command not found"
 # define ER_PERM "Error\nvalidate"
 # define ER_MINI "Error\nminishell: "
 

@@ -39,7 +39,7 @@
 # define MS_BLANKS " \t\n"
 # define MS_METAERR "&;()\\"
 
-extern int	g_return;
+extern sig_atomic_t volatile	g_return;
 
 /*			STRINGS			*/
 
@@ -103,15 +103,18 @@ char	**str_split_by_set(char *str, char *set, bool eval_quote);
 /* 
  * Calls get_prompt, which gets the USER env variable and appends it with 
  * the shell_prompt, so that readline may display prompt as example:
- * USER/minishell>;
+ * USER/minishell> ;
  * then calls readline and appends the returned line to history 
  * and adds it to the shell->cmd_line string upon success.
  * Reminder!
  * After calling remember to rl_clear_history() and free(shell->cmd_line); 
+ * 
  * Return value:
- * 1 if command was got or 0 if no input or error.
+ * 1 on success, 0 on error.
+ * If ctrl D(EOF) encountered cleans up and exits.
+ * On system function call error cleans up and exits the shell.
  */
-int		get_command(t_shell *shell);
+int	get_command(t_shell *shell);
 
 /*
  * Reads input from stdin until a limiter is met.

@@ -138,7 +138,7 @@ int	is_executable(t_arr *env, void **exec)
 	free(slash);
 	arr_free(paths);
 	errno = 127;
-	cmd_perror(NULL, *exec, ER_CMD);
+	cmd_perror("", *exec, ER_CMD);
 	return (0);
 }
 

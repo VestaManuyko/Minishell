@@ -34,7 +34,7 @@ static char	*get_prompt(char **env)
 		if (!user)
 			return (NULL);
 	}
-	prompt = ft_strjoin(user, "/minishell>");
+	prompt = ft_strjoin(user, "/minishell> ");
 	free(user);
 	return (prompt);
 }
@@ -58,12 +58,20 @@ static int	quote_opened(char *line)
 	str_isquoted(status);
 	return (1);
 }
-//FIX change exit for clean_up
 
-static void	perror_exit(char *message)
+static void	clean_exit(char *message, t_shell *shell)
 {
-	perror(message);
-	exit(EXIT_FAILURE);
+	if (!message)
+	{
+		free_shell(shell);
+		exit(EXIT_SUCCESS);
+	}
+	else
+	{
+		perror(message);
+		free_shell(shell);
+		exit(EXIT_FAILURE);
+	}
 }
 
 int	get_command(t_shell *shell)
@@ -73,16 +81,15 @@ int	get_command(t_shell *shell)
 
 	prompt = get_prompt((char **)shell->env->arr);
 	if (!prompt)
-		perror_exit(ER_PROMPT);
+		clean_exit(ER_PROMPT, shell);
 	line = readline(prompt);
 	free(prompt);
 	if (!line)
 	{
 		if (errno != 0)
-			perror_exit(ER_READLINE);
+			clean_exit(ER_READLINE, shell);
 		write(1, "exit\n", 5);
-		// exit(EXIT_SUCCESS);
-		return (0);
+		clean_exit(0, shell);
 	}
 	if (quote_opened(line))
 		return (ft_putendl_fd(ER_QUOTES, 2), 0);
