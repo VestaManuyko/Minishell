@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <stdbool.h>
 # include <signal.h>
 # include <errno.h>
@@ -147,5 +148,14 @@ int		bltn_exit(t_arr *args, t_arr *env);
  * Signal handling for the main shell
  */
 void	signal_set(int is_child);
+
+/*     EXECUTION     */
+
+/* Validates if the programs are executable, 
+ * if yes executes it and sets the exit value
+ * Return value:
+ * 0 on error, 1 on success.
+ */
+void	exec_programs(t_shell *shell);
 
 #endif

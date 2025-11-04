@@ -14,19 +14,6 @@
 
 sig_atomic_t volatile	g_return = 0;
 
-int	programs_run(t_shell *sh)
-{
-	int	i;
-
-	i = 0;
-	while (i < sh->count)
-	{
-		programs_validate(sh, &sh->items[i]);
-		i++;
-	}
-	return (1);
-}
-
 int	main(int ac, char **av, char **env)
 {
 	t_shell	sh;
@@ -42,7 +29,7 @@ int	main(int ac, char **av, char **env)
 		{
 			if (programs_populate(&sh))
 			{
-				programs_run(&sh);
+				exec_programs(&sh);
 				programs_print(sh);
 				reset_shell(&sh);
 			}

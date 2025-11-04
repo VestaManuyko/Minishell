@@ -20,7 +20,7 @@ void	programs_free(t_prog *items, int count);
 void	programs_print(t_shell sh);
 
 int		programs_populate(t_shell *sh);
-int		programs_validate(t_shell *sh, t_prog *proc);
+int		program_validate(t_shell *sh, t_prog *proc);
 
 void	cmd_perror(char *pre, char *str, char *err);
 

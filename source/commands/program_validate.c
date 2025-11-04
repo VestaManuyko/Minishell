@@ -142,7 +142,7 @@ int	is_executable(t_arr *env, void **exec)
 	return (0);
 }
 
-int	programs_validate(t_shell *sh, t_prog *proc)
+int	program_validate(t_shell *sh, t_prog *proc)
 {
 	void	**exec;
 

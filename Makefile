@@ -38,7 +38,7 @@ STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
 ENVIRON = env_getid.c env_getkey.c env_getvalue.c env_getpaths.c \
 		  env_entry_update.c  env_entry_remove.c  
 
-INPUT = prompt.c heredoc.c create_filename.c 
+INPUT = prompt.c heredoc.c
 
 INIT = init_shell.c free_shell.c reset_shell.c \
 	   signal.c \
@@ -48,10 +48,12 @@ MAIN = main.c
 
 REDIRECT = red_init.c red_free.c \
 		   red_perror.c red_str2struct.c \
-		   red_raw2val.c 
+		   red_raw2val.c
+
+EXEC = exec_prog.c
 		   
 COMMANDS = programs_init.c programs_free.c \
-		   programs_populate.c  programs_validate.c programs_print.c \
+		   programs_populate.c  program_validate.c programs_print.c \
 		   cmd_perror.c \
 		   cmd_validate_pipes.c \
 		   cmd_str2prog.c \
@@ -65,12 +67,12 @@ INPUT_SRC = $(addprefix $(SRC_DIR)/input/, $(INPUT))
 REDIRECT_SRC = $(addprefix $(SRC_DIR)/redirections/, $(REDIRECT))
 COMMANDS_SRC = $(addprefix $(SRC_DIR)/commands/, $(COMMANDS))
 INIT_SRC = $(addprefix $(SRC_DIR)/init/, $(INIT))
+EXEC_SRC = $(addprefix $(SRC_DIR)/execution/, $(EXEC))
 MAIN_SRC = $(addprefix $(SRC_DIR)/, $(MAIN))
 
 # Collect all the c file in one variable
 SRC = $(STRINGS_SRC) $(ENVIRON_SRC) $(INPUT_SRC) $(REDIRECT_SRC) \
-	  $(COMMANDS_SRC) \
-	  $(INIT_SRC) 
+	  $(COMMANDS_SRC) $(INIT_SRC) $(EXEC_SRC)
 OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
 
 H_FILES = $(addprefix include/, $(H_INCLUDES))
