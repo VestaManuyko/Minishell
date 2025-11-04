@@ -69,8 +69,7 @@ typedef struct s_prog
 	int		id;
 	int		cpid;
 	t_pipe	go_to;
-	int		f_stdin;
-	int		f_stdout;
+	t_bltn	*bltin;
 	t_arr	*redirect;
 	int		fd_io[2];
 	t_arr	*prog;

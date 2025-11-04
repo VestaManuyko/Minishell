@@ -18,6 +18,5 @@
 void	free_shell(t_shell *sh);
 void	reset_shell(t_shell *sh);
 void	init_bltn_list(t_bltn *list);
-void	signal_set(void);
 
 #endif
