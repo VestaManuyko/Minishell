@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 12:50:21 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/28 12:51:40 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/28 13:32:30 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 	limiter = str_expand(quotes, shell.env, argv[1], 0);
 	if (!limiter)
 		return (1);
-	tmp_filename = heredoc(argv[1], limiter, &shell);
+	tmp_filename = heredoc(argv[1], limiter, shell.env);
 	free(limiter);
 	if (!tmp_filename)
 		return (1);

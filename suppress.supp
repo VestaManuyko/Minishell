@@ -1,16 +1,6 @@
 {
 	ignore_leak_in_readline
 	Memcheck:Leak
-	fun:*alloc
 	...
-	fun:readline
+	obj:*/libreadline.so*
 }
-
-{
-	ignore_leak_in_history
-	Memcheck:Leak
-	fun:*alloc
-	...
-	fun:add_history
-}
-

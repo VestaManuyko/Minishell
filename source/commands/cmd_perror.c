@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_fillheredoc.c                                  :+:      :+:    :+:   */
+/*   cmd_perror.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/23 12:21:33 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/28 13:28:57 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/27 18:33:25 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/27 18:33:28 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_structs.h"
 #include <minishell.h>
 
-int	cmd_fillheredoc(t_red *tmp, t_arr *env)
+void	cmd_perror(char *pre, char *str, char *err)
 {
-	char	*path;
-
-	path = heredoc(tmp->raw, tmp->val, env);
-	if (path == NULL)
-		return (0);
-	free(tmp->val);
-	tmp->val = path;
-	return (1);
+	ft_putstr_fd(pre, 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(err, 2);
 }

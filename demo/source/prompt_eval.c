@@ -6,13 +6,15 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 16:43:42 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/27 09:34:03 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 18:38:39 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ms_init.h"
 #include "ms_structs.h"
 #include <minishell.h>
+
+int g_return = 0;
 
 int main(int ac, char **av, char **envp)
 {

@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:41:04 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 11:08:14 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/28 13:25:45 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	programs_free(t_prog *items, int count);
 void	programs_print(t_shell sh);
 
 int		programs_populate(t_shell *sh);
-int		programs_validate(t_shell *sh);
+int		programs_validate(t_shell *sh, t_prog *proc);
+
+void	cmd_perror(char *pre, char *str, char *err);
 
 /*
  * Given a string evaluates if there are some chars between the portion of it 
@@ -42,7 +44,7 @@ int		cmd_validate_pipes(char *str);
  * - 1 on success
  * - 0 on error.
  */
-int		cmd_str2prog(t_prog *proc, char *str, t_shell *sh);
+int		cmd_str2prog(t_prog *proc, char *str, t_arr *env);
 
 int		cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect);
 
@@ -64,6 +66,6 @@ int		cmd_parse_progs(t_prog *proc, t_arr *env);
  * the value param (originally the EOF pattern) with the 
  * newly created file.
  */
-int		cmd_fillheredoc(t_red *tmp);
+int		cmd_fillheredoc(t_red *tmp, t_arr *env);
 
 #endif

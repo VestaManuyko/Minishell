@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_fillheredoc.c                                  :+:      :+:    :+:   */
+/*   env_getpaths.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/23 12:21:33 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/28 13:28:57 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/27 14:24:12 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/27 14:25:00 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_structs.h"
 #include <minishell.h>
 
-int	cmd_fillheredoc(t_red *tmp, t_arr *env)
+char	**env_getpaths(t_arr *env)
 {
-	char	*path;
+	char	*value;
+	char	**arr;
 
-	path = heredoc(tmp->raw, tmp->val, env);
-	if (path == NULL)
-		return (0);
-	free(tmp->val);
-	tmp->val = path;
-	return (1);
+	env_getvalue((char **)env->arr, &value,
+		env_getid((char **)env->arr, "PATH"));
+	if (value == NULL)
+		return (NULL);
+	arr = str_split_by_set(value, ":", 1);
+	free(value);
+	if (arr == NULL)
+		return (NULL);
+	return (arr);
 }

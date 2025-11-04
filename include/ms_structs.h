@@ -6,12 +6,14 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 13:52:22 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 18:41:01 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MS_STRUCTS_H
 # define MS_STRUCTS_H
+
+# define MS_BUILTINS 7
 
 # include <sys/types.h>
 
@@ -40,6 +42,14 @@ typedef struct s_arr
 	void	(*u_free)(void *item);
 }			t_arr;
 
+typedef int	(*t_bltnf)(t_arr *args, t_arr *env);
+
+typedef struct t_bltn
+{
+	const char	*name;
+	t_bltnf		func;
+}	t_bltn;
+
 /* This structure represents the core items required to execute a program:
  * - id:		current program id (from the list that needs execution).
  * - cpid:		child process hosting the program execution.
@@ -59,8 +69,7 @@ typedef struct s_prog
 	int		id;
 	int		cpid;
 	t_pipe	go_to;
-	int		f_stdin;
-	int		f_stdout;
+	t_bltn	*bltin;
 	t_arr	*redirect;
 	int		fd_io[2];
 	t_arr	*prog;
@@ -81,6 +90,7 @@ typedef struct s_shell
 	int		count;
 	t_prog	*items;
 	t_arr	*env;
+	t_bltn	bltn[MS_BUILTINS];
 }	t_shell;
 
 /*
