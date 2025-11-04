@@ -12,8 +12,6 @@
 
 #include <minishell.h>
 
-char	*create_filename(int nbr, char *prefix);
-
 /*
  * Checks weather the given str contains quotes.
  * Return value:
@@ -91,13 +89,21 @@ static char	*get_filename(int *fd, int *expand, char *raw_limiter)
 {
 	char		*tmp_filename;
 	static int	nbr = 0;
-
+	char		*path;
+	char		*temp;
+	
 	*expand = 1;
 	if (is_quoted(raw_limiter))
 		*expand = 0;
 	if (nbr++ == 2147483645)
 		nbr = 0;
-	tmp_filename = create_filename(nbr, "/tmp/heredoc_");
+	temp = ft_itoa(nbr);
+	path = ft_strjoin("/tmp/heredoc_", temp);
+	free(temp);
+	temp = ft_itoa(getpid());
+	tmp_filename = ft_strjoin(path, temp);
+	free(temp);
+	free(path);
 	if (!tmp_filename)
 		return (NULL);
 	*fd = open(tmp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
