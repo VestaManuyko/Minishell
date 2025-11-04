@@ -34,6 +34,8 @@ int	programs_populate(t_shell *sh)
 	t_arr	*cmds;
 	int		i;
 
+	if (!*sh->cmd_line)
+		return (0);
 	if (!cmd_validate_pipes(sh->cmd_line))
 		return (0);
 	cmds = split_commands(sh->cmd_line);

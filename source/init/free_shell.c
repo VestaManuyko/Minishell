@@ -26,5 +26,5 @@ void	free_shell(t_shell *sh)
 		programs_free(sh->items, sh->count);
 	sh->items = NULL;
 	sh = NULL;
-	rl_clear_history;
+	rl_clear_history();
 }
