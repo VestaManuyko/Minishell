@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:09:53 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/04 18:43:33 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:49:01 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	handler(int signum)
 		rl_on_new_line();
 		write(1, "\n", 1);
 		rl_redisplay();
+		g_return = 130;
 	}
 }
 
