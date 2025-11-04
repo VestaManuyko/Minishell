@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/27 18:06:11 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/10/28 13:29:58 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,29 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <sys/types.h>
+# include <sys/stat.h>
 # include <stdbool.h>
 # include <signal.h>
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <asm-generic/errno-base.h>
-# include <errno.h>
 # include <fcntl.h>
 
 # include <libft.h>
 # include "ms_structs.h"
+# include "err_mes.h"
 # include "ms_strings.h"
 # include "ms_environment.h"
 # include "ms_init.h"
-# include "err_mes.h"
 # include "ms_redirections.h"
 # include "ms_commands.h"
 
 # define MS_METACHAR "\n|&;()<>"
 # define MS_BLANKS " \t\n"
 # define MS_METAERR "&;()\\"
+
+extern sig_atomic_t volatile	g_return;
 
 /*			STRINGS			*/
 
@@ -101,15 +103,28 @@ char	**str_split_by_set(char *str, char *set, bool eval_quote);
 /* 
  * Calls get_prompt, which gets the USER env variable and appends it with 
  * the shell_prompt, so that readline may display prompt as example:
- * USER/minishell>;
+ * USER/minishell> ;
  * then calls readline and appends the returned line to history 
  * and adds it to the shell->cmd_line string upon success.
  * Reminder!
  * After calling remember to rl_clear_history() and free(shell->cmd_line); 
+ * 
  * Return value:
- * 1 if command was got or 0 if no input or error.
+ * 1 on success, 0 on error.
+ * If ctrl D(EOF) encountered cleans up and exits.
+ * On system function call error cleans up and exits the shell.
  */
-int		get_command(t_shell *shell);
+int	get_command(t_shell *shell);
+
+/*
+ * Reads input from stdin until a limiter is met.
+ * If limiter was quoted expands the environment variables
+ * Return value:
+ * On error NULL;
+ * on success a freeable ointer to a string with the name 
+ * of the tmp_file where heredoc input was written.
+*/
+char	*heredoc(char *raw_limiter, char *limiter, t_arr *env);
 
 /*			INIT			*/
 
@@ -120,9 +135,17 @@ int		get_command(t_shell *shell);
  */
 int		init_shell(t_shell *shell, char **env);
 
+int		bltn_echo(t_arr *args, t_arr *env);
+int		bltn_cd(t_arr *args, t_arr *env);
+int		bltn_pwd(t_arr *args, t_arr *env);
+int		bltn_export(t_arr *args, t_arr *env);
+int		bltn_unset(t_arr *args, t_arr *env);
+int		bltn_env(t_arr *args, t_arr *env);
+int		bltn_exit(t_arr *args, t_arr *env);
+
 /*
  * Signal handling for the main shell
-*/
+ */
 void	signal_set(int is_child);
 
 #endif

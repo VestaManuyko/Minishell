@@ -20,6 +20,7 @@ static void	handler(int signum)
 		rl_on_new_line();
 		write(1, "\n", 1);
 		rl_redisplay();
+		g_return = -1;
 	}
 }
 

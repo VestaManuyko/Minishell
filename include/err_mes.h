@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   err_mes.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 11:22:40 by vmanuyko          #+#    #+#             */
 /*   Updated: 2025/10/27 17:42:58 by vmanuyko         ###   ########.fr       */
@@ -21,5 +21,8 @@
 # define ER_SINTAX "Error\nminishell:  syntax error near unexpected token `"
 # define ER_FORK "Error\nfork"
 # define ER_WAITPID "Error\nwaitpid"
+# define ER_CMD "command not found"
+# define ER_PERM "Error\nvalidate"
+# define ER_MINI "Error\nminishell: "
 
 #endif

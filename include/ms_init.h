@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 11:10:52 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/27 09:28:29 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 10:27:34 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 void	free_shell(t_shell *sh);
 void	reset_shell(t_shell *sh);
+void	init_bltn_list(t_bltn *list);
 void	signal_set(void);
 
 #endif

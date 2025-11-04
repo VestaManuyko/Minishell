@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_fillheredoc.c                                  :+:      :+:    :+:   */
+/*   validfile.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/23 12:21:33 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/28 13:28:57 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/10/29 13:10:06 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/10/29 13:18:59 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_structs.h"
 #include <minishell.h>
 
-int	cmd_fillheredoc(t_red *tmp, t_arr *env)
+int main(int ac, char **av)
 {
-	char	*path;
-
-	path = heredoc(tmp->raw, tmp->val, env);
-	if (path == NULL)
-		return (0);
-	free(tmp->val);
-	tmp->val = path;
-	return (1);
+	int fd;
+	if (ac != 2)
+		return ( printf("usage: validfile.out {filename}"), 1);
+	fd = open(av[1], O_RDONLY);
+	if (fd == -1)
+		cmd_perror(ER_MINI, av[1], strerror(errno));
+	else 
+		printf("file opened successfully");
+	close(fd);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:44:48 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 11:53:33 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/28 13:25:53 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	programs_populate(t_shell *sh)
 	t_arr	*cmds;
 	int		i;
 
+	if (!*sh->cmd_line)
+		return (0);
 	if (!cmd_validate_pipes(sh->cmd_line))
 		return (0);
 	cmds = split_commands(sh->cmd_line);
@@ -49,7 +51,7 @@ int	programs_populate(t_shell *sh)
 		sh->items[i].id = i;
 		if (i == cmds->size -1)
 			sh->items[i].go_to = end;
-		if (!cmd_str2prog(&sh->items[i], cmds->arr[i], sh))
+		if (!cmd_str2prog(&sh->items[i], cmds->arr[i], sh->env))
 			return (tar_free(cmds), 0);
 		i++;
 	}

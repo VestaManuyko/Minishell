@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/27 09:29:19 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/10/28 13:13:26 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,9 @@ SRC_DIR := source
 OBJ_DIR := build
 LIB_DIR := libs
 
+# All the h_files
+H_INCLUDES = minishell.h err_mes.h ms_commands.h ms_environment.h ms_init.h \
+			ms_redirections.h ms_strings.h ms_structs_support.h ms_structs.h
 # Groups of source files 
 STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
 		  arr_double.c \
@@ -32,12 +35,14 @@ STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
 		  tar_popone.c tar_linkone.c \
 		  tar_putstr.c tar_putred.c 
 
-ENVIRON = env_getid.c env_getkey.c env_getvalue.c \
+ENVIRON = env_getid.c env_getkey.c env_getvalue.c env_getpaths.c \
 		  env_entry_update.c  env_entry_remove.c  
 
-INPUT = prompt.c
+INPUT = prompt.c heredoc.c create_filename.c 
 
-INIT = init_shell.c free_shell.c reset_shell.c signal.c
+INIT = init_shell.c free_shell.c reset_shell.c \
+	   signal.c \
+	   init_builtin.c bltn.c
 
 MAIN = main.c
 
@@ -47,6 +52,7 @@ REDIRECT = red_init.c red_free.c \
 		   
 COMMANDS = programs_init.c programs_free.c \
 		   programs_populate.c  programs_validate.c programs_print.c \
+		   cmd_perror.c \
 		   cmd_validate_pipes.c \
 		   cmd_str2prog.c \
 		   cmd_split_tokens.c cmd_parse_progs.c cmd_parse_redirect.c \
@@ -64,15 +70,17 @@ MAIN_SRC = $(addprefix $(SRC_DIR)/, $(MAIN))
 # Collect all the c file in one variable
 SRC = $(STRINGS_SRC) $(ENVIRON_SRC) $(INPUT_SRC) $(REDIRECT_SRC) \
 	  $(COMMANDS_SRC) \
-	  $(INIT_SRC) $(MAIN_SRC)
+	  $(INIT_SRC) 
 OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
+
+H_FILES = $(addprefix include/, $(H_INCLUDES))
 
 LIBFT := $(LIB_DIR)/libft/libft.a
 MINI := $(OBJ_DIR)/libmini.a
-NAME := minishell 
+NAME := minishell
 
-$(NAME)  : $(OBJ) $(LIBFT) $(H_FILES) 
-	$(CC) $(FLAGS) $(INCLUDES) $(OBJ) $(LIBFT) $(LINKS) -o $(NAME)
+$(NAME)  : $(LIBFT) $(OBJ) $(H_FILES) 
+	$(CC) $(FLAGS) $(INCLUDES) $(MAIN_SRC) $(OBJ) $(LIBFT) $(LINKS) -o $(NAME)
 $(LIBFT) :
 	make -C $(LIB_DIR)/libft libft.a
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
