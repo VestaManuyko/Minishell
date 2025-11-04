@@ -1,12 +1,5 @@
 #include <minishell.h>
 
-int	bltn_echo(t_arr *args, t_arr *env)
-{
-	(void)args;
-	(void)env;
-	return (1);
-}
-
 int	bltn_cd(t_arr *args, t_arr *env)
 {
 	(void)args;

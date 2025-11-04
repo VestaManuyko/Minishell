@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
+#    By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/10/28 13:13:26 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/11/04 18:10:52 by vmanuyko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,16 +41,14 @@ ENVIRON = env_getid.c env_getkey.c env_getvalue.c env_getpaths.c \
 INPUT = prompt.c heredoc.c
 
 INIT = init_shell.c free_shell.c reset_shell.c \
-	   signal.c \
-	   init_builtin.c bltn.c
+	   signal.c init_builtin.c bltn.c
 
 MAIN = main.c
 
 REDIRECT = red_init.c red_free.c \
-		   red_perror.c red_str2struct.c \
-		   red_raw2val.c
+		   red_perror.c red_str2struct.c red_raw2val.c
 
-EXEC = exec_prog.c
+EXEC = exec_prog.c echo.c
 		   
 COMMANDS = programs_init.c programs_free.c \
 		   programs_populate.c  program_validate.c programs_print.c \

@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:09:53 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/27 18:14:38 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:43:33 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	handler(int signum)
 		rl_on_new_line();
 		write(1, "\n", 1);
 		rl_redisplay();
-		g_return = -1;
 	}
 }
 
@@ -32,9 +31,9 @@ void	signal_set(int is_child)
 	sigemptyset(&sa.sa_mask);
 	if (!is_child)
 		sa.sa_handler = handler;
-	if (is_child)
+	if (is_child == 1)
 		sa.sa_handler = SIG_DFL;
-	else
+	if (is_child > 1)
 		sa.sa_handler = SIG_IGN;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 	{

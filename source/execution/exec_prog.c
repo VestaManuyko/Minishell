@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 15:09:03 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/27 18:14:55 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/11/04 18:47:03 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	exec_single(t_shell *shell)
 			return (perror(ER_WAITPID), 0);
 		shell->items->complete = exit_status;
 	}
+	signal_set(0);
 	return (free(path), 1);
 }
 
@@ -57,9 +58,10 @@ int	exec_single(t_shell *shell)
  * Return value:
  * 0 on error, 1 on success.
 */
-int	exec_bltn(t_bltn *bltn)
+int	exec_bltn(t_bltn *bltn, t_shell *shell)
 {
-	(void)bltn;
+	if (!bltn->func(shell->items[0].prog, shell->env))
+		return (0);
 	return (1);
 }
 
@@ -100,7 +102,7 @@ void	exec_programs(t_shell *shell)
 		if (shell->items[0].bltin == NULL)
 			exec_single(shell);
 		else
-			exec_bltn(shell->items[0].bltin);
+			exec_bltn(shell->items[0].bltin, shell);
 	}
 	else
 	{
