@@ -65,7 +65,7 @@ static void	print_cmd_args(int flag, char *cmd_args)
 		printf("%s", cmd_args);
 }
 
-int	bltn_echo(t_arr *args, t_arr *env)
+int	bltn_echo(t_arr *args, t_shell *sh)
 {
 	char	*print_str;
 	char	*cmd_args;
@@ -77,7 +77,7 @@ int	bltn_echo(t_arr *args, t_arr *env)
 		return (0);
 	if (ft_strchr(cmd_args, '$'))
 	{
-		print_str = str_expand(dollar, env, cmd_args, 0);
+		print_str = str_expand(dollar, sh->env, cmd_args, 0);
 		if (!print_str)
 			return (free(cmd_args), 0);
 		if (!flag)

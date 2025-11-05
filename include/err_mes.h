@@ -24,5 +24,6 @@
 # define ER_CMD "command not found"
 # define ER_PERM "Error\nvalidate"
 # define ER_MINI "Error\nminishell: "
+# define ER_CD "Error\nminishell: cd: "
 
 #endif

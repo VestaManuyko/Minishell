@@ -17,6 +17,7 @@
 
 # include <sys/types.h>
 
+typedef struct s_shell t_shell;
 /* This stucture represents the way the current program relates to the 
  * surrounding ones.
  * - pipe: has at least a process that follows.
@@ -42,7 +43,7 @@ typedef struct s_arr
 	void	(*u_free)(void *item);
 }			t_arr;
 
-typedef int	(*t_bltnf)(t_arr *args, t_arr *env);
+typedef int	(*t_bltnf)(t_arr *args, t_shell *sh);
 
 typedef struct t_bltn
 {

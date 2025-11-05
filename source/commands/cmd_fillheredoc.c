@@ -15,12 +15,12 @@
 
 int	cmd_fillheredoc(t_red *tmp, t_arr *env)
 {
-	char	*path;
+	char	*tmp_filename;
 
-	path = heredoc(tmp->raw, tmp->val, env);
-	if (path == NULL)
+	tmp_filename = handle_heredoc(tmp->raw, tmp->val, env);
+	if (!tmp_filename)
 		return (0);
 	free(tmp->val);
-	tmp->val = path;
+	tmp->val = tmp_filename;
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/28 13:29:58 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/05 12:19:12 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,27 @@ int	get_command(t_shell *shell);
 
 /*
  * Reads input from stdin until a limiter is met.
- * If limiter was quoted expands the environment variables
+ * If limiter was quoted expands the environment variables.
  * Return value:
- * On error NULL;
- * on success a freeable ointer to a string with the name 
- * of the tmp_file where heredoc input was written.
+ * 0 on error, 1 on success or EOF;
 */
-char	*heredoc(char *raw_limiter, char *limiter, t_arr *env);
+int	heredoc(char *raw_limiter, char *limiter, t_arr *env, char *tmp_filename);
+/*
+ * Creates a tmp_filename for heredoc using the programs pid
+ * and random int number.
+ * Return value:
+ * NULL on error,
+ * freeable pointer to a string containing the tmp_filename.
+*/
+char	*get_filename(void);
+/*
+ * First creates a tmp_filename later used for heredoc, then
+ * forks a child process that safely calls heredoc, 
+ * which writes into tmp_file from stdin.
+ * Return value:
+ * The name of the tmp_file or NULL or error.
+*/
+char	*handle_heredoc(char *raw_limiter, char *limiter, t_arr *env);
 
 /*			INIT			*/
 
@@ -136,13 +150,13 @@ char	*heredoc(char *raw_limiter, char *limiter, t_arr *env);
  */
 int		init_shell(t_shell *shell, char **env);
 
-int		bltn_echo(t_arr *args, t_arr *env);
-int		bltn_cd(t_arr *args, t_arr *env);
-int		bltn_pwd(t_arr *args, t_arr *env);
-int		bltn_export(t_arr *args, t_arr *env);
-int		bltn_unset(t_arr *args, t_arr *env);
-int		bltn_env(t_arr *args, t_arr *env);
-int		bltn_exit(t_arr *args, t_arr *env);
+int		bltn_echo(t_arr *args, t_shell *sh);
+int		bltn_cd(t_arr *args, t_shell *sh);
+int		bltn_pwd(t_arr *args, t_shell *sh);
+int		bltn_export(t_arr *args, t_shell *sh);
+int		bltn_unset(t_arr *args, t_shell *sh);
+int		bltn_env(t_arr *args, t_shell *sh);
+int		bltn_exit(t_arr *args, t_shell *sh);
 
 /*
  * Signal handling for the main shell

@@ -6,7 +6,7 @@
 /*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 15:09:03 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/04 18:47:03 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/11/05 11:56:18 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_path_for_cmd(t_prog prog)
 int	exec_single(t_shell *shell)
 {
 	pid_t	pid;
-	int		exit_status;
+	int		status;
 	char	*path;
 
 	path = get_path_for_cmd(shell->items[0]);
@@ -45,9 +45,12 @@ int	exec_single(t_shell *shell)
 	else
 	{
 		signal_set(2);
-		if (waitpid(pid, &exit_status, 0) == -1)
+		if (waitpid(pid, &status, 0) == -1)
 			return (perror(ER_WAITPID), 0);
-		shell->items->complete = exit_status;
+		if (WIFEXITED(status))
+        	g_return = WEXITSTATUS(status);
+		if (WIFSIGNALED(status))
+			g_return = 128 + WTERMSIG(status);
 	}
 	signal_set(0);
 	return (free(path), 1);
@@ -60,7 +63,7 @@ int	exec_single(t_shell *shell)
 */
 int	exec_bltn(t_bltn *bltn, t_shell *shell)
 {
-	if (!bltn->func(shell->items[0].prog, shell->env))
+	if (!bltn->func(shell->items[0].prog, shell))
 		return (0);
 	return (1);
 }
@@ -88,7 +91,7 @@ static int	programs_validate(t_shell *shell)
 
 /*
  * Exec_programs checks if the programs are valid,
- * if yes executes the commands and updates the exit_status.
+ * if yes executes the commands and updates the status.
 */
 void	exec_programs(t_shell *shell)
 {
