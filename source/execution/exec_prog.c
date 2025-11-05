@@ -24,6 +24,17 @@ int	exec_bltn(t_bltn *bltn, t_shell *shell)
 }
 
 /*
+ * Called by parent, sets the exit status of a child process.
+*/
+void	set_status(int status)
+{
+	if (WIFEXITED(status))
+		g_return = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+		g_return = 128 + WTERMSIG(status);
+}
+
+/*
  * Dup_fds function checks all the existing programs fds
  * and calls dup2 if needed for duplicating an fd to stdin or out etc.
 */
