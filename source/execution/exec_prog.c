@@ -12,13 +12,6 @@
 
 #include <minishell.h>
 
-char	*get_path_for_cmd(t_prog prog)
-{
-	char	*path;
-
-	path = ft_strdup((char *)prog.prog->arr[0]);
-	return (path);
-}
 /*
  * Called by parent, sets the exit status of a child process.
 */
@@ -40,17 +33,17 @@ int	exec_single(t_shell *shell)
 	pid_t	pid;
 	int		status;
 	char	*path;
+	t_prog	item;
 
-	path = get_path_for_cmd(shell->items[0]);
-	if (!path)
-		return (0);
+	item = shell->items[0];
+	path = (char *)item.prog->arr[0];
 	pid = fork();
 	if (pid == -1)
-		return (free(path), perror(ER_FORK), 0);
+		return (perror(ER_FORK), 0);
 	if (pid == 0)
 	{
 		signal_set(1);
-		execve(path, (char **)shell->items->prog->arr, (char **)shell->env->arr);
+		execve(path, (char **)item.prog->arr, (char **)shell->env->arr);
 	}
 	else
 	{
@@ -59,7 +52,7 @@ int	exec_single(t_shell *shell)
 			return (signal_set(0), perror(ER_WAITPID), 0);
 		set_status(status);
 	}
-	return (signal_set(0), free(path), 1);
+	return (signal_set(0), 1);
 }
 
 /*
