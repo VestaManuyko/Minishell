@@ -75,8 +75,76 @@ int	exec_bltn(t_bltn *bltn, t_shell *shell)
 }
 
 /*
+ * Checks if the redirection files are valid and
+ * sets all the needed fds for execution.
+ * Return value:
+ * 0 on error, 1 on valid.
+*/
+static int	set_redirect(t_shell *shell)
+{
+	t_red	*red;
+	int		i;
+
+	i = 0;
+	while (i < shell->count)
+	{
+		red = (t_red *)shell->items[i].redirect->arr[i];
+		if (red->type == out_create || red->type == out_append)
+		{
+			if (red->type == out_create)
+				red->fd = open(red->val, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			else if (red->type == out_append)
+				red->fd = open(red->val, O_CREAT | O_WRONLY | O_APPEND, 0644);
+			if (red->fd == -1)
+				return (cmd_perror(ER_MINI, red->val, strerror(errno)), 0);
+			else
+				shell->items[i].fd_io[1] = red->fd;
+		}
+		else if (red->type == in_file || red->type == in_heredoc)
+		{
+			if (red->type == in_file)
+				red->fd = open(red->val, O_RDONLY);
+			else if (red->type == in_heredoc)
+				red->fd = open(red->val, O_RDONLY);
+			if (red->fd == -1)
+				return (cmd_perror(ER_MINI, red->val, strerror(errno)), 0);
+			else
+				shell->items[i].fd_io[0] = red->fd;
+		}
+		i++;
+	}
+	return (1);
+}
+
+/*
+ * Dup_fds function checks all the existing programs fds
+ * and calls dup2 if needed for duplicating an fd to stdin or out etc.
+*/
+int	dup_fds(t_shell *shell)
+{
+	if (shell->count == 1)
+	{
+		if (shell->items[0].fd_io[0])
+		{
+			if ((dup2(shell->items[0].fd_io[0], STDIN_FILENO)) == -1)
+				return (0);
+			close (shell->items[0].fd_io[0]);
+			shell->items[0].fd_io[0] = 0;
+		}
+		if (shell->items[0].fd_io[1])
+		{
+			if ((dup2(shell->items[0].fd_io[1], STDOUT_FILENO)) == -1)
+				return (0);
+			close (shell->items[0].fd_io[1]);
+			shell->items[0].fd_io[1] = 0;
+		}
+	}
+	return (1);
+}
+
+/*
  * Programs_validate validates each program if its executable
- * and checks if the redirection files are valid.
+ * and has valid redirections.
  * Return value:
  * 0 on error, 1 on success.
 */
@@ -91,7 +159,10 @@ static int	programs_validate(t_shell *shell)
 			return (0);
 		i++;
 	}
-	//check redirections here;
+	if (!set_redirect(shell))
+		return (0);
+	if (!dup_fds(shell))
+		return (0);
 	return (1);
 }
 
