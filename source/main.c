@@ -30,7 +30,6 @@ int	main(int ac, char **av, char **env)
 			if (programs_populate(&sh))
 			{
 				exec_programs(&sh);
-				programs_print(sh);
 				reset_shell(&sh);
 			}
 		}
