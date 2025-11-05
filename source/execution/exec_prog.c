@@ -56,7 +56,7 @@ int	exec_single(t_shell *shell)
 }
 
 /*
- * Execution of a bulit in function passed as a parameter
+ * Execution of a bulit-in function passed as a parameter
  * Return value:
  * 0 on error, 1 on success.
 */

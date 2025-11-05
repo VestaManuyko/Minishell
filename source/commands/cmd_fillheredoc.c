@@ -17,7 +17,7 @@ int	cmd_fillheredoc(t_red *tmp, t_arr *env)
 {
 	char	*tmp_filename;
 
-	tmp_filename = handle_heredoc(tmp->raw, tmp->val, env);
+	tmp_filename = heredoc(tmp->raw, tmp->val, env);
 	if (!tmp_filename)
 		return (0);
 	free(tmp->val);
