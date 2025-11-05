@@ -28,13 +28,30 @@ static t_arr	*split_commands(char *str)
 		return (tar_free(cmds), NULL);
 	return (cmds);
 }
+/*
+ * Checks for input containing only spaces or empty input
+ * If only spaces or empty returns 1, otherwise 0.
+*/
+static int	is_only_space(char	*line)
+{
+	size_t	i;
+
+	i = 0;
+	if (!*line)
+		return (1);
+	while (line[i] == ' ')
+		i++;
+	if (i == ft_strlen(line))
+		return (1);
+	return (0);
+}
 
 int	programs_populate(t_shell *sh)
 {
 	t_arr	*cmds;
 	int		i;
 
-	if (!*sh->cmd_line)
+	if (is_only_space(sh->cmd_line))
 		return (0);
 	if (!cmd_validate_pipes(sh->cmd_line))
 		return (0);
