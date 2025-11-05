@@ -115,7 +115,7 @@ char	**str_split_by_set(char *str, char *set, bool eval_quote);
  * If ctrl D(EOF) encountered cleans up and exits.
  * On system function call error cleans up and exits the shell.
  */
-int	get_command(t_shell *shell);
+int		get_command(t_shell *shell);
 
 /*
  * Reads input from stdin until a limiter is met into a tmp_file.
@@ -135,14 +135,6 @@ char	*heredoc(char *raw_limiter, char *limiter, t_arr *env);
  */
 int		init_shell(t_shell *shell, char **env);
 
-int		bltn_echo(t_arr *args, t_shell *sh);
-int		bltn_cd(t_arr *args, t_shell *sh);
-int		bltn_pwd(t_arr *args, t_shell *sh);
-int		bltn_export(t_arr *args, t_shell *sh);
-int		bltn_unset(t_arr *args, t_shell *sh);
-int		bltn_env(t_arr *args, t_shell *sh);
-int		bltn_exit(t_arr *args, t_shell *sh);
-
 /*
  * Signal handling for the main shell
  */
@@ -150,11 +142,37 @@ void	signal_set(int is_child);
 
 /*     EXECUTION     */
 
-/* Validates if the programs are executable, 
- * if yes executes it and sets the exit value
- * Return value:
- * 0 on error, 1 on success.
+/* 
+ * Validates if the programs are executable, 
+ * if yes executes it and sets the exit status to g_return.
  */
 void	exec_programs(t_shell *shell);
+/*
+ * Called by parent, sets the exit status of a child process.
+*/
+void	set_status(int status);
+/*
+ * Executes a single child process if not built-in.
+ * Return value:
+ * 0 on error, 1 on success.
+*/
+int		exec_single(t_shell *shell);
+/*
+ * Checks if the redirection files are valid and
+ * sets all the needed fds for execution.
+ * Return value:
+ * 0 on error, 1 on valid.
+*/
+int		set_redirect(t_shell *shell);
+/*
+ * All the built in functions.
+*/
+int		bltn_echo(t_arr *args, t_shell *sh);
+int		bltn_cd(t_arr *args, t_shell *sh);
+int		bltn_pwd(t_arr *args, t_shell *sh);
+int		bltn_export(t_arr *args, t_shell *sh);
+int		bltn_unset(t_arr *args, t_shell *sh);
+int		bltn_env(t_arr *args, t_shell *sh);
+int		bltn_exit(t_arr *args, t_shell *sh);
 
 #endif

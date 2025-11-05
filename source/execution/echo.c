@@ -16,7 +16,7 @@ static char	*join_args(char *arr, char *temp, int i, int flag)
 {
 	char	*args;
 	char	*temp2;
-	
+
 	if (i == 1 || (flag == 1 && i == 2))
 		args = ft_strjoin(temp, arr);
 	else
@@ -33,7 +33,7 @@ static char	*get_args(char	**arr, int *flag)
 	size_t	i;
 	char	*temp;
 	char	*args;
-	
+
 	i = 1;
 	temp = NULL;
 	if (!arr[i])

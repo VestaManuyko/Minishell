@@ -17,7 +17,7 @@
 
 # include <sys/types.h>
 
-typedef struct s_shell t_shell;
+typedef struct s_shell	t_shell;
 /* This stucture represents the way the current program relates to the 
  * surrounding ones.
  * - pipe: has at least a process that follows.

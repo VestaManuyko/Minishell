@@ -91,7 +91,7 @@ static char	*get_filename(int *fd, int *expand, char *raw_limiter)
 	static int	nbr = 0;
 	char		*path;
 	char		*temp;
-	
+
 	*expand = 1;
 	if (is_quoted(raw_limiter))
 		*expand = 0;

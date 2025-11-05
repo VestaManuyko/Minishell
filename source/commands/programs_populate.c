@@ -28,6 +28,7 @@ static t_arr	*split_commands(char *str)
 		return (tar_free(cmds), NULL);
 	return (cmds);
 }
+
 /*
  * Checks for input containing only spaces or empty input
  * If only spaces or empty returns 1, otherwise 0.
@@ -72,6 +73,5 @@ int	programs_populate(t_shell *sh)
 			return (tar_free(cmds), 0);
 		i++;
 	}
-	tar_free(cmds);
-	return (1);
+	return (tar_free(cmds), 1);
 }
