@@ -60,9 +60,9 @@ static char	*get_args(char	**arr, int *flag)
 static void	print_cmd_args(int flag, char *cmd_args)
 {
 	if (!flag)
-		printf("%s\n", cmd_args);
+		ft_putendl_fd(cmd_args, 1);
 	else
-		printf("%s", cmd_args);
+		write(1, cmd_args, ft_strlen(cmd_args));
 }
 
 int	bltn_echo(t_arr *args, t_shell *sh)
@@ -80,10 +80,7 @@ int	bltn_echo(t_arr *args, t_shell *sh)
 		print_str = str_expand(dollar, sh->env, cmd_args, 0);
 		if (!print_str)
 			return (free(cmd_args), 0);
-		if (!flag)
-			printf("%s\n", print_str);
-		else
-			printf("%s", print_str);
+		print_cmd_args(flag, print_str);
 		return (free(print_str), free(cmd_args), 1);
 	}
 	else

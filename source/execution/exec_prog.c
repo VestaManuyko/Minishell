@@ -18,8 +18,28 @@
 */
 int	exec_bltn(t_bltn *bltn, t_shell *shell)
 {
+	int	stdin_main;
+	int	stdout_main;
+
+	if (shell->items[0].redirect->size != 0)
+	{
+		stdin_main = dup(STDIN_FILENO);
+		stdout_main = dup(STDOUT_FILENO);
+		if (!dup_fds(shell) || stdin_main == -1 || stdout_main == -1)
+			return (0);
+	}
 	if (!bltn->func(shell->items[0].prog, shell))
+	{
+		dup2(stdin_main, STDIN_FILENO);
+		dup2(stdout_main, STDOUT_FILENO);
+		close(stdin_main);
+		close(stdout_main);
 		return (0);
+	}
+	dup2(stdin_main, STDIN_FILENO);
+	dup2(stdout_main, STDOUT_FILENO);
+	close(stdin_main);
+	close(stdout_main);
 	return (1);
 }
 

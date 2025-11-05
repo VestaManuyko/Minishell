@@ -158,6 +158,14 @@ void	set_status(int status);
 */
 int		exec_single(t_shell *shell);
 /*
+ * Dup_fds function checks all the existing programs fds
+ * and calls dup2 if needed for duplicating an fd to stdin or out etc.
+ * Currently done for 1 executable.
+ * Return value:
+ * 0 on error 1 on success.
+*/
+int	dup_fds(t_shell *shell);
+/*
  * Checks if the redirection files are valid and
  * sets all the needed fds for execution.
  * Return value:

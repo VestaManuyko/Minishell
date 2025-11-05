@@ -11,25 +11,19 @@
 /* ************************************************************************** */
 
 #include <minishell.h>
-/*
- * Dup_fds function checks all the existing programs fds
- * and calls dup2 if needed for duplicating an fd to stdin or out etc.
- * Currently done for 1 executable.
- * Return value:
- * 0 on error 1 on success.
-*/
+
 int	dup_fds(t_shell *shell)
 {
 	if (shell->count == 1)
 	{
-		if (shell->items[0].fd_io[0])
+		if (shell->items[0].fd_io[0] && shell->items[0].fd_io[0] != STDIN_FILENO)
 		{
 			if ((dup2(shell->items[0].fd_io[0], STDIN_FILENO)) == -1)
 				return (0);
 			close (shell->items[0].fd_io[0]);
 			shell->items[0].fd_io[0] = 0;
 		}
-		if (shell->items[0].fd_io[1])
+		if (shell->items[0].fd_io[1] && shell->items[0].fd_io[1] != STDOUT_FILENO)
 		{
 			if ((dup2(shell->items[0].fd_io[1], STDOUT_FILENO)) == -1)
 				return (0);
