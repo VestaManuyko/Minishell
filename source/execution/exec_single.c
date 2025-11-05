@@ -40,11 +40,6 @@ int	dup_fds(t_shell *shell)
 	return (1);
 }
 
-/*
- * Executes a single child process
- * Return value:
- * 0 on error, 1 on success.
-*/
 int	exec_single(t_shell *shell)
 {
 	pid_t	pid;
