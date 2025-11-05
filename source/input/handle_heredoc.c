@@ -55,6 +55,5 @@ char	*handle_heredoc(char *raw_limiter, char *limiter, t_arr *env)
 		if (!temp)
 			return (NULL);
 	}
-	signal_set(0);
-	return (tmp_file);
+	return (signal_set(0), tmp_file);
 }

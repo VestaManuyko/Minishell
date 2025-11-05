@@ -19,6 +19,16 @@ char	*get_path_for_cmd(t_prog prog)
 	path = ft_strdup((char *)prog.prog->arr[0]);
 	return (path);
 }
+/*
+ * Called by parent, sets the exit status of a child process.
+*/
+static void	set_status(int status)
+{
+	if (WIFEXITED(status))
+		g_return = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+		g_return = 128 + WTERMSIG(status);
+}
 
 /*
  * Executes a single child process
@@ -46,14 +56,10 @@ int	exec_single(t_shell *shell)
 	{
 		signal_set(2);
 		if (waitpid(pid, &status, 0) == -1)
-			return (perror(ER_WAITPID), 0);
-		if (WIFEXITED(status))
-        	g_return = WEXITSTATUS(status);
-		if (WIFSIGNALED(status))
-			g_return = 128 + WTERMSIG(status);
+			return (signal_set(0), perror(ER_WAITPID), 0);
+		set_status(status);
 	}
-	signal_set(0);
-	return (free(path), 1);
+	return (signal_set(0), free(path), 1);
 }
 
 /*
