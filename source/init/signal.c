@@ -24,7 +24,7 @@ static void	handler(int signum)
 	}
 }
 
-void	signal_set(int is_child)
+void	signal_set(int is_child, t_shell *shell)
 {
 	struct sigaction	sa;
 
@@ -37,18 +37,12 @@ void	signal_set(int is_child)
 	if (is_child > 1)
 		sa.sa_handler = SIG_IGN;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
-	{
-		perror(ER_SIGACT);
-		exit(1);
-	}
+		clean_exit(ER_SIGACT, shell);
 	if (!is_child)
 		signal(SIGQUIT, SIG_IGN);
 	else
 	{
 		if (sigaction(SIGQUIT, &sa, NULL) == -1)
-		{
-			perror(ER_SIGACT);
-			exit(1);
-		}
+			clean_exit(ER_SIGACT, shell);
 	}
 }

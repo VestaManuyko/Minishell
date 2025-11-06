@@ -59,7 +59,7 @@ static int	quote_opened(char *line)
 	return (1);
 }
 
-static void	clean_exit(char *message, t_shell *shell)
+void	clean_exit(char *message, t_shell *shell)
 {
 	if (!message)
 	{

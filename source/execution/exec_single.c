@@ -48,17 +48,17 @@ int	exec_single(t_shell *shell)
 		return (perror(ER_FORK), 0);
 	if (pid == 0)
 	{
-		signal_set(1);
+		signal_set(1, shell);
 		if (!dup_fds(shell))
 			exit(1);
 		execve(path, (char **)item.prog->arr, (char **)shell->env->arr);
 	}
 	else
 	{
-		signal_set(2);
+		signal_set(2, shell);
 		if (waitpid(pid, &status, 0) == -1)
-			return (signal_set(0), perror(ER_WAITPID), 0);
+			return (signal_set(0, shell), perror(ER_WAITPID), 0);
 		set_status(status);
 	}
-	return (signal_set(0), 1);
+	return (signal_set(0, shell), 1);
 }

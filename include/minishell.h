@@ -117,6 +117,12 @@ char	**str_split_by_set(char *str, char *set, bool eval_quote);
  */
 int		get_command(t_shell *shell);
 /*
+ * Prints an error message with perror if not NULL
+ * checks if anything needs to be freed and cleans up,
+ * then exits.
+*/
+void	clean_exit(char *message, t_shell *shell);
+/*
  * Reads input from stdin until a limiter is met.
  * If limiter was quoted expands the environment variables.
  * Return value:
@@ -152,7 +158,7 @@ int		init_shell(t_shell *shell, char **env);
 /*
  * Signal handling for the main shell
  */
-void	signal_set(int is_child);
+void	signal_set(int is_child, t_shell *shell);
 
 /*     EXECUTION     */
 
