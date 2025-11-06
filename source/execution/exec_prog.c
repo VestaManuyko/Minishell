@@ -26,21 +26,17 @@ int	exec_bltn(t_bltn *bltn, t_shell *shell)
 		stdin_main = dup(STDIN_FILENO);
 		stdout_main = dup(STDOUT_FILENO);
 		if (!dup_fds(shell) || stdin_main == -1 || stdout_main == -1)
-			return (0);
+			return (close(stdin_main), close(stdout_main), 0);
 	}
 	if (!bltn->func(shell->items[0].prog, shell))
 	{
 		dup2(stdin_main, STDIN_FILENO);
 		dup2(stdout_main, STDOUT_FILENO);
-		close(stdin_main);
-		close(stdout_main);
-		return (0);
+		return (close(stdin_main), close(stdout_main), 0);
 	}
 	dup2(stdin_main, STDIN_FILENO);
 	dup2(stdout_main, STDOUT_FILENO);
-	close(stdin_main);
-	close(stdout_main);
-	return (1);
+	return (close(stdin_main), close(stdout_main), 1);
 }
 
 /*
