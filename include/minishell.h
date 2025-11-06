@@ -116,15 +116,29 @@ char	**str_split_by_set(char *str, char *set, bool eval_quote);
  * On system function call error cleans up and exits the shell.
  */
 int		get_command(t_shell *shell);
-
 /*
- * Reads input from stdin until a limiter is met into a tmp_file.
+ * Reads input from stdin until a limiter is met.
  * If limiter was quoted expands the environment variables.
  * Return value:
- * NULL on error, otherwise a freeeable pointer to a string 
- * with tmp_filename.
+ * 0 on error, 1 on success or EOF;
 */
-char	*heredoc(char *raw_limiter, char *limiter, t_arr *env);
+int	heredoc(char *raw_limiter, char *limiter, t_arr *env, char *tmp_filename);
+/*
+ * Creates a tmp_filename for heredoc using the programs pid
+ * and random int number.
+ * Return value:
+ * NULL on error,
+ * freeable pointer to a string containing the tmp_filename.
+*/
+char	*get_filename(void);
+/*
+ * First creates a tmp_filename later used for heredoc, then
+ * forks a child process that safely calls heredoc, 
+ * which writes into tmp_file from stdin.
+ * Return value:
+ * The name of the tmp_file or NULL or error.
+*/
+char	*handle_heredoc(char *raw_limiter, char *limiter, t_arr *env);
 
 /*			INIT			*/
 
