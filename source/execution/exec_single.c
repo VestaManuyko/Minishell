@@ -16,14 +16,14 @@ int	dup_fds(t_shell *shell)
 {
 	if (shell->count == 1)
 	{
-		if (shell->items[0].fd_io[0] && shell->items[0].fd_io[0] != STDIN_FILENO)
+		if (shell->items[0].fd_io[0] && shell->items[0].fd_io[0] != 0)
 		{
 			if ((dup2(shell->items[0].fd_io[0], STDIN_FILENO)) == -1)
 				return (0);
 			close (shell->items[0].fd_io[0]);
 			shell->items[0].fd_io[0] = 0;
 		}
-		if (shell->items[0].fd_io[1] && shell->items[0].fd_io[1] != STDOUT_FILENO)
+		if (shell->items[0].fd_io[1] && shell->items[0].fd_io[1] != 1)
 		{
 			if ((dup2(shell->items[0].fd_io[1], STDOUT_FILENO)) == -1)
 				return (0);

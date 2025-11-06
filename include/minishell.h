@@ -122,7 +122,7 @@ int		get_command(t_shell *shell);
  * Return value:
  * 0 on error, 1 on success or EOF;
 */
-int	heredoc(char *raw_limiter, char *limiter, t_arr *env, char *tmp_filename);
+int		heredoc(char *raw_limiter, char *limiter, t_arr *env, char *tmp_filename);
 /*
  * Creates a tmp_filename for heredoc using the programs pid
  * and random int number.
@@ -178,7 +178,7 @@ int		exec_single(t_shell *shell);
  * Return value:
  * 0 on error 1 on success.
 */
-int	dup_fds(t_shell *shell);
+int		dup_fds(t_shell *shell);
 /*
  * Checks if the redirection files are valid and
  * sets all the needed fds for execution.

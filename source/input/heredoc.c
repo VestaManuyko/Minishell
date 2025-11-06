@@ -91,7 +91,7 @@ char	*get_filename(void)
 	static int	nbr = 0;
 	char		*path;
 	char		*temp;
-	
+
 	if (nbr++ == 2147483645)
 		nbr = 0;
 	temp = ft_itoa(nbr);
