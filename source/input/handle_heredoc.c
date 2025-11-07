@@ -12,7 +12,10 @@
 
 #include <minishell.h>
 
-void	free_files(char **files, int amnt)
+/*
+ * Frees all the tmp_files in the files 2d array.
+*/
+static void	free_files(char **files, int amnt)
 {
 	int	i;
 
@@ -23,10 +26,13 @@ void	free_files(char **files, int amnt)
 	}
 	free (files);
 }
-
-void	set_filenames(char **files, t_arr *redirect)
+/*
+ * Sets all the tmp_filenames created in heredoc_handler
+ * into the redirect struct.
+*/
+static void	set_filenames(char **files, t_arr *redirect)
 {
-	t_red 	*red;
+	t_red	*red;
 	int		j;
 	int		i;
 
@@ -44,22 +50,21 @@ void	set_filenames(char **files, t_arr *redirect)
 		j++;
 	}
 }
-
-int	parent_heredoc(pid_t pid, char **files, t_shell *sh, int amnt, t_arr *red)
+/*
+ * Executes the parent process of the heredoc_handler.
+*/
+static int	par_hd(pid_t pid, char **files, t_shell *sh, t_arr *red)
 {
 	int		status;
 
 	signal_set(2, sh);
 	if ((waitpid(pid, &status, 0)) == -1)
-	{
-		free_files(files, amnt);
 		return (signal_set(0, sh), perror(ER_WAITPID), 0);
-	}
 	if (WIFEXITED(status))
 	{
 		g_return = WEXITSTATUS(status);
 		if (g_return == 1)
-			return (signal_set(0, sh), free_files(files, amnt), 0);
+			return (signal_set(0, sh), 0);
 		set_filenames(files, red);
 	}
 	if (WIFSIGNALED(status))
@@ -68,21 +73,54 @@ int	parent_heredoc(pid_t pid, char **files, t_shell *sh, int amnt, t_arr *red)
 		rl_on_new_line();
 		write(1, "\n", 1);
 		g_return = 128 + WTERMSIG(status);
-		return (signal_set(0, sh), free_files(files, amnt), 0);
+		return (signal_set(0, sh), 0);
 	}
 	return (1);
 }
+/*
+ * Executes the child process of an heredoc_handler.
+*/
+static int	chld_hd(t_arr *redirect, t_shell *sh, char **files)
+{
+	int		i;
+	int		j;
+	t_red	*red;
 
+	i = 0;
+	j = 0;
+	signal_set(1, sh);
+	while (redirect->arr[j])
+	{
+		red = (t_red *)redirect->arr[j];
+		if (red->type == in_heredoc)
+		{
+			if (!heredoc(red->raw, red->val, sh->env, files[i]))
+				return (0);
+			i++;
+		}
+		j++;
+	}
+	return (1);
+}
+/*
+ * Creates tmp_files for the amount of heredocs,
+ * then calles a child process, which calls heredoc function
+ * for all of the heredoc, that eads from stdin until a delimiter is met
+ * and writes into the tmp_file provided.
+ * In the parent process waits for the child to terminate, if
+ * all the heredocs were succesful and no signal interruption occured
+ * during the child process, then sets all the tmp_file named for further
+ * redirection execution into the redirect struct and updates
+ * the exit status of the child.
+ * Return value:
+ * 0 on error, 1 on success.
+*/
 int	handle_heredocs(t_shell *shell, t_arr *redirect, int heredocs)
 {
 	pid_t	pid;
 	char	**tmp_files;
-	char	*temp;
-	int		j;
 	int		i;
-	t_red 	*red;
 
-	j = 0;
 	i = 0;
 	tmp_files = malloc (heredocs * sizeof(char *));
 	if (!tmp_files)
@@ -94,27 +132,14 @@ int	handle_heredocs(t_shell *shell, t_arr *redirect, int heredocs)
 		return (perror(ER_FORK), 0);
 	if (pid == 0)
 	{
-		signal_set(1, shell);
-		i = 0;
-		while (redirect->arr[j])
-		{
-			red = (t_red *)redirect->arr[j];
-			if (red->type == in_heredoc)
-			{
-				if (!heredoc(red->raw, red->val, shell->env, tmp_files[i]))
-					exit(1);
-				i++;
-			}
-			j++;
-		}
+		if (!chld_hd(redirect, shell, tmp_files))
+			exit(1);
 		exit(0);
 	}
 	else
 	{
-		if (!parent_heredoc(pid, tmp_files, shell, heredocs, redirect))
-			return (0);
+		if (!par_hd(pid, tmp_files, shell, redirect))
+			return (free_files(tmp_files, heredocs), 0);
 	}
-	signal_set(0, shell);
-	free(tmp_files);
-	return (1);
+	return (signal_set(0, shell), free(tmp_files), 1);
 }

@@ -138,11 +138,17 @@ int		heredoc(char *raw_limiter, char *limiter, t_arr *env, char *tmp_filename);
 */
 char	*get_filename(void);
 /*
- * First creates a tmp_filename later used for heredoc, then
- * forks a child process that safely calls heredoc, 
- * which writes into tmp_file from stdin.
+ * Creates tmp_files for the amount of heredocs,
+ * then calles a child process, which calls heredoc function
+ * for all of the heredoc, that eads from stdin until a delimiter is met
+ * and writes into the tmp_file provided.
+ * In the parent process waits for the child to terminate, if
+ * all the heredocs were succesful and no signal interruption occured
+ * during the child process, then sets all the tmp_file named for further
+ * redirection execution into the redirect struct and updates
+ * the exit status of the child.
  * Return value:
- * The name of the tmp_file or NULL or error.
+ * 0 on error, 1 on success.
 */
 int		handle_heredocs(t_shell *shell, t_arr *redirect, int heredocs);
 
