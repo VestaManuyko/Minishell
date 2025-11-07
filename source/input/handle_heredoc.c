@@ -24,33 +24,6 @@ void	free_files(char **files, int amnt)
 	free (files);
 }
 
-int	parent_heredoc(pid_t pid, char **files, t_shell *shell, int amnt)
-{
-	int		status;
-
-	signal_set(2, shell);
-	if ((waitpid(pid, &status, 0)) == -1)
-	{
-		free_files(files, amnt);
-		perror(ER_WAITPID);
-		return (signal_set(0, shell), 0);
-	}
-	if (WIFEXITED(status))
-	{
-		g_return = WEXITSTATUS(status);
-		if (g_return == 1)
-			return (signal_set(0, shell), free_files(files, amnt), 0);
-	}
-	if (WIFSIGNALED(status))
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		write(1, "\n", 1);
-		g_return = 128 + WTERMSIG(status);
-	}
-	return (1);
-}
-
 void	set_filenames(char **files, t_arr *redirect)
 {
 	t_red 	*red;
@@ -70,6 +43,34 @@ void	set_filenames(char **files, t_arr *redirect)
 		}
 		j++;
 	}
+}
+
+int	parent_heredoc(pid_t pid, char **files, t_shell *sh, int amnt, t_arr *red)
+{
+	int		status;
+
+	signal_set(2, sh);
+	if ((waitpid(pid, &status, 0)) == -1)
+	{
+		free_files(files, amnt);
+		return (signal_set(0, sh), perror(ER_WAITPID), 0);
+	}
+	if (WIFEXITED(status))
+	{
+		g_return = WEXITSTATUS(status);
+		if (g_return == 1)
+			return (signal_set(0, sh), free_files(files, amnt), 0);
+		set_filenames(files, red);
+	}
+	if (WIFSIGNALED(status))
+	{
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		write(1, "\n", 1);
+		g_return = 128 + WTERMSIG(status);
+		return (signal_set(0, sh), free_files(files, amnt), 0);
+	}
+	return (1);
 }
 
 int	handle_heredocs(t_shell *shell, t_arr *redirect, int heredocs)
@@ -110,11 +111,10 @@ int	handle_heredocs(t_shell *shell, t_arr *redirect, int heredocs)
 	}
 	else
 	{
-		if (!parent_heredoc(pid, tmp_files, shell, heredocs))
+		if (!parent_heredoc(pid, tmp_files, shell, heredocs, redirect))
 			return (0);
 	}
 	signal_set(0, shell);
-	set_filenames(tmp_files, redirect);
 	free(tmp_files);
 	return (1);
 }

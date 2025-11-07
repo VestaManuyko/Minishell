@@ -55,8 +55,7 @@ COMMANDS = programs_init.c programs_free.c \
 		   cmd_perror.c \
 		   cmd_validate_pipes.c \
 		   cmd_str2prog.c \
-		   cmd_split_tokens.c cmd_parse_progs.c cmd_parse_redirect.c \
-		   cmd_fillheredoc.c 
+		   cmd_split_tokens.c cmd_parse_progs.c cmd_parse_redirect.c
 
 # Add source paths to files 
 STRINGS_SRC = $(addprefix $(SRC_DIR)/strings/, $(STRINGS))
