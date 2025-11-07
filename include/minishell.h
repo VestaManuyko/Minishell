@@ -144,7 +144,7 @@ char	*get_filename(void);
  * Return value:
  * The name of the tmp_file or NULL or error.
 */
-char	*handle_heredoc(char *raw_limiter, char *limiter, t_shell *shell);
+int		handle_heredocs(t_shell *shell, t_arr *redirect, int heredocs);
 
 /*			INIT			*/
 

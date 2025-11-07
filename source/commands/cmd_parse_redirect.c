@@ -17,8 +17,10 @@ int	cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_shell *sh)
 {
 	int		i;
 	t_red	*tmp;
+	int		heredocs;
 
 	(void)proc;
+	heredocs = 0;
 	i = 0;
 	while (i < redirect->size)
 	{
@@ -26,9 +28,13 @@ int	cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_shell *sh)
 		if (!red_raw2val(tmp, sh->env))
 			return (0);
 		if (tmp->type == in_heredoc)
-			if (!cmd_fillheredoc(tmp, sh))
-				return (0);
+			heredocs++;
 		i++;
+	}
+	if (heredocs)
+	{
+		if (!handle_heredocs(sh, redirect, heredocs))
+			return (0);
 	}
 	return (1);
 }
