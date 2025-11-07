@@ -57,17 +57,8 @@ static char	*get_args(char	**arr, int *flag)
 	return (args);
 }
 
-static void	print_cmd_args(int flag, char *cmd_args)
-{
-	if (!flag)
-		ft_putendl_fd(cmd_args, 1);
-	else
-		write(1, cmd_args, ft_strlen(cmd_args));
-}
-
 int	bltn_echo(t_arr *args, t_shell *sh)
 {
-	char	*print_str;
 	char	*cmd_args;
 	int		flag;
 
@@ -75,15 +66,9 @@ int	bltn_echo(t_arr *args, t_shell *sh)
 	cmd_args = get_args((char **)args->arr, &flag);
 	if (!cmd_args)
 		return (0);
-	if (ft_strchr(cmd_args, '$'))
-	{
-		print_str = str_expand(dollar, sh->env, cmd_args, 0);
-		if (!print_str)
-			return (free(cmd_args), 0);
-		print_cmd_args(flag, print_str);
-		return (free(print_str), free(cmd_args), 1);
-	}
+	if (!flag)
+		ft_putendl_fd(cmd_args, 1);
 	else
-		print_cmd_args(flag, cmd_args);
+		write(1, cmd_args, ft_strlen(cmd_args));
 	return (free(cmd_args), 1);
 }
