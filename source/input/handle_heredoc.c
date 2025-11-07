@@ -12,18 +12,18 @@
 
 #include <minishell.h>
 
-char	*parent_heredoc(pid_t pid, char *tmp_file)
+char	*parent_heredoc(pid_t pid, char *tmp_file, t_shell *shell)
 {
 	int		status;
 
-	signal_set(2);
+	signal_set(2, shell);
 	if ((waitpid(pid, &status, 0)) == -1)
-		return (signal_set(0), perror(ER_WAITPID), free(tmp_file), NULL);
+		return (signal_set(0, shell), perror(ER_WAITPID), free(tmp_file), NULL);
 	if (WIFEXITED(status))
 	{
 		g_return = WEXITSTATUS(status);
 		if (g_return == 1)
-			return (signal_set(0), free(tmp_file), NULL);
+			return (signal_set(0, shell), free(tmp_file), NULL);
 	}
 	if (WIFSIGNALED(status))
 	{
@@ -35,7 +35,7 @@ char	*parent_heredoc(pid_t pid, char *tmp_file)
 	return (tmp_file);
 }
 
-char	*handle_heredoc(char *raw_limiter, char *limiter, t_arr *env)
+char	*handle_heredoc(char *raw_limiter, char *limiter, t_shell *shell)
 {
 	pid_t	pid;
 	char	*tmp_file;
@@ -49,17 +49,17 @@ char	*handle_heredoc(char *raw_limiter, char *limiter, t_arr *env)
 		return (perror(ER_FORK), NULL);
 	if (pid == 0)
 	{
-		signal_set(1);
-		if (!heredoc(raw_limiter, limiter, env, tmp_file))
+		signal_set(1, shell);
+		if (!heredoc(raw_limiter, limiter, shell->env, tmp_file))
 			exit(1);
 		exit(0);
 	}
 	else
 	{
-		temp = parent_heredoc(pid, tmp_file);
+		temp = parent_heredoc(pid, tmp_file, shell);
 		if (!temp)
 			return (NULL);
 	}
-	signal_set(0);
+	signal_set(0, shell);
 	return (tmp_file);
 }

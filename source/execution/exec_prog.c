@@ -34,9 +34,14 @@ int	exec_bltn(t_bltn *bltn, t_shell *shell)
 		dup2(stdout_main, STDOUT_FILENO);
 		return (close(stdin_main), close(stdout_main), 0);
 	}
-	dup2(stdin_main, STDIN_FILENO);
-	dup2(stdout_main, STDOUT_FILENO);
-	return (close(stdin_main), close(stdout_main), 1);
+	if (shell->items[0].redirect->size != 0)
+	{
+		dup2(stdin_main, STDIN_FILENO);
+		dup2(stdout_main, STDOUT_FILENO);
+		close(stdin_main);
+		close(stdout_main);
+	}
+	return (1);
 }
 
 /*

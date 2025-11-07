@@ -44,7 +44,7 @@ int		cmd_validate_pipes(char *str);
  * - 1 on success
  * - 0 on error.
  */
-int		cmd_str2prog(t_prog *proc, char *str, t_arr *env);
+int		cmd_str2prog(t_prog *proc, char *str, t_shell *sh);
 
 int		cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect);
 
@@ -57,7 +57,7 @@ int		cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect);
  * the heredoc procedure is called and the path to the 
  * written file is returned.
  */
-int		cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_arr *env);
+int		cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_shell *sh);
 
 int		cmd_parse_progs(t_prog *proc, t_arr *env);
 
@@ -66,6 +66,6 @@ int		cmd_parse_progs(t_prog *proc, t_arr *env);
  * the value param (originally the EOF pattern) with the 
  * newly created file.
  */
-int		cmd_fillheredoc(t_red *tmp, t_arr *env);
+int		cmd_fillheredoc(t_red *tmp, t_shell *sh);
 
 #endif

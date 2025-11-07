@@ -13,11 +13,11 @@
 #include "ms_structs.h"
 #include <minishell.h>
 
-int	cmd_fillheredoc(t_red *tmp, t_arr *env)
+int	cmd_fillheredoc(t_red *tmp, t_shell *sh)
 {
 	char	*tmp_filename;
 
-	tmp_filename = handle_heredoc(tmp->raw, tmp->val, env);
+	tmp_filename = handle_heredoc(tmp->raw, tmp->val, sh);
 	if (!tmp_filename)
 		return (0);
 	free(tmp->val);
