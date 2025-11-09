@@ -25,5 +25,6 @@
 # define ER_PERM "Error\nvalidate"
 # define ER_MINI "Error\nminishell: "
 # define ER_CD "Error\nminishell: cd: "
+# define ER_IDENT "`=': not a valid identifier"
 
 #endif

@@ -12,8 +12,28 @@
 
 #include <minishell.h>
 
+static int	has_spaces(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '=')
+			break ;
+		i++;
+	}
+	if (!s[i - 1] || !s[i + 1])
+		return (1);
+	if (s[i - 1] == ' '|| s[i = 1] == ' ')
+		return (1);
+	return (0);
+}
+
 int	bltn_export(t_arr *args, t_shell *sh)
 {
+	if (has_spaces((char *)args->arr[1]))
+		return (cmd_perror(ER_MINI, "export", ER_IDENT), 0);
 	if (!env_entry_update(sh->env, (char *)args->arr[1]))
 		return (0);
 	return (1);
