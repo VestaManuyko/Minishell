@@ -14,15 +14,15 @@
 
 int	bltn_export(t_arr *args, t_shell *sh)
 {
-	(void)args;
-	(void)sh;
+	if (!env_entry_update(sh->env, (char *)args->arr[1]))
+		return (0);
 	return (1);
 }
 
 int	bltn_unset(t_arr *args, t_shell *sh)
 {
-	(void)args;
-	(void)sh;
+	if (!env_entry_remove(sh->env, (char *)args->arr[1]))
+		return (0);
 	return (1);
 }
 

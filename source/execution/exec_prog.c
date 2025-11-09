@@ -20,7 +20,9 @@ int	exec_bltn(t_bltn *bltn, t_shell *shell)
 {
 	int	stdin_main;
 	int	stdout_main;
+	int	err_ret;
 
+	err_ret = 0;
 	if (shell->items[0].redirect->size != 0)
 	{
 		stdin_main = dup(STDIN_FILENO);
@@ -29,11 +31,7 @@ int	exec_bltn(t_bltn *bltn, t_shell *shell)
 			return (close(stdin_main), close(stdout_main), 0);
 	}
 	if (!bltn->func(shell->items[0].prog, shell))
-	{
-		dup2(stdin_main, STDIN_FILENO);
-		dup2(stdout_main, STDOUT_FILENO);
-		return (close(stdin_main), close(stdout_main), 0);
-	}
+		err_ret = 1;
 	if (shell->items[0].redirect->size != 0)
 	{
 		dup2(stdin_main, STDIN_FILENO);
@@ -41,6 +39,8 @@ int	exec_bltn(t_bltn *bltn, t_shell *shell)
 		close(stdin_main);
 		close(stdout_main);
 	}
+	if (err_ret == 1)
+		return (0);
 	return (1);
 }
 
