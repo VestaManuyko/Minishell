@@ -97,10 +97,7 @@ void	exec_programs(t_shell *shell)
 	}
 	else
 	{
-		while (i < shell->count)
-		{
-			// execute shell->items[i++];
-			printf("Pipeline execution to be made\n");
-		}
+		if (!fork_children(shell))
+			return ;
 	}
 }

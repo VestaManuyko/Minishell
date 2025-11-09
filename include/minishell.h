@@ -184,6 +184,13 @@ void	set_status(int status);
 */
 int		exec_single(t_shell *shell);
 /*
+ * Forks nedded amount of child processes, creates n-1 pipes
+ * and executes the commands.
+ * Return value:
+ * 0 on error, 1 on success.
+*/
+int	fork_children(t_shell *sh);
+/*
  * Dup_fds function checks all the existing programs fds
  * and calls dup2 if needed for duplicating an fd to stdin or out etc.
  * Currently done for 1 executable.
