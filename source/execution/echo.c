@@ -65,7 +65,7 @@ int	bltn_echo(t_arr *args, t_shell *sh)
 	flag = 0;
 	cmd_args = get_args((char **)args->arr, &flag);
 	if (!cmd_args)
-		return (0);
+		return (write(1, "\n", 1), 0);
 	if (!flag)
 		ft_putendl_fd(cmd_args, 1);
 	else
