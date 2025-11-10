@@ -29,10 +29,9 @@ static int	init_pipes(t_shell *sh, int **pipes)
 			i = 0;
 			while (i < (sh->count - 1))
 				free(pipes[i++]);
+			free (pipes);
 			return (0);
 		}
-		sh->items[i].fd_io[0] = pipes[i][0];
-		sh->items[i].fd_io[1] = pipes[i][1];
 		i++;
 	}
 	return (1);
@@ -46,28 +45,26 @@ static int	init_pipes(t_shell *sh, int **pipes)
 */
 int	create_pipes(t_shell *sh)
 {
-	int		**pipes;
 	size_t	i;
 	size_t	j;
 
 	i = 0;
 	j = 0;
-	pipes = malloc(sizeof(int *) * (sh->count - 1));
-	if (!pipes)
+	sh->pipes = malloc(sizeof(int *) * (sh->count - 1));
+	if (!sh->pipes)
 		return (0);
 	while (i < (sh->count - 1))
 	{
-		pipes[i] = malloc(sizeof(int) * 2);
-		if (!pipes[i])
+		sh->pipes[i] = malloc(sizeof(int) * 2);
+		if (!sh->pipes[i])
 		{
 			while (j < i)
-				free(pipes[j++]);
-			free(pipes);
+				free(sh->pipes[j++]);
+			free(sh->pipes);
 		}
 		i++;
 	}
-	if (!init_pipes(sh, pipes))
-		return (free(pipes), 0);
-	free(pipes);
+	if (!init_pipes(sh, sh->pipes))
+		return (0);
 	return (1);
 }

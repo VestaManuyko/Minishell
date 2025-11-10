@@ -20,12 +20,12 @@
 # define ER_SIGACT "Error\nsigaction"
 # define ER_SINTAX "Error\nminishell:  syntax error near unexpected token `"
 # define ER_FORK "Error\nfork"
-# define ER_WAITPID "Error\nwaitpid"
 # define ER_CMD "command not found"
 # define ER_PERM "Error\nvalidate"
 # define ER_MINI "Error\nminishell: "
 # define ER_CD "Error\nminishell: cd: "
 # define ER_IDENT "`=': not a valid identifier"
-# define ER_PIPE "create_pipes failure"
+# define ER_PIPE "Error\ncreate_pipes failure"
+# define ER_CLOSE "Error\nclose failure"
 
 #endif

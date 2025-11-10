@@ -14,6 +14,9 @@
 
 int	cmd_str2prog(t_prog *proc, char *str, t_shell *sh)
 {
+	size_t	i;
+
+	i = 0;
 	proc->redirect = tar_init(NULL, red_free);
 	if (proc->redirect == NULL)
 		return (0);
@@ -26,5 +29,11 @@ int	cmd_str2prog(t_prog *proc, char *str, t_shell *sh)
 		return (0);
 	if (!cmd_parse_progs(proc, sh->env))
 		return (0);
+	while (i < sh->count)
+	{
+		proc[i].fd_io[0] = -1;
+		proc[i].fd_io[1] = -1;
+		i++;
+	}
 	return (1);
 }

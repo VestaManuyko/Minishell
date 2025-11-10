@@ -88,6 +88,7 @@ typedef struct s_prog
 typedef struct s_shell
 {
 	char	*cmd_line;
+	int		**pipes;
 	int		count;
 	t_prog	*items;
 	t_arr	*env;

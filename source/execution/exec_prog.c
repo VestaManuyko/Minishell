@@ -27,7 +27,7 @@ int	exec_bltn(t_bltn *bltn, t_shell *shell)
 	{
 		stdin_main = dup(STDIN_FILENO);
 		stdout_main = dup(STDOUT_FILENO);
-		if (!dup_fds(shell) || stdin_main == -1 || stdout_main == -1)
+		if (!dup_fds(&shell->items[0]) || stdin_main == -1 || stdout_main == -1)
 			return (close(stdin_main), close(stdout_main), 0);
 	}
 	if (!bltn->func(shell->items[0].prog, shell))
@@ -97,7 +97,7 @@ void	exec_programs(t_shell *shell)
 	}
 	else
 	{
-		if (!fork_children(shell))
+		if (!exec_pipeline(shell))
 			return ;
 	}
 }

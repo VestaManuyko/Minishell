@@ -52,9 +52,7 @@ int	programs_populate(t_shell *sh)
 	t_arr	*cmds;
 	int		i;
 
-	if (is_only_space(sh->cmd_line))
-		return (0);
-	if (!cmd_validate_pipes(sh->cmd_line))
+	if (is_only_space(sh->cmd_line) || !cmd_validate_pipes(sh->cmd_line))
 		return (0);
 	cmds = split_commands(sh->cmd_line);
 	if (cmds == NULL)
@@ -73,5 +71,7 @@ int	programs_populate(t_shell *sh)
 			return (tar_free(cmds), 0);
 		i++;
 	}
+	if (!create_pipes(sh))
+		return (ft_putendl_fd(ER_PIPE, 2), tar_free(cmds), 0);
 	return (tar_free(cmds), 1);
 }

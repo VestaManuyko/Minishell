@@ -12,53 +12,50 @@
 
 #include <minishell.h>
 
-int	dup_fds(t_shell *shell)
+int	dup_fds(t_prog *item)
 {
-	if (shell->count == 1)
+	if (item->fd_io[0] != -1 && item->fd_io[0] != 0)
 	{
-		if (shell->items[0].fd_io[0] && shell->items[0].fd_io[0] != 0)
-		{
-			if ((dup2(shell->items[0].fd_io[0], STDIN_FILENO)) == -1)
-				return (0);
-			close (shell->items[0].fd_io[0]);
-			shell->items[0].fd_io[0] = 0;
-		}
-		if (shell->items[0].fd_io[1] && shell->items[0].fd_io[1] != 1)
-		{
-			if ((dup2(shell->items[0].fd_io[1], STDOUT_FILENO)) == -1)
-				return (0);
-			close (shell->items[0].fd_io[1]);
-			shell->items[0].fd_io[1] = 0;
-		}
+		if ((dup2(item->fd_io[0], STDIN_FILENO)) == -1)
+			return (0);
+		close (item->fd_io[0]);
+		item->fd_io[0] = -1;
+	}
+	if (item->fd_io[1] != -1 && item->fd_io[1] != 1)
+	{
+		if ((dup2(item->fd_io[1], STDOUT_FILENO)) == -1)
+			return (0);
+		close (item->fd_io[1]);
+		item->fd_io[1] = -1;
 	}
 	return (1);
 }
 
-int	exec_single(t_shell *shell)
+int	exec_single(t_shell *sh)
 {
 	pid_t	pid;
 	int		status;
 	char	*path;
-	t_prog	item;
+	t_prog	*item;
 
-	item = shell->items[0];
-	path = (char *)item.prog->arr[0];
+	item = &sh->items[0];
+	path = (char *)item->prog->arr[0];
 	pid = fork();
 	if (pid == -1)
 		return (perror(ER_FORK), 0);
 	if (pid == 0)
 	{
-		signal_set(1, shell);
-		if (!dup_fds(shell))
+		signal_set(1, sh);
+		if (!dup_fds(item))
 			exit(1);
-		execve(path, (char **)item.prog->arr, (char **)shell->env->arr);
+		if (execve(path, (char **)item->prog->arr, (char **)sh->env->arr) == -1)
+			return (cmd_perror(ER_MINI, "execve", strerror(errno)), 1);
 	}
 	else
 	{
-		signal_set(2, shell);
-		if (waitpid(pid, &status, 0) == -1)
-			return (signal_set(0, shell), perror(ER_WAITPID), 0);
+		signal_set(2, sh);
+		waitpid(pid, &status, 0);
 		set_status(status);
 	}
-	return (signal_set(0, shell), 1);
+	return (signal_set(0, sh), 1);
 }
