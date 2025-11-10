@@ -26,5 +26,6 @@
 # define ER_MINI "Error\nminishell: "
 # define ER_CD "Error\nminishell: cd: "
 # define ER_IDENT "`=': not a valid identifier"
+# define ER_PIPE "create_pipes failure"
 
 #endif

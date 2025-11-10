@@ -191,6 +191,13 @@ int		exec_single(t_shell *shell);
 */
 int	fork_children(t_shell *sh);
 /*
+ * Allocates memory for a 2d array of size nbr of commands - 1.
+ * Then creates pipes and initialises the 2d array with piped fds.
+ * Return value:
+ * 0 on error, 1 on success.
+*/
+int	create_pipes(t_shell *sh);
+/*
  * Dup_fds function checks all the existing programs fds
  * and calls dup2 if needed for duplicating an fd to stdin or out etc.
  * Currently done for 1 executable.

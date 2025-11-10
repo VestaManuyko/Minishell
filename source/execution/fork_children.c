@@ -11,36 +11,42 @@
 /* ************************************************************************** */
 
 #include <minishell.h>
-
 /*
- * Allocates memory for a 2d array of size nbr of commands - 1.
- * Then creates pipes and initialises the 2d array with piped fds.
+ * Executes multiple programs and redirects the stdin stdout
+ * from the pipe between the processes.
+ * In the parent sets the exit status of the last process.
  * Return value:
  * 0 on error, 1 on success.
 */
-static int	create_pipes(t_shell *sh)
+static int	exec_pipeline(t_shell *sh)
 {
-	int		**pipes;
+	pid_t	pid;
+	int		status;
 	size_t	i;
 
 	i = 0;
-	pipes = malloc(sizeof(int *) * sh->count - 1);
-	if (!pipes)
-		return (0);
-	while (i < sh->count - 1)
+	while (i < sh->count)
 	{
-		pipes[i] = malloc(sizeof(int) * 2);
-		if (!pipes[i])
+		pid == fork();
+		if (pid == -1)
+			return (perror(ER_FORK), 0);
+		if (pid == 0)
 		{
-			
+
 		}
 	}
-	return (1);
+	signal_set(2, sh);
+	if (waitpid(0, &status, 0) == -1)
+		return (signal_set(0, sh), perror(ER_WAITPID), 0);
+	set_status(status);
+	return (signal_set(0, sh), 1);
 }
 
 int	fork_children(t_shell *sh)
 {
 	if (!create_pipes(sh))
+		return (cmd_perror(ER_MINI, "fork_children", ER_PIPE), 0);
+	if (!exec_pipeline(sh))
 		return (0);
 	return (1);
 }
