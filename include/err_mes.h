@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 11:22:40 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/27 17:42:58 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/11/11 16:59:05 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@
 # define ER_IDENT "`=': not a valid identifier"
 # define ER_PIPE "Error\ncreate_pipes failure"
 # define ER_CLOSE "Error\nclose failure"
-
+# define ER_NOEXEC "Permission denied"
 #endif
