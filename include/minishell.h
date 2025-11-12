@@ -166,6 +166,14 @@ int		init_shell(t_shell *shell, char **env);
  */
 void	signal_set(int is_child, t_shell *shell);
 
+/*
+ * Allocates memory for a 2d array of size nbr of commands - 1.
+ * Then creates pipes and initialises the 2d array with piped fds.
+ * Return value:
+ * 0 on error, 1 on success.v
+*/
+int		create_pipes(t_shell *sh);
+
 /*     EXECUTION     */
 
 /* 
@@ -173,18 +181,20 @@ void	signal_set(int is_child, t_shell *shell);
  * if yes executes it and sets the exit status to g_return.
  */
 void	exec_programs(t_shell *shell);
+
 /*
  * Called by parent, sets the exit status of a child process.
 */
 void	set_status(int status);
+
 /*
- * Dup_fds function checks all the existing programs fds
- * and calls dup2 if needed for duplicating an fd to stdin or out etc.
- * Currently done for 1 executable.
+ * Dup_fds function checks the existing programs fds
+ * and calls dup2 if needed for duplicating an fd to stdin or stdout.
  * Return value:
  * 0 on error 1 on success.
 */
 int		dup_fds(t_prog *item);
+
 /*
  * Checks if the redirection files are valid and
  * sets all the needed fds for execution.
@@ -192,12 +202,15 @@ int		dup_fds(t_prog *item);
  * 0 on error, 1 on valid.
 */
 int		set_redirect(t_shell *shell);
+
 /*
  * Executes a single child process if not built-in.
+ * In the parent sets the exit status of the last process.
  * Return value:
  * 0 on error, 1 on success.
 */
 int		exec_single(t_shell *shell);
+
 /*
  * Executes multiple programs and redirects the stdin stdout
  * from the pipe between the processes.
@@ -206,13 +219,7 @@ int		exec_single(t_shell *shell);
  * 0 on error, 1 on success.
 */
 int		exec_pipeline(t_shell *sh);
-/*
- * Allocates memory for a 2d array of size nbr of commands - 1.
- * Then creates pipes and initialises the 2d array with piped fds.
- * Return value:
- * 0 on error, 1 on success.
-*/
-int		create_pipes(t_shell *sh);
+
 /*
  * All the built in functions.
 */

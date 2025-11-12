@@ -56,6 +56,30 @@ void	set_status(int status)
 }
 
 /*
+ * Dup_fds function checks the existing programs fds
+ * and calls dup2 if needed for duplicating an fd to stdin or stdout.
+ * Return value:
+ * 0 on error 1 on success.
+*/
+int	dup_fds(t_prog *item)
+{
+	if (item->fd_io[0] != -1 && item->fd_io[0] != 0)
+	{
+		if ((dup2(item->fd_io[0], STDIN_FILENO)) == -1)
+			return (0);
+		close (item->fd_io[0]);
+		item->fd_io[0] = -1;
+	}
+	if (item->fd_io[1] != -1 && item->fd_io[1] != 1)
+	{
+		if ((dup2(item->fd_io[1], STDOUT_FILENO)) == -1)
+			return (0);
+		close (item->fd_io[1]);
+		item->fd_io[1] = -1;
+	}
+	return (1);
+}
+/*
  * Programs_validate validates each program if its executable
  * and has valid redirections.
  * Return value:

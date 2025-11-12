@@ -41,7 +41,7 @@ ENVIRON = env_getid.c env_getkey.c env_getvalue.c env_getpaths.c \
 INPUT = prompt.c heredoc.c handle_heredoc.c
 
 INIT = init_shell.c free_shell.c reset_shell.c \
-	   signal.c init_builtin.c
+	   signal.c init_builtin.c create_pipes.c
 
 MAIN = main.c
 
@@ -49,7 +49,7 @@ REDIRECT = red_init.c red_free.c \
 		   red_perror.c red_str2struct.c red_raw2val.c
 
 EXEC = exec_prog.c echo.c bltn.c dir_bltn.c exec_single.c set_redirect.c \
-		exec_pipeline.c create_pipes.c
+		exec_pipeline.c
 		   
 COMMANDS = programs_init.c programs_free.c \
 		   programs_populate.c  program_validate.c programs_print.c \

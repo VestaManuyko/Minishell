@@ -36,6 +36,30 @@ static int	close_unused_fds(t_prog *item, t_shell *sh)
 	return (1);
 }
 
+static int	close_fds(t_shell *sh)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < (sh->count - 1))
+	{
+		if (sh->pipes[i][0] != -1)
+		{
+			if (close(sh->pipes[i][0]) == -1)
+				return (perror(ER_CLOSE), 0);
+		}
+		if (sh->pipes[i][1] != -1)
+		{
+			if (close(sh->pipes[i][1]) == -1)
+				return (perror(ER_CLOSE), 0);
+		}
+		sh->pipes[i][0] = -1;
+		sh->pipes[i][1] = -1;
+		i++;
+	}
+	return (1);
+}
+
 /*
  * Checks for exsisting redirections of stdin/out
  * and sets fds for each program according  to pipe
@@ -94,24 +118,6 @@ static int	exec_child(t_prog *item, t_shell *sh)
 	return (1);
 }
 
-static int	close_fds(t_shell *sh)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < (sh->count - 1))
-	{
-		if (close(sh->pipes[i][0]) == -1)
-			return (perror(ER_CLOSE), 0);
-		if (close(sh->pipes[i][1]) == -1)
-			return (perror(ER_CLOSE), 0);
-		sh->pipes[i][0] = -1;
-		sh->pipes[i][1] = -1;
-		i++;
-	}
-	return (1);
-}
-
 /*
  * Executes multiple programs and redirects the stdin stdout
  * from the pipe between the processes.
@@ -124,7 +130,6 @@ int	exec_pipeline(t_shell *sh)
 	pid_t	pid;
 	int		status;
 	size_t	i;
-	t_prog	*item;
 
 	i = 0;
 	while (i < sh->count)
@@ -135,8 +140,7 @@ int	exec_pipeline(t_shell *sh)
 		if (pid == 0)
 		{
 			signal_set(1, sh);
-			item = &sh->items[i];
-			if (!exec_child(item, sh))
+			if (!exec_child(&sh->items[i], sh))
 				exit (1);
 			exit (0);
 		}

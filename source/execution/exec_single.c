@@ -12,25 +12,6 @@
 
 #include <minishell.h>
 
-int	dup_fds(t_prog *item)
-{
-	if (item->fd_io[0] != -1 && item->fd_io[0] != 0)
-	{
-		if ((dup2(item->fd_io[0], STDIN_FILENO)) == -1)
-			return (0);
-		close (item->fd_io[0]);
-		item->fd_io[0] = -1;
-	}
-	if (item->fd_io[1] != -1 && item->fd_io[1] != 1)
-	{
-		if ((dup2(item->fd_io[1], STDOUT_FILENO)) == -1)
-			return (0);
-		close (item->fd_io[1]);
-		item->fd_io[1] = -1;
-	}
-	return (1);
-}
-
 int	exec_single(t_shell *sh)
 {
 	pid_t	pid;
