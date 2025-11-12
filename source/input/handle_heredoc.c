@@ -58,8 +58,7 @@ static int	par_hd(pid_t pid, char **files, t_shell *sh, t_arr *red)
 	int		status;
 
 	signal_set(2, sh);
-	if ((waitpid(pid, &status, 0)) == -1)
-		return (signal_set(0, sh), perror(ER_WAITPID), 0);
+	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 	{
 		g_return = WEXITSTATUS(status);
