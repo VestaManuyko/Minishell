@@ -128,7 +128,7 @@ void	clean_exit(char *message, t_shell *shell);
  * Return value:
  * 0 on error, 1 on success or EOF;
 */
-int		heredoc(char *raw_limiter, char *limiter, t_arr *env, char *tmp_filename);
+int		heredoc(char *raw_lim, char *limiter, t_arr *env, char *tmp_filename);
 /*
  * Creates a tmp_filename for heredoc using the programs pid
  * and random int number.

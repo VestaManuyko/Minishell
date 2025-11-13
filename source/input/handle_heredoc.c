@@ -26,6 +26,7 @@ static void	free_files(char **files, int amnt)
 	}
 	free (files);
 }
+
 /*
  * Sets all the tmp_filenames created in heredoc_handler
  * into the redirect struct.
@@ -50,6 +51,7 @@ static void	set_filenames(char **files, t_arr *redirect)
 		j++;
 	}
 }
+
 /*
  * Executes the parent process of the heredoc_handler.
 */
@@ -76,6 +78,7 @@ static int	par_hd(pid_t pid, char **files, t_shell *sh, t_arr *red)
 	}
 	return (1);
 }
+
 /*
  * Executes the child process of an heredoc_handler.
 */
@@ -101,6 +104,7 @@ static int	chld_hd(t_arr *redirect, t_shell *sh, char **files)
 	}
 	return (1);
 }
+
 /*
  * Creates tmp_files for the amount of heredocs,
  * then calles a child process, which calls heredoc function

@@ -79,6 +79,7 @@ int	dup_fds(t_prog *item)
 	}
 	return (1);
 }
+
 /*
  * Programs_validate validates each program if its executable
  * and has valid redirections.

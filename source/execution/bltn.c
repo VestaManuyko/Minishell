@@ -14,25 +14,23 @@
 
 static int	has_spaces(char *s)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '=')
-			break ;
-		i++;
-	}
-	if (!s[i - 1] || !s[i + 1])
-		return (1);
-	if (s[i - 1] == ' '|| s[i = 1] == ' ')
-		return (1);
-	return (0);
+	if (!s || !*s)
+		return (0);
+	if (*s != '=')
+		return (0);
+	return (1);
 }
 
 int	bltn_export(t_arr *args, t_shell *sh)
 {
-	if (has_spaces((char *)args->arr[1]))
+	char	*s;
+
+	s = (char *)args->arr[1];
+	if (!s)
+		return (0);
+	if (s[0] == '=')
+		return (cmd_perror(ER_MINI, "export", ER_IDENT), 0);
+	if (has_spaces((char *)args->arr[2]))
 		return (cmd_perror(ER_MINI, "export", ER_IDENT), 0);
 	if (!env_entry_update(sh->env, (char *)args->arr[1]))
 		return (0);

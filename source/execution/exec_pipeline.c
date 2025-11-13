@@ -140,15 +140,16 @@ int	exec_pipeline(t_shell *sh)
 		if (pid == 0)
 		{
 			signal_set(1, sh);
-			if (!exec_child(&sh->items[i], sh))
-				exit (1);
-			exit (0);
+			return (exec_child(&sh->items[i], sh));
 		}
 		i++;
 	}
 	close_fds(sh);
 	signal_set(2, sh);
-	while ((pid = waitpid(-1, &status, 0)) > 0)
-		;
+	while (1)
+	{
+		if ((pid = waitpid(-1, &status, 0)) < 1)
+			break ;
+	}
 	return (set_status(status), signal_set(0, sh), 1);
 }
