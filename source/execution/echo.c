@@ -3,72 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 18:00:41 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/04 18:25:21 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:22:16 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	*join_args(char *arr, char *temp, int i, int flag)
+int	only_n(char *str)
 {
-	char	*args;
-	char	*temp2;
-
-	if (i == 1 || (flag == 1 && i == 2))
-		args = ft_strjoin(temp, arr);
-	else
+	while (*str != 0)
 	{
-		temp2 = ft_strjoin(temp, " ");
-		args = ft_strjoin(temp2, arr);
-		free(temp2);
+		if (*str != 'n')
+			return (0);
+		str++;
 	}
-	return (args);
+	return (1);
 }
 
-static char	*get_args(char	**arr, int *flag)
+char	**find_flags(char **arr, int *flag)
 {
-	size_t	i;
-	char	*temp;
-	char	*args;
+	int	i;
 
-	i = 1;
-	temp = NULL;
-	if (!arr[i])
-		return (NULL);
-	if (!ft_strncmp(arr[i], "-n", 2))
+	i = 0;
+	while (arr[i] != NULL)
 	{
-		i++;
-		*flag = 1;
-	}
-	while (arr[i])
-	{
-		if (!temp)
-			temp = ft_strdup("");
-		args = join_args(arr[i], temp, i, *flag);
-		free (temp);
-		if (!args)
-			return (NULL);
-		temp = args;
+		if (!(arr[i][0] == '-' && only_n(&arr[i][1])))
+			return (&arr[i]);
+		*flag = 0;
 		i++;
 	}
-	return (args);
+	return (&arr[i]);
 }
 
 int	bltn_echo(t_arr *args, t_shell *sh)
 {
-	char	*cmd_args;
+	char	**print_ptr;
 	int		flag;
 
-	flag = 0;
-	cmd_args = get_args((char **)args->arr, &flag);
-	if (!cmd_args)
-		return (write(1, "\n", 1), 0);
-	if (!flag)
-		ft_putendl_fd(cmd_args, 1);
-	else
-		write(1, cmd_args, ft_strlen(cmd_args));
-	return (free(cmd_args), 1);
+	(void)sh;
+	flag = 1;
+	if (args->size <= 1)
+		return (write(1, "\n", 1), 1);
+	print_ptr = find_flags((char **)&args->arr[1], &flag);
+	arr_print(print_ptr, ' ', flag);
+	return (1);
 }

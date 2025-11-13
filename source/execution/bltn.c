@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bltn.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 16:44:45 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/05 16:44:48 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/11/13 16:14:37 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	bltn_unset(t_arr *args, t_shell *sh)
 int	bltn_env(t_arr *args, t_shell *sh)
 {
 	(void)args;
-	arr_print((char **)sh->env->arr);
+	arr_print((char **)sh->env->arr, '\n', 0);
 	return (1);
 }
 
