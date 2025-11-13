@@ -15,6 +15,9 @@
 #include "ms_structs.h"
 #include <minishell.h>
 
+sig_atomic_t volatile g_return;
+
+
 /* This small demo evaluate if pipes are somehow connected to some kind of data.
  * basically if after the delimiter has been found no char have been detected
  * then an error of unexpected token will be thrown.

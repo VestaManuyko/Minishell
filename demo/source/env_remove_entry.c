@@ -3,6 +3,7 @@
 #include "ms_strings.h"
 #include <minishell.h>
 
+sig_atomic_t volatile g_return;
 
 /* this small demostrator remove from the env the key PATH and LS_COLORS
  */

@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+sig_atomic_t volatile g_return;
+
 void tar_print_char(t_arr *tar)
 {
 	int i;

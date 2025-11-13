@@ -43,7 +43,7 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	if (!init_shell(&sh, env))
 		return (ft_putendl_fd(ER_INIT, 2), 1);
-	signal_set(0);
+	signal_set(0, &sh);
 	while (g_return != -1)
     {
     	if (get_command(&sh))

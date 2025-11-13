@@ -14,6 +14,8 @@
 #include "ms_strings.h"
 #include <minishell.h>
 
+sig_atomic_t volatile g_return;
+
 void display_envupdate(t_shell *sh, char *str, int use_quotes)
 {
 	char *exp_quotes;

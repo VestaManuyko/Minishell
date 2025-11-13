@@ -14,6 +14,8 @@
 #include "ms_structs.h"
 #include <minishell.h>
 
+sig_atomic_t volatile g_return;
+
 /* Demonstrates how the system expand $ and quotes"
  */
 int main(int ac, char **av, char **env)

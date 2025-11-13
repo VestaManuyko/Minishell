@@ -10,6 +10,8 @@
  #include <minishell.h>
 #include <unistd.h>
 
+sig_atomic_t volatile g_return;
+
  int main(int ac, char **av, char **env)
  {
 	int ret;
