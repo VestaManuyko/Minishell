@@ -167,6 +167,11 @@ int		init_shell(t_shell *shell, char **env);
 void	signal_set(int is_child, t_shell *shell);
 
 /*
+ * Hook function to call after a signal interrupted readline.
+*/
+int		rl_hook(void);
+
+/*
  * Allocates memory for a 2d array of size nbr of commands - 1.
  * Then creates pipes and initialises the 2d array with piped fds.
  * Return value:

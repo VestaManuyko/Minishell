@@ -20,6 +20,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+	rl_signal_event_hook = rl_hook;
 	signal_set(0, &sh);
 	if (!init_shell(&sh, env))
 		return (ft_putendl_fd(ER_INIT, 2), 1);

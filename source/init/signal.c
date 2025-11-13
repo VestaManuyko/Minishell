@@ -16,12 +16,20 @@ static void	handler(int signum)
 {
 	if (signum == SIGINT)
 	{
+		g_return = 130;
+	}
+}
+
+int	rl_hook(void)
+{
+	if (g_return == 130)
+	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		write(1, "\n", 1);
 		rl_redisplay();
-		g_return = 130;
 	}
+	return (0);
 }
 
 void	signal_set(int is_child, t_shell *shell)
