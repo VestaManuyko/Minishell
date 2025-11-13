@@ -6,12 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:48:37 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/13 16:09:59 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/13 16:23:53 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "ms_structs.h"
 #include <minishell.h>
 
 static char	*set_end(t_pipe val)
