@@ -15,9 +15,7 @@
 static void	handler(int signum)
 {
 	if (signum == SIGINT)
-	{
 		g_return = 130;
-	}
 }
 
 int	rl_hook(void)
