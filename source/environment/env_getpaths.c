@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 14:24:12 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/13 15:19:24 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/13 15:42:04 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #include "ms_strings.h"
 #include <minishell.h>
 
-int check_cwd(char *str)
+int	check_cwd(char *str)
 {
 	size_t	len;
-	
+
 	if (!str)
 		return (0);
 	len = ft_strlen(str);
@@ -40,14 +40,13 @@ char	**add_cwd(char **src, int cwd_in)
 	if (arr == NULL)
 		return (NULL);
 	i = 0;
-	while (src && src[i] !=  NULL)
+	while (src && src[i] != NULL)
 	{
 		arr[i] = src[i];
 		i++;
 	}
 	if (src == NULL || cwd_in)
 		arr[i] = getcwd(NULL, 0);
-	arr_print(arr);
 	free(src);
 	if (arr[i] == NULL)
 		return (arr_free(arr), NULL);
