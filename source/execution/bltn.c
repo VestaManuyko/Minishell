@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 16:44:45 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/13 18:11:56 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/14 10:14:54 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ int	bltn_env(t_arr *args, t_shell *sh)
 			ft_putendl_fd(sh->env->arr[i], 1);
 		i++;
 	}
-	// arr_print((char **)sh->env->arr, '\n', 1);
-	return (1);
+	return (g_return = 0, 1);
 }
 
 int	bltn_exit(t_arr *args, t_shell *sh)
