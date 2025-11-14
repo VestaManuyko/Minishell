@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 09:10:22 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/13 11:47:44 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/14 10:41:31 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int main(int ac, char **av)
 	char **arr = str_split_by_set(av[3], " \a\b\t\n\v\f\r", atoi(av[2]));
 	if (arr == NULL)
 		return (1);
-	arr_print(arr);
+	arr_print(arr, '\n', 1);
 	arr_free(arr);
 	return (0);
 }
