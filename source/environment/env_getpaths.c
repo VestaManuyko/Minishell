@@ -6,12 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 14:24:12 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/13 15:42:04 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/14 12:24:28 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "ms_strings.h"
 #include <minishell.h>
 
 int	check_cwd(char *str)
@@ -19,10 +17,12 @@ int	check_cwd(char *str)
 	size_t	len;
 
 	if (!str)
-		return (0);
-	len = ft_strlen(str);
-	if (*str == ':' || str[len - 1] == ':')
 		return (1);
+	len = ft_strlen(str);
+	if (*str == ':')
+		return (1);
+	else if (str[len - 1] == ':')
+		return (-1);
 	return (0);
 }
 
@@ -31,22 +31,28 @@ char	**add_cwd(char **src, int cwd_in)
 	int		i;
 	char	**arr;
 	int		capacity;
+	char	*cwd;
 
+	if (cwd_in == 0)
+		return (src);
 	if (src == NULL)
 		capacity = 1;
 	else
 		capacity = arr_size(src);
 	arr = (char **)ft_calloc(capacity + 2, sizeof(char *));
-	if (arr == NULL)
+	cwd = getcwd(NULL, 0);
+	if (arr == NULL || cwd == NULL)
 		return (NULL);
 	i = 0;
+	if (cwd_in == 1)
+		arr[i++] = cwd;
 	while (src && src[i] != NULL)
 	{
-		arr[i] = src[i];
+		arr[i] = src[i - (cwd_in == 1)];
 		i++;
 	}
-	if (src == NULL || cwd_in)
-		arr[i] = getcwd(NULL, 0);
+	if (src == NULL || cwd_in == -1)
+		arr[i] = cwd;
 	free(src);
 	if (arr[i] == NULL)
 		return (arr_free(arr), NULL);
@@ -70,9 +76,9 @@ char	**env_getpaths(t_arr *env)
 		free(value);
 		value = NULL;
 		if (arr == NULL)
-			return (NULL);
+			return (g_return = errno, NULL);
 	}
-	free(value);
 	arr = add_cwd(arr, cwd_in);
+	free(value);
 	return (arr);
 }
