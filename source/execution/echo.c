@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 18:00:41 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/13 16:22:16 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/14 09:57:01 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ int	bltn_echo(t_arr *args, t_shell *sh)
 	(void)sh;
 	flag = 1;
 	if (args->size <= 1)
-		return (write(1, "\n", 1), 1);
-	print_ptr = find_flags((char **)&args->arr[1], &flag);
-	arr_print(print_ptr, ' ', flag);
-	return (1);
+		write(1, "\n", 1);
+	else
+	{
+		print_ptr = find_flags((char **)&args->arr[1], &flag);
+		arr_print(print_ptr, ' ', flag);
+	}
+	return (g_return = 0, 1);
 }
