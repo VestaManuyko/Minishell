@@ -30,7 +30,7 @@ void	free_shell(t_shell *sh)
 	sh->items = NULL;
 	if (sh->pipes != NULL)
 	{
-		while (i < sh->count)
+		while (i < (sh->count - 1))
 			free(sh->pipes[i++]);
 		free(sh->pipes);
 		sh->pipes = NULL;
