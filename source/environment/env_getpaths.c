@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-int	check_cwd(char *str)
+static int	check_cwd(char *str)
 {
 	size_t	len;
 
@@ -26,27 +26,35 @@ int	check_cwd(char *str)
 	return (0);
 }
 
-char	**add_cwd(char **src, int cwd_in)
+static char	**arr_alloc(char **src)
 {
-	int		i;
-	char	**arr;
 	int		capacity;
-	char	*cwd;
+	char	**arr;
 
-	if (cwd_in == 0)
-		return (src);
 	if (src == NULL)
 		capacity = 1;
 	else
 		capacity = arr_size(src);
 	arr = (char **)ft_calloc(capacity + 2, sizeof(char *));
+	return (arr);
+}
+
+static char	**add_cwd(char **src, int cwd_in)
+{
+	int		i;
+	char	**arr;
+	char	*cwd;
+
+	if (cwd_in == 0)
+		return (src);
+	arr = arr_alloc(src);
 	cwd = getcwd(NULL, 0);
 	if (arr == NULL || cwd == NULL)
 		return (NULL);
 	i = 0;
 	if (cwd_in == 1)
 		arr[i++] = cwd;
-	while (src && src[i] != NULL)
+	while (src && src[i - (cwd_in == 1)] != NULL)
 	{
 		arr[i] = src[i - (cwd_in == 1)];
 		i++;
@@ -54,9 +62,7 @@ char	**add_cwd(char **src, int cwd_in)
 	if (src == NULL || cwd_in == -1)
 		arr[i] = cwd;
 	free(src);
-	if (arr[i] == NULL)
-		return (arr_free(arr), NULL);
-	arr[++i] = NULL;
+	arr[i + (cwd_in == -1)] = NULL;
 	return (arr);
 }
 
