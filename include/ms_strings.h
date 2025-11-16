@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/27 11:08:15 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/13 15:49:42 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int		dollar(t_quote *data, char *str, int use_quote);
 
 ssize_t	arr_size(char **arr);
 void	arr_free(char **arr);
-void	arr_print(char **arr);
+void	arr_print(char **arr, char separator, int newline);
 char	**arr_deepcpy(char **src);
 
 /* return an array size that is double the size of the give capacity 

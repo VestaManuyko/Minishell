@@ -42,7 +42,7 @@ int main(int ac, char **av, char **env)
 	tar_print_char(tar);
 	tar_print_char(sh.env);
 	arr2 = arr_deepcpy((char **)tar->arr);
-	arr_print(arr2);
+	arr_print(arr2, '\n', 1);
 	tar_free(tar);
 	line = arr_to_str(arr2, 1);
 	printf("%s\n", line);
