@@ -201,6 +201,12 @@ void	set_status(int status);
 int		dup_fds(t_prog *item);
 
 /*
+ * Close all fds.
+ * Return value:
+ * 0 on error, 1 on success.
+*/
+int		close_fds(t_shell *sh);
+/*
  * Checks if the redirection files are valid and
  * sets all the needed fds for execution.
  * Return value:

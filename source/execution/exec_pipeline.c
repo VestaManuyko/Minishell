@@ -14,7 +14,7 @@
 
 static int	close_unused_fds(t_prog *item, t_shell *sh)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i < (sh->count - 1))
@@ -31,30 +31,6 @@ static int	close_unused_fds(t_prog *item, t_shell *sh)
 				return (perror(ER_CLOSE), 0);
 			sh->pipes[i][1] = -1;
 		}
-		i++;
-	}
-	return (1);
-}
-
-static int	close_fds(t_shell *sh)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < (sh->count - 1))
-	{
-		if (sh->pipes[i][0] != -1)
-		{
-			if (close(sh->pipes[i][0]) == -1)
-				return (perror(ER_CLOSE), 0);
-		}
-		if (sh->pipes[i][1] != -1)
-		{
-			if (close(sh->pipes[i][1]) == -1)
-				return (perror(ER_CLOSE), 0);
-		}
-		sh->pipes[i][0] = -1;
-		sh->pipes[i][1] = -1;
 		i++;
 	}
 	return (1);
@@ -129,7 +105,7 @@ int	exec_pipeline(t_shell *sh)
 {
 	pid_t	pid;
 	int		status;
-	size_t	i;
+	int		i;
 
 	i = 0;
 	while (i < sh->count)

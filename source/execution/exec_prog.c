@@ -119,6 +119,7 @@ void	exec_programs(t_shell *shell)
 			exec_single(shell);
 		else
 			exec_bltn(shell->items[0].bltin, shell);
+		close_fds(shell);
 	}
 	else
 	{
