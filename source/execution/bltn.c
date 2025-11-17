@@ -14,8 +14,8 @@
 
 int	bltn_export(t_arr *args, t_shell *sh)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (i < args->size)
 	{
@@ -38,7 +38,7 @@ int	bltn_unset(t_arr *args, t_shell *sh)
 
 int	bltn_env(t_arr *args, t_shell *sh)
 {
-	int i;
+	int	i;
 
 	(void)args;
 	i = 0;
