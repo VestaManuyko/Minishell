@@ -28,4 +28,5 @@
 # define ER_PIPE "Error\ncreate_pipes failure"
 # define ER_CLOSE "Error\nclose failure"
 # define ER_NOEXEC "Permission denied"
+# define ER_EXP "Error\nminishell: export: "
 #endif

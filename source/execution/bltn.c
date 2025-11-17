@@ -21,7 +21,7 @@ int	bltn_export(t_arr *args, t_shell *sh)
 	{
 		if (!env_entry_update(sh->env, (char *)args->arr[i]))
 		{
-			cmd_perror(ER_MINI, (char *)args->arr[i], ER_IDENT);
+			cmd_perror(ER_EXP, (char *)args->arr[i], ER_IDENT);
 			g_return = 1;
 		}
 		i++;
