@@ -19,7 +19,7 @@
 */
 static int	init_pipes(t_shell *sh, int **pipes)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i < (sh->count - 1))
@@ -45,8 +45,8 @@ static int	init_pipes(t_shell *sh, int **pipes)
 */
 int	create_pipes(t_shell *sh)
 {
-	size_t	i;
-	size_t	j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;

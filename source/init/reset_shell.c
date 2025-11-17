@@ -14,7 +14,7 @@
 
 void	reset_shell(t_shell *sh)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (sh == NULL)
