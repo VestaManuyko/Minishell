@@ -6,34 +6,26 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 16:44:45 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/13 16:14:37 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/17 15:42:51 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int	has_spaces(char *s)
-{
-	if (!s || !*s)
-		return (0);
-	if (*s != '=')
-		return (0);
-	return (1);
-}
-
 int	bltn_export(t_arr *args, t_shell *sh)
 {
-	char	*s;
-
-	s = (char *)args->arr[1];
-	if (!s)
-		return (0);
-	if (s[0] == '=')
-		return (cmd_perror(ER_MINI, "export", ER_IDENT), 0);
-	if (has_spaces((char *)args->arr[2]))
-		return (cmd_perror(ER_MINI, "export", ER_IDENT), 0);
-	if (!env_entry_update(sh->env, (char *)args->arr[1]))
-		return (0);
+	int i;
+	
+	i = 0;
+	while (i < args->size)
+	{
+		if (!env_entry_update(sh->env, (char *)args->arr[i]))
+		{
+			cmd_perror(ER_EXP, (char *)args->arr[i], ER_IDENT);
+			g_return = 1;
+		}
+		i++;
+	}
 	return (1);
 }
 
@@ -46,9 +38,17 @@ int	bltn_unset(t_arr *args, t_shell *sh)
 
 int	bltn_env(t_arr *args, t_shell *sh)
 {
+	int i;
+
 	(void)args;
-	arr_print((char **)sh->env->arr, '\n', 0);
-	return (1);
+	i = 0;
+	while (i < sh->env->size)
+	{
+		if (ft_strchr(sh->env->arr[i], '='))
+			ft_putendl_fd(sh->env->arr[i], 1);
+		i++;
+	}
+	return (g_return = 0, 1);
 }
 
 int	bltn_exit(t_arr *args, t_shell *sh)
