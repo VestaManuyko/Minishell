@@ -6,13 +6,13 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:51:58 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/11 17:02:18 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/17 12:32:31 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <asm-generic/errno-base.h>
 #include <minishell.h>
-#include <stdio.h>
+
+int	is_valid_file(char *exec);
 
 /* Verify if the executable matches any of the available built ins.
  * If true set the param bltin of the t_prog* to the appropriate 
@@ -84,7 +84,7 @@ static int	check_exec_withpath(char *path, char *slash, void **exec)
 	full_path = ft_strjoin(path, slash);
 	if (full_path == NULL)
 		return (0);
-	if (access(full_path, F_OK) == 0)
+	if (is_valid_file(full_path))
 	{
 		if (access(full_path, X_OK) == 0)
 		{
