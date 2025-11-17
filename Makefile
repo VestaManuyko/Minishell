@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+         #
+#    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/11/05 12:17:01 by vmanuyko         ###   ########.fr        #
+#    Updated: 2025/11/17 12:43:29 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,8 @@ EXEC = exec_prog.c echo.c bltn.c dir_bltn.c exec_single.c set_redirect.c \
 		exec_pipeline.c
 		   
 COMMANDS = programs_init.c programs_free.c \
-		   programs_populate.c  program_validate.c programs_print.c \
+		   programs_populate.c  program_validate.c program_validate2.c \
+		   programs_print.c \
 		   cmd_perror.c \
 		   cmd_validate_pipes.c \
 		   cmd_str2prog.c \
