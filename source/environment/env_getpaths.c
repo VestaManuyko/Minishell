@@ -16,7 +16,7 @@ static int	check_cwd(char *str)
 {
 	size_t	len;
 
-	if (!str)
+	if (!str || !(*str))
 		return (1);
 	len = ft_strlen(str);
 	if (*str == ':')
