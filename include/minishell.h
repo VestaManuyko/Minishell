@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/28 13:29:58 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/05 12:19:12 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 # include <stdbool.h>
 # include <signal.h>
 # include <errno.h>
@@ -114,17 +115,42 @@ char	**str_split_by_set(char *str, char *set, bool eval_quote);
  * If ctrl D(EOF) encountered cleans up and exits.
  * On system function call error cleans up and exits the shell.
  */
-int	get_command(t_shell *shell);
-
+int		get_command(t_shell *shell);
+/*
+ * Prints an error message with perror if not NULL
+ * checks if anything needs to be freed and cleans up,
+ * then exits.
+*/
+void	clean_exit(char *message, t_shell *shell);
 /*
  * Reads input from stdin until a limiter is met.
- * If limiter was quoted expands the environment variables
+ * If limiter was quoted expands the environment variables.
  * Return value:
- * On error NULL;
- * on success a freeable ointer to a string with the name 
- * of the tmp_file where heredoc input was written.
+ * 0 on error, 1 on success or EOF;
 */
-char	*heredoc(char *raw_limiter, char *limiter, t_arr *env);
+int		heredoc(char *raw_lim, char *limiter, t_arr *env, char *tmp_filename);
+/*
+ * Creates a tmp_filename for heredoc using the programs pid
+ * and random int number.
+ * Return value:
+ * NULL on error,
+ * freeable pointer to a string containing the tmp_filename.
+*/
+char	*get_filename(void);
+/*
+ * Creates tmp_files for the amount of heredocs,
+ * then calles a child process, which calls heredoc function
+ * for all of the heredoc, that eads from stdin until a delimiter is met
+ * and writes into the tmp_file provided.
+ * In the parent process waits for the child to terminate, if
+ * all the heredocs were succesful and no signal interruption occured
+ * during the child process, then sets all the tmp_file named for further
+ * redirection execution into the redirect struct and updates
+ * the exit status of the child.
+ * Return value:
+ * 0 on error, 1 on success.
+*/
+int		handle_heredocs(t_shell *shell, t_arr *redirect, int heredocs);
 
 /*			INIT			*/
 
@@ -135,17 +161,85 @@ char	*heredoc(char *raw_limiter, char *limiter, t_arr *env);
  */
 int		init_shell(t_shell *shell, char **env);
 
-int		bltn_echo(t_arr *args, t_arr *env);
-int		bltn_cd(t_arr *args, t_arr *env);
-int		bltn_pwd(t_arr *args, t_arr *env);
-int		bltn_export(t_arr *args, t_arr *env);
-int		bltn_unset(t_arr *args, t_arr *env);
-int		bltn_env(t_arr *args, t_arr *env);
-int		bltn_exit(t_arr *args, t_arr *env);
-
 /*
  * Signal handling for the main shell
  */
-void	signal_set(void);
+void	signal_set(int is_child, t_shell *shell);
+
+/*
+ * Hook function to call after a signal interrupted readline.
+*/
+int		rl_hook(void);
+
+/*
+ * Allocates memory for a 2d array of size nbr of commands - 1.
+ * Then creates pipes and initialises the 2d array with piped fds.
+ * Return value:
+ * 0 on error, 1 on success.v
+*/
+int		create_pipes(t_shell *sh);
+
+/*     EXECUTION     */
+
+/* 
+ * Validates if the programs are executable, 
+ * if yes executes it and sets the exit status to g_return.
+ */
+void	exec_programs(t_shell *shell);
+
+/*
+ * Called by parent, sets the exit status of a child process.
+*/
+void	set_status(int status);
+
+/*
+ * Dup_fds function checks the existing programs fds
+ * and calls dup2 if needed for duplicating an fd to stdin or stdout.
+ * Return value:
+ * 0 on error 1 on success.
+*/
+int		dup_fds(t_prog *item);
+
+/*
+ * Close all fds.
+ * Return value:
+ * 0 on error, 1 on success.
+*/
+int		close_fds(t_shell *sh);
+/*
+ * Checks if the redirection files are valid and
+ * sets all the needed fds for execution.
+ * Return value:
+ * 0 on error, 1 on valid.
+*/
+int		set_redirect(t_shell *shell);
+
+/*
+ * Executes a single child process if not built-in.
+ * In the parent sets the exit status of the last process.
+ * Return value:
+ * 0 on error, 1 on success.
+*/
+int		exec_single(t_shell *shell);
+
+/*
+ * Executes multiple programs and redirects the stdin stdout
+ * from the pipe between the processes.
+ * In the parent sets the exit status of the last process.
+ * Return value:
+ * 0 on error, 1 on success.
+*/
+int		exec_pipeline(t_shell *sh);
+
+/*
+ * All the built in functions.
+*/
+int		bltn_echo(t_arr *args, t_shell *sh);
+int		bltn_cd(t_arr *args, t_shell *sh);
+int		bltn_pwd(t_arr *args, t_shell *sh);
+int		bltn_export(t_arr *args, t_shell *sh);
+int		bltn_unset(t_arr *args, t_shell *sh);
+int		bltn_env(t_arr *args, t_shell *sh);
+int		bltn_exit(t_arr *args, t_shell *sh);
 
 #endif

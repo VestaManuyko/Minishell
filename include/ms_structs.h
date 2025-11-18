@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ms_structs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
 /*   Updated: 2025/10/27 18:41:01 by fpaglia          ###   ########.fr       */
@@ -17,6 +17,7 @@
 
 # include <sys/types.h>
 
+typedef struct s_shell	t_shell;
 /* This stucture represents the way the current program relates to the 
  * surrounding ones.
  * - pipe: has at least a process that follows.
@@ -42,7 +43,7 @@ typedef struct s_arr
 	void	(*u_free)(void *item);
 }			t_arr;
 
-typedef int	(*t_bltnf)(t_arr *args, t_arr *env);
+typedef int	(*t_bltnf)(t_arr *args, t_shell *sh);
 
 typedef struct t_bltn
 {
@@ -87,6 +88,7 @@ typedef struct s_prog
 typedef struct s_shell
 {
 	char	*cmd_line;
+	int		**pipes;
 	int		count;
 	t_prog	*items;
 	t_arr	*env;

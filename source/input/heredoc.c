@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 11:16:42 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/28 13:23:08 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/05 12:33:48 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-char	*create_filename(int nbr, char *prefix);
 
 /*
  * Checks weather the given str contains quotes.
@@ -62,19 +60,19 @@ static int	process_line(char **line, t_arr *env, int expand)
  * Return value:
  * NULL on error, tmp_filename on eof.
 */
-static char	*readline_eof(int fd, char *limiter, char *tmp_filename)
+static int	readline_eof(int fd, char *limiter)
 {
 	if (errno == 0)
 	{
 		printf("minishell: here-doc delimited by eof (wanted `%s')\n",
 			limiter);
 		close (fd);
-		return (tmp_filename);
+		return (1);
 	}
 	else
 	{
 		close (fd);
-		return (NULL);
+		return (0);
 	}
 }
 
@@ -87,49 +85,52 @@ static char	*readline_eof(int fd, char *limiter, char *tmp_filename)
  * Return value:
  * NULL on errors, tmp_filename on success.
 */
-static char	*get_filename(int *fd, int *expand, char *raw_limiter)
+char	*get_filename(void)
 {
 	char		*tmp_filename;
 	static int	nbr = 0;
+	char		*path;
+	char		*temp;
 
-	*expand = 1;
-	if (is_quoted(raw_limiter))
-		*expand = 0;
 	if (nbr++ == 2147483645)
 		nbr = 0;
-	tmp_filename = create_filename(nbr, "/tmp/heredoc_");
+	temp = ft_itoa(nbr);
+	path = ft_strjoin("/tmp/heredoc_", temp);
+	free(temp);
+	temp = ft_itoa(getpid());
+	tmp_filename = ft_strjoin(path, temp);
+	free(temp);
+	free(path);
 	if (!tmp_filename)
-		return (NULL);
-	*fd = open(tmp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
-	if (*fd == -1)
 		return (NULL);
 	return (tmp_filename);
 }
 
-char	*heredoc(char *raw_limiter, char *limiter, t_arr *env)
+int	heredoc(char *raw_lim, char *limiter, t_arr *env, char *tmp_filename)
 {
 	int		expand;
 	int		fd;
 	char	*line;
-	char	*tmp_filename;
 
-	tmp_filename = get_filename(&fd, &expand, raw_limiter);
-	if (!tmp_filename)
-		return (NULL);
+	expand = 1;
+	if (is_quoted(raw_lim))
+		expand = 0;
+	fd = open(tmp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	if (fd == -1)
+		return (0);
 	while (1)
 	{
 		line = readline("> ");
 		if (!line)
-			return (readline_eof(fd, limiter, tmp_filename));
+			return (readline_eof(fd, limiter));
 		if (ft_strchr(line, '$') && expand == 1)
 		{
 			if (process_line(&line, env, expand) == -1)
-				return (free(line), free(tmp_filename), close (fd), NULL);
+				return (free(line), free(tmp_filename), close (fd), 0);
 		}
 		if (!ft_strncmp(line, limiter, ft_strlen(limiter) + 1))
-			return (close (fd), tmp_filename);
+			return (close (fd), free(tmp_filename), 1);
 		ft_putendl_fd(line, fd);
 		free (line);
 	}
-	return (NULL);
 }

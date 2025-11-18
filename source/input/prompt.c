@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 11:29:16 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/10/28 15:21:08 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/10/27 16:24:27 by vmanuyko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	quote_opened(char *line)
 	return (1);
 }
 
-static void	clean_exit(char *message, t_shell *shell)
+void	clean_exit(char *message, t_shell *shell)
 {
 	if (!message)
 	{
@@ -92,7 +92,7 @@ int	get_command(t_shell *shell)
 		clean_exit(0, shell);
 	}
 	if (quote_opened(line))
-		return (ft_putendl_fd(ER_QUOTES, 2), 0);
+		return (add_history(line), free(line), ft_putendl_fd(ER_QUOTES, 2), 0);
 	shell->cmd_line = line;
 	if (*line)
 		add_history(line);

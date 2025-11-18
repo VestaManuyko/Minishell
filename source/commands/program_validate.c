@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   programs_validate.c                                :+:      :+:    :+:   */
+/*   program_validate.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:51:58 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/29 12:01:31 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/17 12:32:31 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	is_valid_file(char *exec);
 
 /* Verify if the executable matches any of the available built ins.
  * If true set the param bltin of the t_prog* to the appropriate 
@@ -57,13 +59,13 @@ static int	is_valid_path(char *exec)
 
 	ret = stat(exec, &info);
 	if (ret == -1)
-		return (0);
+		return (g_return = EPERM, 0);
 	if S_ISDIR(info.st_mode)
-		return (errno = EISDIR, 0);
+		return (errno = EISDIR, g_return = EISDIR, 0);
 	else if (!(S_ISREG(info.st_mode) || S_ISLNK(info.st_mode)))
-		return (errno = EPERM, 0);
+		return (errno = EPERM, g_return = EPERM, 0);
 	else if (access(exec, X_OK) == -1)
-		return (errno = EPERM, 0);
+		return (errno = EPERM, g_return = EPERM, 0);
 	return (1);
 }
 
@@ -82,7 +84,7 @@ static int	check_exec_withpath(char *path, char *slash, void **exec)
 	full_path = ft_strjoin(path, slash);
 	if (full_path == NULL)
 		return (0);
-	if (access(full_path, F_OK) == 0)
+	if (is_valid_file(full_path))
 	{
 		if (access(full_path, X_OK) == 0)
 		{
@@ -92,7 +94,8 @@ static int	check_exec_withpath(char *path, char *slash, void **exec)
 		}
 		else
 		{
-			cmd_perror(ER_MINI, *exec, strerror(errno));
+			cmd_perror(ER_MINI, *exec, ER_NOEXEC);
+			g_return = 126;
 			return (free(full_path), 0);
 		}
 	}
@@ -137,12 +140,12 @@ int	is_executable(t_arr *env, void **exec)
 	}
 	free(slash);
 	arr_free(paths);
-	errno = 127;
+	g_return = 127;
 	cmd_perror("", *exec, ER_CMD);
 	return (0);
 }
 
-int	programs_validate(t_shell *sh, t_prog *proc)
+int	program_validate(t_shell *sh, t_prog *proc)
 {
 	void	**exec;
 

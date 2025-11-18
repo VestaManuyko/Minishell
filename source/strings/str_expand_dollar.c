@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:50:13 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/29 11:49:56 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/11 15:43:13 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	expand_dollar_special(char **str, char **end, t_quote *data)
 	if (*(*str + 1) == '$')
 		line = ft_itoa(getpid());
 	else
-		line = ft_strdup("<<_$?_TO_BE_ADDED!!!>>");
+		line = ft_itoa(g_return);
 	if (line == NULL)
 		return (0);
 	if (!tar_putstr(data->expand, line))

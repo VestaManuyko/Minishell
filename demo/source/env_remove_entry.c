@@ -3,6 +3,7 @@
 #include "ms_strings.h"
 #include <minishell.h>
 
+sig_atomic_t volatile g_return;
 
 /* this small demostrator remove from the env the key PATH and LS_COLORS
  */
@@ -15,11 +16,11 @@ int main(int ac, char **av, char **env)
 	init_shell(&sh, env);
 	if (sh.env == NULL)
 		return (1);
-	arr_print((char**)sh.env->arr);
+	arr_print((char**)sh.env->arr, '\n', 1);
 	env_entry_remove(sh.env, "PATH");
 	env_entry_remove(sh.env, "LS_COLORS");
 	// env_entry_remove(sh.env, "");
-	arr_print((char**)sh.env->arr);
+	arr_print((char**)sh.env->arr, '\n', 1);
 	free_shell(&sh);
 	return (0);
 }

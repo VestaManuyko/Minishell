@@ -3,6 +3,8 @@
 #include "ms_strings.h"
 #include "ms_structs.h"
 
+sig_atomic_t volatile g_return;
+
 /* 
  * This demosntrator showcase how to build the array of redirection 
  * for each t_prog (or string already split by pipe).

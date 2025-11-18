@@ -13,27 +13,27 @@
 #include <minishell.h>
 
 /* this function must be replaced with a different one that does the dup2 directly at child execution
- * it is much safer in case of sig coming in  there are no risks of keeping fd's open by chance.
+ * it is much safer in case of sig coming in there are no risks of keeping fd's open by chance.
  */
-int cmd_openfile(t_red *item, t_prog *proc)
+int cmd_openfile(t_red *red, t_prog *proc)
 {
-	if (item->type == out_create || item->type == out_append)
+	if (red->type == out_create || red->type == out_append)
 	{
-		if (item->type == out_create)
-			item->fd = open(item->val, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		else if (item->type == out_append)
-			item->fd = open(item->val, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		proc->f_stdout = item->fd;
+		if (red->type == out_create)
+			red->fd = open(red->val, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		else if (red->type == out_append)
+			red->fd = open(red->val, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		proc->f_stdout = red->fd;
 	}
 	else
 	{
-		if (item->type == in_file)
-			item->fd = open(item->val, O_RDONLY);
+		if (red->type == in_file)
+			red->fd = open(red->val, O_RDONLY);
 		else
-		 	item->fd = -1; // TODO: waiting for heredoc function
-		proc->f_stdin = item->fd;
+		 	red->fd = -1; // TODO: waiting for heredoc function
+		proc->f_stdin = red->fd;
 	}
-	if (item->fd == -1)
+	if (red->fd == -1)
 		return (0);
 	return (1);
 }	

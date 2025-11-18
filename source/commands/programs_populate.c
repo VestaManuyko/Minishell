@@ -29,14 +29,30 @@ static t_arr	*split_commands(char *str)
 	return (cmds);
 }
 
+/*
+ * Checks for input containing only spaces or empty input
+ * If only spaces or empty returns 1, otherwise 0.
+*/
+static int	is_only_space(char	*line)
+{
+	size_t	i;
+
+	i = 0;
+	if (!*line)
+		return (1);
+	while (line[i] == ' ')
+		i++;
+	if (i == ft_strlen(line))
+		return (1);
+	return (0);
+}
+
 int	programs_populate(t_shell *sh)
 {
 	t_arr	*cmds;
 	int		i;
 
-	if (!*sh->cmd_line)
-		return (0);
-	if (!cmd_validate_pipes(sh->cmd_line))
+	if (is_only_space(sh->cmd_line) || !cmd_validate_pipes(sh->cmd_line))
 		return (0);
 	cmds = split_commands(sh->cmd_line);
 	if (cmds == NULL)
@@ -51,10 +67,11 @@ int	programs_populate(t_shell *sh)
 		sh->items[i].id = i;
 		if (i == cmds->size -1)
 			sh->items[i].go_to = end;
-		if (!cmd_str2prog(&sh->items[i], cmds->arr[i], sh->env))
+		if (!cmd_str2prog(&sh->items[i], cmds->arr[i], sh))
 			return (tar_free(cmds), 0);
 		i++;
 	}
-	tar_free(cmds);
-	return (1);
+	if (!create_pipes(sh))
+		return (ft_putendl_fd(ER_PIPE, 2), tar_free(cmds), 0);
+	return (tar_free(cmds), 1);
 }

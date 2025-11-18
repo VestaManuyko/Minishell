@@ -14,11 +14,21 @@
 
 void	reset_shell(t_shell *sh)
 {
+	int	i;
+
+	i = 0;
 	if (sh == NULL)
 		return ;
 	if (sh->cmd_line != NULL)
 		free(sh->cmd_line);
 	sh->cmd_line = NULL;
 	programs_free(sh->items, sh->count);
+	if (sh->pipes != NULL)
+	{
+		while (i < (sh->count - 1))
+			free(sh->pipes[i++]);
+		free(sh->pipes);
+		sh->pipes = NULL;
+	}
 	sh->items = NULL;
 }

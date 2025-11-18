@@ -12,8 +12,11 @@
 
 #include <minishell.h>
 
-int	cmd_str2prog(t_prog *proc, char *str, t_arr *env)
+int	cmd_str2prog(t_prog *proc, char *str, t_shell *sh)
 {
+	size_t	i;
+
+	i = 0;
 	proc->redirect = tar_init(NULL, red_free);
 	if (proc->redirect == NULL)
 		return (0);
@@ -22,9 +25,11 @@ int	cmd_str2prog(t_prog *proc, char *str, t_arr *env)
 		return (0);
 	if (!cmd_split_tokens(proc, str, proc->redirect))
 		return (0);
-	if (!cmd_parse_redirect(proc->redirect, proc, env))
+	if (!cmd_parse_redirect(proc->redirect, proc, sh))
 		return (0);
-	if (!cmd_parse_progs(proc, env))
+	if (!cmd_parse_progs(proc, sh->env))
 		return (0);
+	proc->fd_io[0] = -1;
+	proc->fd_io[1] = -1;
 	return (1);
 }

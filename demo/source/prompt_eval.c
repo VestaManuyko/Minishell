@@ -14,7 +14,7 @@
 #include "ms_structs.h"
 #include <minishell.h>
 
-int g_return = 0;
+sig_atomic_t volatile g_return = 0;
 
 int main(int ac, char **av, char **envp)
 {
@@ -22,7 +22,7 @@ int main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	signal_set();
+	signal_set(0, &shell);
 	if (!init_shell(&shell, envp))
 		return (ft_putendl_fd(ER_INIT, 2), 1);
 	while (1)

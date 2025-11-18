@@ -16,6 +16,9 @@
 
 void	free_shell(t_shell *sh)
 {
+	int	i;
+
+	i = 0;
 	if (sh == NULL)
 		return ;
 	if (sh->cmd_line != NULL)
@@ -25,6 +28,13 @@ void	free_shell(t_shell *sh)
 	if (sh->items != NULL)
 		programs_free(sh->items, sh->count);
 	sh->items = NULL;
+	if (sh->pipes != NULL)
+	{
+		while (i < (sh->count - 1))
+			free(sh->pipes[i++]);
+		free(sh->pipes);
+		sh->pipes = NULL;
+	}
 	sh = NULL;
 	rl_clear_history();
 }
