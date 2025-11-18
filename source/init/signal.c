@@ -36,6 +36,8 @@ void	signal_set(int is_child, t_shell *shell)
 
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGINT);
+	sigaddset(&sa.sa_mask, SIGQUIT);
 	if (!is_child)
 		sa.sa_handler = handler;
 	if (is_child == 1)
