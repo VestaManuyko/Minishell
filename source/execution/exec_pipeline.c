@@ -84,7 +84,11 @@ static int	exec_child(t_prog *item, t_shell *sh)
 	if (item->bltin != NULL)
 	{
 		if (!item->bltin->func(item->prog, sh))
+		{
+			free_shell(sh);
 			exit (1);
+		}
+		free_shell(sh);
 		exit(0);
 	}
 	else
@@ -117,7 +121,7 @@ int	exec_pipeline(t_shell *sh)
 		if (pid == 0)
 		{
 			signal_set(1, sh);
-			return (exec_child(&sh->items[i], sh));
+			exit (exec_child(&sh->items[i], sh));
 		}
 		i++;
 	}
