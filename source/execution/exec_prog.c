@@ -97,8 +97,6 @@ static int	programs_validate(t_shell *shell)
 			return (0);
 		i++;
 	}
-	if (!set_redirect(shell))
-		return (0);
 	return (1);
 }
 
@@ -112,6 +110,8 @@ void	exec_programs(t_shell *shell)
 		return ;
 	if (shell->count == 1)
 	{
+		if (!set_redirect(shell, &shell->items[0]))
+			return ;
 		if (shell->items[0].bltin == NULL)
 			exec_single(shell);
 		else

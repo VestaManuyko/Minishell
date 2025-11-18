@@ -126,6 +126,11 @@ int	exec_pipeline(t_shell *sh)
 		if (pid == 0)
 		{
 			signal_set(1, sh);
+			if (!set_redirect(sh, &sh->items[i]))
+			{
+				free_shell(sh);
+				exit (1);
+			}
 			exit (exec_child(&sh->items[i], sh));
 		}
 		i++;

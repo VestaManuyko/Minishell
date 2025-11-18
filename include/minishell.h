@@ -206,13 +206,14 @@ int		dup_fds(t_prog *item);
  * 0 on error, 1 on success.
 */
 int		close_fds(t_shell *sh);
+
 /*
  * Checks if the redirection files are valid and
- * sets all the needed fds for execution.
+ * sets all the needed fds for execution of a program.
  * Return value:
  * 0 on error, 1 on valid.
 */
-int		set_redirect(t_shell *shell);
+int		set_redirect(t_shell *shell, t_prog *item);
 
 /*
  * Executes a single child process if not built-in.
