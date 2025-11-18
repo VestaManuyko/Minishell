@@ -108,9 +108,6 @@ static int	programs_validate(t_shell *shell)
 */
 void	exec_programs(t_shell *shell)
 {
-	int	i;
-
-	i = 0;
 	if (!programs_validate(shell))
 		return ;
 	if (shell->count == 1)

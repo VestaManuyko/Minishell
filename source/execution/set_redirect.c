@@ -72,7 +72,7 @@ int	set_redirect(t_shell *shell)
 			else if (red->type == in_file || red->type == in_heredoc)
 				ret = create_in_files(red, shell, i);
 			if (!ret)
-				return (0);
+				return (close_fds(shell), 0);
 			j++;
 		}
 		i++;
