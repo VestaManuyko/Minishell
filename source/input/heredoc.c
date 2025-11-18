@@ -40,7 +40,7 @@ static int	is_quoted(char *str)
 /*
  * Processes the line by expanding the env values if found.
  * Return value:
- * -1 on error, 0 on success.
+ * 0 on error, 1 on success.
 */
 static int	process_line(char **line, t_arr *env, int expand)
 {
@@ -48,10 +48,10 @@ static int	process_line(char **line, t_arr *env, int expand)
 
 	expand_line = str_expand(dollar, env, *line, expand);
 	if (!expand_line)
-		return (-1);
+		return (0);
 	free (*line);
 	*line = expand_line;
-	return (0);
+	return (1);
 }
 
 /*
@@ -60,12 +60,11 @@ static int	process_line(char **line, t_arr *env, int expand)
  * Return value:
  * NULL on error, tmp_filename on eof.
 */
-static int	readline_eof(int fd, char *limiter)
+static int	readline_eof(int fd, char *lim)
 {
 	if (errno == 0)
 	{
-		printf("minishell: here-doc delimited by eof (wanted `%s')\n",
-			limiter);
+		printf("minishell: here-doc delimited by eof (wanted `%s')\n", lim);
 		close (fd);
 		return (1);
 	}
@@ -125,7 +124,7 @@ int	heredoc(char *raw_lim, char *limiter, t_arr *env, char *tmp_filename)
 			return (readline_eof(fd, limiter));
 		if (ft_strchr(line, '$') && expand == 1)
 		{
-			if (process_line(&line, env, expand) == -1)
+			if (!process_line(&line, env, expand))
 				return (free(line), close (fd), 0);
 		}
 		if (!ft_strncmp(line, limiter, ft_strlen(limiter) + 1))
