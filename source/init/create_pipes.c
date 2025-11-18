@@ -30,6 +30,7 @@ static int	init_pipes(t_shell *sh, int **pipes)
 			while (i < (sh->count - 1))
 				free(pipes[i++]);
 			free (pipes);
+			pipes = NULL;
 			return (0);
 		}
 		i++;
@@ -61,6 +62,7 @@ int	create_pipes(t_shell *sh)
 			while (j < i)
 				free(sh->pipes[j++]);
 			free(sh->pipes);
+			sh->pipes = NULL;
 		}
 		i++;
 	}
