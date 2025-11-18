@@ -82,7 +82,7 @@ static int	par_hd(pid_t pid, char **files, t_shell *sh, t_arr *red)
 /*
  * Executes the child process of an heredoc_handler.
 */
-static int	chld_hd(t_arr *redirect, t_shell *sh, char **files)
+static int	chld_hd(t_arr *redirect, t_shell *sh, char **files, int amnt)
 {
 	int		i;
 	int		j;
@@ -97,12 +97,12 @@ static int	chld_hd(t_arr *redirect, t_shell *sh, char **files)
 		if (red->type == in_heredoc)
 		{
 			if (!heredoc(red->raw, red->val, sh->env, files[i]))
-				return (0);
+				return (free_files(files, amnt), 0);
 			i++;
 		}
 		j++;
 	}
-	return (1);
+	return (free_files(files, amnt), 1);
 }
 
 /*
@@ -135,7 +135,7 @@ int	handle_heredocs(t_shell *shell, t_arr *redirect, int heredocs)
 		return (perror(ER_FORK), 0);
 	if (pid == 0)
 	{
-		if (!chld_hd(redirect, shell, tmp_files))
+		if (!chld_hd(redirect, shell, tmp_files, heredocs))
 			exit(1);
 		exit(0);
 	}

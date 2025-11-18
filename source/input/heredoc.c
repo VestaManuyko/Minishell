@@ -126,10 +126,10 @@ int	heredoc(char *raw_lim, char *limiter, t_arr *env, char *tmp_filename)
 		if (ft_strchr(line, '$') && expand == 1)
 		{
 			if (process_line(&line, env, expand) == -1)
-				return (free(line), free(tmp_filename), close (fd), 0);
+				return (free(line), close (fd), 0);
 		}
 		if (!ft_strncmp(line, limiter, ft_strlen(limiter) + 1))
-			return (close (fd), free(tmp_filename), 1);
+			return (close (fd), 1);
 		ft_putendl_fd(line, fd);
 		free (line);
 	}
