@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 16:09:33 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/17 15:59:54 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/18 15:28:35 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static char	*check_input(t_arr *env, char *str, int *assign)
 {
 	char	*exp_str;
 
-	exp_str = str_clearquotes(env, str, 0);
+	(void)env;
+	exp_str = str;
+	// exp_str = str_clearquotes(env, str, 0);
 	if (exp_str == NULL)
 		return (NULL);
 	if (ft_strchr(exp_str, '='))
@@ -45,8 +47,8 @@ int	env_entry_update(t_arr *env, char *str)
 	if (id == -1)
 	{
 		if (!tar_putstr(env, exp_str))
-			return (free(exp_str), 0);
-		free(exp_str);
+			return (/*free(exp_str),*/ 0);
+		// free(exp_str);
 	}
 	else if (assign)
 	{

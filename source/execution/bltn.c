@@ -6,28 +6,11 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 16:44:45 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/17 15:42:51 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/18 15:00:58 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-int	bltn_export(t_arr *args, t_shell *sh)
-{
-	int	i;
-
-	i = 0;
-	while (i < args->size)
-	{
-		if (!env_entry_update(sh->env, (char *)args->arr[i]))
-		{
-			cmd_perror(ER_EXP, (char *)args->arr[i], ER_IDENT);
-			g_return = 1;
-		}
-		i++;
-	}
-	return (1);
-}
 
 int	bltn_unset(t_arr *args, t_shell *sh)
 {
