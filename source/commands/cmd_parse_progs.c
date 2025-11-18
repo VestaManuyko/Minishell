@@ -6,10 +6,11 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 11:06:57 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/18 15:54:40 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/18 16:11:44 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "ms_strings.h"
 #include <minishell.h>
 
@@ -58,7 +59,8 @@ int	cmd_parse_progs(t_prog *proc, t_arr *env)
 	t_arr	*tar;
 	char	**arr;
 
-		
+	if (ft_strncmp((char *)proc->prog->arr[0], "export", 6))
+		return (1);
 	arr = clear_dollar((char **)proc->prog->arr, env);
 	if (arr == NULL)
 		return (0);
