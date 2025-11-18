@@ -12,6 +12,11 @@
 
 #include <minishell.h>
 
+/*
+ * Called from a child process to close all unused fds by that process.
+ * Return value:
+ * 0 on error, 1 0n success.
+*/
 static int	close_unused_fds(t_prog *item, t_shell *sh)
 {
 	int	i;
