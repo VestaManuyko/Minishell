@@ -137,6 +137,7 @@ int	handle_heredocs(t_shell *shell, t_arr *redirect, int heredocs)
 	{
 		if (!chld_hd(redirect, shell, tmp_files, heredocs))
 			exit(1);
+		free_shell(shell);
 		exit(0);
 	}
 	else
