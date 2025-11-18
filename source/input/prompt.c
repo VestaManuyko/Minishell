@@ -86,8 +86,6 @@ int	get_command(t_shell *shell)
 	free(prompt);
 	if (!line)
 	{
-		if (errno != 0)
-			clean_exit(ER_READLINE, shell);
 		write(1, "exit\n", 5);
 		clean_exit(0, shell);
 	}
