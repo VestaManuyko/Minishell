@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:10:47 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/18 15:50:05 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/18 16:13:09 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 int	cmd_str2prog(t_prog *proc, char *str, t_shell *sh)
 {
-	size_t	i;
-
-	i = 0;
 	proc->redirect = tar_init(NULL, red_free);
 	if (proc->redirect == NULL)
 		return (0);
