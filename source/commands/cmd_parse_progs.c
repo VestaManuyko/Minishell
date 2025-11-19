@@ -6,42 +6,40 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 11:06:57 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/19 15:24:13 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/19 15:53:05 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ms_structs_support.h"
 #include <minishell.h>
 
 char	**split_byequal(char *str);
 
 static char	**clear_export(char **arr, t_arr *env)
 {
-	char	**tmp;
-	char	**arr_inter;
-	char	**arr_out;
+	t_expo	ex;
 	int		i;
-	char	*str;
 
 	i = 0;
-	arr_out = NULL;
+	ex.arr_out = NULL;
 	while (arr[i] != NULL)
 	{
-		str = str_expand(dollar, env, arr[i], 1);
-		if (str == NULL)
+		ex.str = str_expand(dollar, env, arr[i], 1);
+		if (ex.str == NULL)
 			return (arr_free(arr), NULL);
-		arr_inter = split_byequal(str);
-		free(str);
-		if (arr_inter == NULL)
+		ex.arr_inter = split_byequal(ex.str);
+		free(ex.str);
+		if (ex.arr_inter == NULL)
 			return (arr_free(arr), NULL);
-		tmp = arr_out;
-		arr_out = arr_merge(arr_out, arr_inter);
-		if (arr_out == NULL)
-			return (arr_free(arr), arr_free(arr_inter), NULL);
-		free(tmp);
-		free(arr_inter);
+		ex.tmp = ex.arr_out;
+		ex.arr_out = arr_merge(ex.arr_out, ex.arr_inter);
+		if (ex.arr_out == NULL)
+			return (arr_free(arr), arr_free(ex.arr_inter), NULL);
+		free(ex.tmp);
+		free(ex.arr_inter);
 		i++;
 	}
-	return (arr_out);
+	return (ex.arr_out);
 }
 
 static char	**clear_dollar(char **arr, t_arr *env)
