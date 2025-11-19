@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/13 15:49:42 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/19 15:23:03 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,12 @@ char	**arr_deepcpy(char **src);
 /* return an array size that is double the size of the give capacity 
  */
 void	**arr_double(void **src, int capacity);
+
+/* return an array that is the sum of the 2 given ones.
+ * NULL arrays can be passed.
+ * in case all the source array are empty an array of size 1 will be returned.
+ */
+char	**arr_merge(char **arr1, char **arr2);
 
 /*
  ************************************************

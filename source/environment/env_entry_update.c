@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 16:09:33 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/19 14:17:53 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/19 15:11:41 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include <minishell.h>
 
 static int	does_assign(char *str)
-{	
-	int assign;
+{
+	int	assign;
 
 	if (ft_strchr(str, '='))
 		assign = 1;
@@ -29,7 +29,6 @@ int	env_entry_update(t_arr *env, char *str)
 	int		id;
 	char	*key;
 	int		assign;
-	char	*tmp;
 
 	assign = does_assign(str);
 	key = env_getkey(str);
@@ -44,9 +43,11 @@ int	env_entry_update(t_arr *env, char *str)
 	}
 	else if (assign)
 	{
-		tmp = env->arr[id];
-		env->arr[id] = str;
-		free(tmp);
+		key = ft_strdup(str);
+		if (key == NULL)
+			return (0);
+		free(env->arr[id]);
+		env->arr[id] = key;
 	}
 	return (1);
 }

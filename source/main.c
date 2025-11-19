@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:34:08 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/19 10:04:49 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/19 14:27:37 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int ac, char **av, char **env)
 		{
 			if (programs_populate(&sh))
 			{
-				programs_print(sh);
 				exec_programs(&sh);
 				reset_shell(&sh);
 			}

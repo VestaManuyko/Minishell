@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/11/18 15:13:48 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/11/19 15:27:46 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ H_INCLUDES = minishell.h err_mes.h ms_commands.h ms_environment.h ms_init.h \
 			ms_redirections.h ms_strings.h ms_structs_support.h ms_structs.h
 # Groups of source files 
 STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
-		  arr_double.c \
+		  arr_double.c arr_merge.c \
 		  str_split_by_set.c str_isquoted.c \
 		  str_clearquotes.c \
 		  str_expand.c str_expand_quotes.c str_expand_dollar.c \
@@ -56,7 +56,8 @@ COMMANDS = programs_init.c programs_free.c \
 		   cmd_perror.c \
 		   cmd_validate_pipes.c \
 		   cmd_str2prog.c \
-		   cmd_split_tokens.c cmd_parse_progs.c cmd_parse_redirect.c
+		   cmd_split_tokens.c cmd_parse_progs.c cmd_parse_progs2.c \
+		   cmd_parse_redirect.c
 
 # Add source paths to files 
 STRINGS_SRC = $(addprefix $(SRC_DIR)/strings/, $(STRINGS))

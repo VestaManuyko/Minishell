@@ -6,103 +6,22 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 11:06:57 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/19 13:08:40 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/19 15:24:13 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "ms_strings.h"
 #include <minishell.h>
 
-char **arr_merge(char **arr1, char **arr2)
-{
-	int s1;
-	int s2;
-	char **arr_out;
-	char **arr_ptr;
-	
-	s1 = arr_size(arr1);
-	s2 = arr_size(arr2);
-	arr_out = (char **)ft_calloc(s1 * (s1 != -1) + s2 * (s2 != -1) + 1,
-		sizeof(char *));
-	if (arr_out == NULL)
-		return (NULL);
-	arr_ptr = arr_out;
-	while (s1 != -1 && *arr1 != NULL)
-		*arr_ptr++ = *arr1++;
-	while (s2 != -1 && *arr2 != NULL)
-		*arr_ptr++ = *arr2++;
-	return (arr_out);
-}
+char	**split_byequal(char *str);
 
-int	correct_quotes(char **str)
-{
-	int i;
-	int quote;
-	
-	i = 0;
-	while ((*str)[i] != '=' && (*str)[i] != '\0')
-	{
-		quote = str_isquoted((*str)[i]);
-		i++;
-	}
-	(*str)[i] = (char)quote;
-	str_isquoted((*str)[i]);
-	return (quote);
-}
-char *rebuild_equal(char *str1, char *str2, int quotes)
-{
-	char *out;
-	char *tmp;
-
-	if (quotes != 0)
-	{
-		str2[0] = (char)quotes;
-		tmp = ft_strjoin(str1, "=");
-		out = ft_strjoin(tmp, str2);
-		free(tmp);
-	}
-	else
-		out = ft_strjoin(str1, str2);
-	return (out);
-}
-
-char **split_byequal(char *str)
-{
-	char 	*equal_ptr;
-	char	*tmp_str;
-	char	**arr;
-	int		len;
-	int		quotes;
-	
-	equal_ptr = ft_strchr(str, '=');
-	if (equal_ptr == NULL)
-		return (str_split_by_set(str, MS_BLANKS, 1));
-	tmp_str = ft_strncpy(str, equal_ptr - str + 1);
-	if (tmp_str == NULL)
-		return (NULL);
-	quotes = correct_quotes(&tmp_str);
-	arr = str_split_by_set(tmp_str, MS_BLANKS, 1);
-	if (arr == NULL)
-		return (free(tmp_str), NULL);
-	free(tmp_str);
-	len = arr_size(arr);
-	tmp_str = rebuild_equal(arr[len - 1], equal_ptr, quotes);
-	if (tmp_str == NULL)
-		return (arr_free(arr), NULL);
-	free(arr[len -1]);
-	arr[len - 1] = tmp_str;
-	return (arr);
-}
-
-static char **clear_export(char **arr, t_arr *env)
+static char	**clear_export(char **arr, t_arr *env)
 {
 	char	**tmp;
 	char	**arr_inter;
 	char	**arr_out;
 	int		i;
 	char	*str;
-	
+
 	i = 0;
 	arr_out = NULL;
 	while (arr[i] != NULL)
@@ -124,46 +43,6 @@ static char **clear_export(char **arr, t_arr *env)
 	}
 	return (arr_out);
 }
-
-// static char **clear_export(char **arr)
-// {
-// 	int i;
-// 	int j;
-// 	size_t len;
-// 	char *str;
-
-// 	i = 1;
-// 	while (arr[i] != NULL)
-// 	{
-// 		if (ft_strchr(arr[i], '=') != NULL)
-// 		{
-// 			j = 0;
-// 			len = strlen(arr[i]);
-// 			str = (char *)ft_calloc(len + 3, sizeof(char));
-// 			if (!str)
-// 				return (NULL);
-// 			while (arr[i][j] != '=')
-// 			{
-// 				str[j] = arr[i][j];
-// 				j++;	
-// 			}
-// 			str[j] = arr[i][j];
-// 			j++;
-// 			str[j++] = '"';
-// 			while (arr[i][j - 1] != '\0')
-// 			{
-// 				str[j] = arr[i][j - 1];
-// 				j++;	
-// 			}
-// 			str[j] = '"';
-// 		}
-// 		free(arr[i]);
-// 		arr[i] = str;
-// 		str = NULL;
-// 		i++;
-// 	}
-// 	return (arr);
-// }
 
 static char	**clear_dollar(char **arr, t_arr *env)
 {
