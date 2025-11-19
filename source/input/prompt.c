@@ -87,7 +87,7 @@ int	get_command(t_shell *shell)
 	if (!line)
 	{
 		write(1, "exit\n", 5);
-		clean_exit(0, shell, 0);
+		clean_exit(0, shell, shell->status);
 	}
 	if (quote_opened(line))
 		return (add_history(line), free(line), ft_putendl_fd(ER_QUOTES, 2), 0);

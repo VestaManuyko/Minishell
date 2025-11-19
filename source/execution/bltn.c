@@ -53,9 +53,40 @@ int	bltn_env(t_arr *args, t_shell *sh)
 
 int	bltn_exit(t_arr *args, t_shell *sh)
 {
-	(void)args;
-	free_shell(sh);
+	int		status;
+	int		i;
+	char	*str;
+
+	i = 0;
+	status = sh->status;
 	printf("exit\n");
-	exit(0);
+	if (args->size > 2)
+	{
+		cmd_perror(ER_MINI, "exit", "too many arguments");
+		return (0);
+	}
+	if (args->size == 1)
+		clean_exit(0, sh, status);
+	str = (char *)args->arr[1];
+	if (!str[i])
+	{
+		status = 2;
+		cmd_perror(ER_EXIT, str, "numeric argument required");
+		clean_exit(0, sh, status);
+	}
+	while (str[i])
+	{
+		if (isalpha(str[i]))
+			break;
+		i++;
+	}
+	if (str[i] != '\0')
+	{
+		cmd_perror(ER_EXIT, str, "numeric argument required");
+		status = 2;
+	}
+	else
+		status = ft_atoi(str);
+	clean_exit(0, sh, status);
 	return (1);
 }

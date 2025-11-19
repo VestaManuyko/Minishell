@@ -29,4 +29,5 @@
 # define ER_CLOSE "Error\nclose failure"
 # define ER_NOEXEC "Permission denied"
 # define ER_EXP "Error\nminishell: export: "
+# define ER_EXIT "minishell: exit: "
 #endif
