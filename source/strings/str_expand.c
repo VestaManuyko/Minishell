@@ -14,7 +14,7 @@
 #include <minishell.h>
 
 char	*str_expand(int (*f)(t_quote *data, char *str, int use_quote),
-			t_arr *env, char *str, int use_quote)
+			char *str, int use_quote, t_shell *sh)
 {
 	char	*line;
 	t_quote	data;
@@ -25,7 +25,8 @@ char	*str_expand(int (*f)(t_quote *data, char *str, int use_quote),
 		return (ft_strdup(""));
 	line = NULL;
 	data.expand = tar_init(NULL, free);
-	data.env = env;
+	data.env = sh->env;
+	data.status = &sh->status;
 	data.quote = 0;
 	if (data.expand == NULL)
 		return (NULL);

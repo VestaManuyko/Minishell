@@ -13,7 +13,7 @@
 #include "ms_strings.h"
 #include <minishell.h>
 
-static char	**clear_dollar(char **arr, t_arr *env)
+static char	**clear_dollar(char **arr, t_shell *sh)
 {
 	char	*line;
 	char	*line_d;
@@ -24,7 +24,7 @@ static char	**clear_dollar(char **arr, t_arr *env)
 	line = arr_to_str(arr_in, 1);
 	if (line == NULL)
 		return (0);
-	line_d = str_expand(dollar, env, line, 1);
+	line_d = str_expand(dollar, line, 1, sh);
 	free(line);
 	if (line_d == NULL)
 		return (0);
@@ -35,7 +35,7 @@ static char	**clear_dollar(char **arr, t_arr *env)
 	return (arr_out);
 }
 
-static int	clear_quotes(char **arr, t_arr *env)
+static int	clear_quotes(char **arr, t_shell *sh)
 {
 	int		i;
 	char	*line;
@@ -43,7 +43,7 @@ static int	clear_quotes(char **arr, t_arr *env)
 	i = 0;
 	while (arr[i] != NULL)
 	{
-		line = str_expand(quotes, env, arr[i], 0);
+		line = str_expand(quotes, arr[i], 0, sh);
 		if (line == NULL)
 			return (0);
 		free(arr[i]);
@@ -53,15 +53,15 @@ static int	clear_quotes(char **arr, t_arr *env)
 	return (1);
 }
 
-int	cmd_parse_progs(t_prog *proc, t_arr *env)
+int	cmd_parse_progs(t_prog *proc, t_shell *sh)
 {
 	t_arr	*tar;
 	char	**arr;
 
-	arr = clear_dollar((char **)proc->prog->arr, env);
+	arr = clear_dollar((char **)proc->prog->arr, sh);
 	if (arr == NULL)
 		return (0);
-	if (!clear_quotes(arr, env))
+	if (!clear_quotes(arr, sh))
 		return (arr_free(arr), 0);
 	tar_free(proc->prog);
 	tar = tar_init(arr, free);

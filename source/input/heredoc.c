@@ -42,11 +42,11 @@ static int	is_quoted(char *str)
  * Return value:
  * 0 on error, 1 on success.
 */
-static int	process_line(char **line, t_arr *env, int expand)
+static int	process_line(char **line, int expand, t_shell *sh)
 {
 	char	*expand_line;
 
-	expand_line = str_expand(dollar, env, *line, expand);
+	expand_line = str_expand(dollar, *line, expand, sh);
 	if (!expand_line)
 		return (0);
 	free (*line);
@@ -105,7 +105,7 @@ char	*get_filename(void)
 	return (tmp_filename);
 }
 
-int	heredoc(char *raw_lim, char *limiter, t_arr *env, char *tmp_filename)
+int	heredoc(char *raw_lim, char *limiter, char *tmp_filename, t_shell *sh)
 {
 	int		expand;
 	int		fd;
@@ -124,7 +124,7 @@ int	heredoc(char *raw_lim, char *limiter, t_arr *env, char *tmp_filename)
 			return (readline_eof(fd, limiter));
 		if (ft_strchr(line, '$') && expand == 1)
 		{
-			if (!process_line(&line, env, expand))
+			if (!process_line(&line, expand, sh))
 				return (free(line), close (fd), 0);
 		}
 		if (!ft_strncmp(line, limiter, ft_strlen(limiter) + 1))

@@ -42,7 +42,7 @@
  * - a pointer to the realized string in case of success;
  * - a NULL pointer on failure.
  */
-char	*str_clearquotes(t_arr *env, char *str, int use_quote);
+char	*str_clearquotes(char *str, int use_quote, t_shell *sh);
 
 /* 
  * Given a string returns a new string based on the pointer function given.
@@ -56,7 +56,7 @@ char	*str_clearquotes(t_arr *env, char *str, int use_quote);
  * - a NULL pointer on failure.
  */
 char	*str_expand(int (*f)(t_quote *data, char *str, int use_quote),
-			t_arr *env, char *str, int use_quote);
+			char *str, int use_quote, t_shell *sh);
 int		quotes(t_quote *data, char *str, int use_quote);
 int		dollar(t_quote *data, char *str, int use_quote);
 

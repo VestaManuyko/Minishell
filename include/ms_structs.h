@@ -93,6 +93,7 @@ typedef struct s_shell
 	t_prog	*items;
 	t_arr	*env;
 	t_bltn	bltn[MS_BUILTINS];
+	int		status;
 }	t_shell;
 
 /*

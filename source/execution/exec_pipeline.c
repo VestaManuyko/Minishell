@@ -127,11 +127,8 @@ int	exec_pipeline(t_shell *sh)
 		{
 			signal_set(1, sh);
 			if (!set_redirect(sh, &sh->items[i]))
-			{
-				free_shell(sh);
-				exit (1);
-			}
-			exit (exec_child(&sh->items[i], sh));
+				clean_exit(0, sh, 1);
+			clean_exit(0, sh, exec_child(&sh->items[i], sh));
 		}
 		i++;
 	}
@@ -139,5 +136,5 @@ int	exec_pipeline(t_shell *sh)
 	signal_set(2, sh);
 	while ((waitpid(-1, &status, 0)) > 0)
 		;
-	return (set_status(status), signal_set(0, sh), 1);
+	return (set_status(status, sh), signal_set(0, sh), 1);
 }

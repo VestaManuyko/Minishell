@@ -46,7 +46,7 @@ int		env_getvalue(char **arr, char **str, int id);
  * - 0 on error, please note the source env, str will need to be free'd
  *     by the caller. 
  */
-int		env_entry_update(t_arr *env, char *str);
+int		env_entry_update(t_arr *env, char *str, t_shell *sh);
 
 /* 
  * Search through the env for the provided key, if found will remove the
@@ -57,7 +57,7 @@ int		env_entry_update(t_arr *env, char *str);
  * - 1 on success
  * - 0 on missing key
  */
-int		env_entry_remove(t_arr *env, char *key);
+int		env_entry_remove(t_arr *env, char *str, t_shell *sh);
 
 /* 
  * Given a string finds the portion of it that preceeds the equal sign.

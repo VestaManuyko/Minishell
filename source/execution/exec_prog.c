@@ -14,7 +14,7 @@
 /*
  * Execution of a bulit-in function passed as a parameter
  * Return value:
- * 0 on error, 1 on success.
+ * 1 on error, 0 on success.
 */
 int	exec_bltn(t_bltn *bltn, t_shell *shell)
 {
@@ -28,7 +28,7 @@ int	exec_bltn(t_bltn *bltn, t_shell *shell)
 		stdin_main = dup(STDIN_FILENO);
 		stdout_main = dup(STDOUT_FILENO);
 		if (!dup_fds(&shell->items[0]) || stdin_main == -1 || stdout_main == -1)
-			return (close(stdin_main), close(stdout_main), 0);
+			return (close(stdin_main), close(stdout_main), 1);
 	}
 	if (!bltn->func(shell->items[0].prog, shell))
 		err_ret = 1;
@@ -40,19 +40,19 @@ int	exec_bltn(t_bltn *bltn, t_shell *shell)
 		close(stdout_main);
 	}
 	if (err_ret == 1)
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
 /*
  * Called by parent, sets the exit status of a child process.
 */
-void	set_status(int status)
+void	set_status(int status, t_shell *sh)
 {
 	if (WIFEXITED(status))
-		g_return = WEXITSTATUS(status);
+		sh->status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
-		g_return = 128 + WTERMSIG(status);
+		sh->status = 128 + WTERMSIG(status);
 }
 
 /*
@@ -115,7 +115,7 @@ void	exec_programs(t_shell *shell)
 		if (shell->items[0].bltin == NULL)
 			exec_single(shell);
 		else
-			exec_bltn(shell->items[0].bltin, shell);
+			shell->status = exec_bltn(shell->items[0].bltin, shell);
 		close_fds(shell);
 	}
 	else

@@ -59,6 +59,6 @@ int		cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect);
  */
 int		cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_shell *sh);
 
-int		cmd_parse_progs(t_prog *proc, t_arr *env);
+int		cmd_parse_progs(t_prog *proc, t_shell *sh);
 
 #endif

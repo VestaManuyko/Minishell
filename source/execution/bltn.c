@@ -19,7 +19,7 @@ int	bltn_export(t_arr *args, t_shell *sh)
 	i = 0;
 	while (i < args->size)
 	{
-		if (!env_entry_update(sh->env, (char *)args->arr[i]))
+		if (!env_entry_update(sh->env, (char *)args->arr[i], sh))
 		{
 			cmd_perror(ER_EXP, (char *)args->arr[i], ER_IDENT);
 			g_return = 1;
@@ -31,7 +31,7 @@ int	bltn_export(t_arr *args, t_shell *sh)
 
 int	bltn_unset(t_arr *args, t_shell *sh)
 {
-	if (!env_entry_remove(sh->env, (char *)args->arr[1]))
+	if (!env_entry_remove(sh->env, (char *)args->arr[1], sh))
 		return (0);
 	return (1);
 }

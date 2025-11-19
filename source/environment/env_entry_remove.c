@@ -12,13 +12,13 @@
 
 #include <minishell.h>
 
-int	env_entry_remove(t_arr *env, char *str)
+int	env_entry_remove(t_arr *env, char *str, t_shell *sh)
 {
 	int		id;
 	char	*exp_str;
 	char	*key;
 
-	exp_str = str_clearquotes(env, str, 0);
+	exp_str = str_clearquotes(str, 0, sh);
 	if (exp_str == NULL)
 		return (0);
 	key = env_getkey(exp_str);

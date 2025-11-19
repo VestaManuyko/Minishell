@@ -34,6 +34,7 @@ typedef struct s_quote
 	t_arr	*env;
 	t_arr	*expand;
 	int		quote;
-}			t_quote;
+	int		*status;
+}	t_quote;
 
 #endif

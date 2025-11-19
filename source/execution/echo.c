@@ -52,5 +52,5 @@ int	bltn_echo(t_arr *args, t_shell *sh)
 		print_ptr = find_flags((char **)&args->arr[1], &flag);
 		arr_print(print_ptr, ' ', flag);
 	}
-	return (g_return = 0, 1);
+	return (1);
 }

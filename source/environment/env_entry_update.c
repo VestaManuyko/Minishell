@@ -13,11 +13,11 @@
 #include "libft.h"
 #include <minishell.h>
 
-static char	*check_input(t_arr *env, char *str, int *assign)
+static char	*check_input(t_shell *sh, char *str, int *assign)
 {
 	char	*exp_str;
 
-	exp_str = str_clearquotes(env, str, 0);
+	exp_str = str_clearquotes(str, 0, sh);
 	if (exp_str == NULL)
 		return (NULL);
 	if (ft_strchr(exp_str, '='))
@@ -27,14 +27,14 @@ static char	*check_input(t_arr *env, char *str, int *assign)
 	return (exp_str);
 }
 
-int	env_entry_update(t_arr *env, char *str)
+int	env_entry_update(t_arr *env, char *str, t_shell *sh)
 {
 	int		id;
 	char	*exp_str;
 	char	*key;
 	int		assign;
 
-	exp_str = check_input(env, str, &assign);
+	exp_str = check_input(sh, str, &assign);
 	if (exp_str == NULL)
 		return (0);
 	key = env_getkey(exp_str);

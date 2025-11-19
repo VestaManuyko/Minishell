@@ -38,7 +38,7 @@ int	bltn_cd(t_arr *args, t_shell *sh)
 	if (!chdir(args->arr[1]))
 		return (free(home), 1);
 	cmd_perror(ER_CD, args->arr[1], strerror(errno));
-	return (free(home), 0);
+	return (free(home), 1);
 }
 
 int	bltn_pwd(t_arr *args, t_shell *sh)

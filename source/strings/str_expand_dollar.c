@@ -36,10 +36,15 @@ static int	expand_dollar_special(char **str, char **end, t_quote *data)
 	char	*line;
 
 	line = NULL;
+	if (g_return == 130)
+	{
+		*data->status = 130;
+		g_return = 0;
+	}
 	if (*(*str + 1) == '$')
 		line = ft_itoa(getpid());
 	else
-		line = ft_itoa(g_return);
+		line = ft_itoa(*data->status);
 	if (line == NULL)
 		return (0);
 	if (!tar_putstr(data->expand, line))

@@ -36,7 +36,7 @@ int	exec_single(t_shell *sh)
 	{
 		signal_set(2, sh);
 		waitpid(pid, &status, 0);
-		set_status(status);
+		set_status(status, sh);
 	}
 	return (signal_set(0, sh), 1);
 }

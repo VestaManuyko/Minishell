@@ -28,5 +28,6 @@ int	init_shell(t_shell *shell, char **env)
 	shell->count = 0;
 	shell->items = NULL;
 	shell->pipes = NULL;
+	shell->status = 0;
 	return (1);
 }

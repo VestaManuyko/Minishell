@@ -36,8 +36,6 @@ void	signal_set(int is_child, t_shell *shell)
 
 	sa.sa_flags = 0;
 	sigemptyset(&sa.sa_mask);
-	sigaddset(&sa.sa_mask, SIGINT);
-	sigaddset(&sa.sa_mask, SIGQUIT);
 	if (!is_child)
 		sa.sa_handler = handler;
 	if (is_child == 1)
@@ -45,12 +43,12 @@ void	signal_set(int is_child, t_shell *shell)
 	if (is_child > 1)
 		sa.sa_handler = SIG_IGN;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
-		clean_exit(ER_SIGACT, shell);
+		clean_exit(ER_SIGACT, shell, 1);
 	if (!is_child)
 		signal(SIGQUIT, SIG_IGN);
 	else
 	{
 		if (sigaction(SIGQUIT, &sa, NULL) == -1)
-			clean_exit(ER_SIGACT, shell);
+			clean_exit(ER_SIGACT, shell, 1);
 	}
 }

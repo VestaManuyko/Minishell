@@ -96,7 +96,7 @@ static int	chld_hd(t_arr *redirect, t_shell *sh, char **files, int amnt)
 		red = (t_red *)redirect->arr[j];
 		if (red->type == in_heredoc)
 		{
-			if (!heredoc(red->raw, red->val, sh->env, files[i]))
+			if (!heredoc(red->raw, red->val, files[i], sh))
 				return (free_files(files, amnt), 0);
 			i++;
 		}
@@ -136,9 +136,8 @@ int	handle_heredocs(t_shell *shell, t_arr *redirect, int heredocs)
 	if (pid == 0)
 	{
 		if (!chld_hd(redirect, shell, tmp_files, heredocs))
-			exit(1);
-		free_shell(shell);
-		exit(0);
+			clean_exit(0, shell, 1);
+		clean_exit(0, shell, 0);
 	}
 	else
 	{

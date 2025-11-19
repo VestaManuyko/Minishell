@@ -38,6 +38,6 @@ t_red	*red_str2struct(char *str);
  * $ and quotes are getting expanded with the exception of the heredoc case
  * where only quotes are expanded.
  */
-int		red_raw2val(t_red *item, t_arr *env);
+int	red_raw2val(t_red *item, t_shell *sh);
 
 #endif

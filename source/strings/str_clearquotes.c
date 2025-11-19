@@ -13,15 +13,15 @@
 #include "ms_strings.h"
 #include <minishell.h>
 
-char	*str_clearquotes(t_arr *env, char *str, int use_quote)
+char	*str_clearquotes(char *str, int use_quote, t_shell *sh)
 {
 	char	*line;
 	char	*line2;
 
-	line = str_expand(dollar, env, str, use_quote);
+	line = str_expand(dollar, str, use_quote, sh);
 	if (line == NULL)
 		return (NULL);
-	line2 = str_expand(quotes, env, line, use_quote);
+	line2 = str_expand(quotes,line, use_quote, sh);
 	if (line2 == NULL)
 		return (free(line), NULL);
 	free(line);

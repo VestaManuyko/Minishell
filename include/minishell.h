@@ -116,19 +116,22 @@ char	**str_split_by_set(char *str, char *set, bool eval_quote);
  * On system function call error cleans up and exits the shell.
  */
 int		get_command(t_shell *shell);
+
 /*
  * Prints an error message with perror if not NULL
  * checks if anything needs to be freed and cleans up,
  * then exits.
 */
-void	clean_exit(char *message, t_shell *shell);
+void	clean_exit(char *message, t_shell *shell, int status);
+
 /*
  * Reads input from stdin until a limiter is met.
  * If limiter was quoted expands the environment variables.
  * Return value:
  * 0 on error, 1 on success or EOF;
 */
-int		heredoc(char *raw_lim, char *limiter, t_arr *env, char *tmp_filename);
+int		heredoc(char *raw_lim, char *limiter, char *tmp_filename, t_shell *sh);
+
 /*
  * Creates a tmp_filename for heredoc using the programs pid
  * and random int number.
@@ -137,6 +140,7 @@ int		heredoc(char *raw_lim, char *limiter, t_arr *env, char *tmp_filename);
  * freeable pointer to a string containing the tmp_filename.
 */
 char	*get_filename(void);
+
 /*
  * Creates tmp_files for the amount of heredocs,
  * then calles a child process, which calls heredoc function
@@ -190,7 +194,7 @@ void	exec_programs(t_shell *shell);
 /*
  * Called by parent, sets the exit status of a child process.
 */
-void	set_status(int status);
+void	set_status(int status, t_shell *sh);
 
 /*
  * Dup_fds function checks the existing programs fds

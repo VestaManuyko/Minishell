@@ -25,7 +25,7 @@ int	cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_shell *sh)
 	while (i < redirect->size)
 	{
 		tmp = (t_red *)redirect->arr[i];
-		if (!red_raw2val(tmp, sh->env))
+		if (!red_raw2val(tmp, sh))
 			return (0);
 		if (tmp->type == in_heredoc)
 			heredocs++;
