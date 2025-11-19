@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 16:44:45 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/18 15:00:58 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/19 14:00:35 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	bltn_env(t_arr *args, t_shell *sh)
 	i = 0;
 	while (i < sh->env->size)
 	{
-		if (ft_strchr(sh->env->arr[i], '='))
+		if (ft_strchr(sh->env->arr[i], '=') != NULL)
 			ft_putendl_fd(sh->env->arr[i], 1);
 		i++;
 	}
