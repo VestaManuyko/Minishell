@@ -63,8 +63,8 @@ static int	par_hd(pid_t pid, char **files, t_shell *sh, t_arr *red)
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 	{
-		g_return = WEXITSTATUS(status);
-		if (g_return == 1)
+		sh->status = WEXITSTATUS(status);
+		if (sh->status == 1)
 			return (signal_set(0, sh), 0);
 		set_filenames(files, red);
 	}
@@ -73,7 +73,7 @@ static int	par_hd(pid_t pid, char **files, t_shell *sh, t_arr *red)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		write(1, "\n", 1);
-		g_return = 128 + WTERMSIG(status);
+		sh->status = 128 + WTERMSIG(status);
 		return (signal_set(0, sh), 0);
 	}
 	return (1);

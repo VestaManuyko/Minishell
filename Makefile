@@ -48,7 +48,7 @@ REDIRECT = red_init.c red_free.c \
 		   red_perror.c red_str2struct.c red_raw2val.c
 
 EXEC = exec_prog.c echo.c bltn.c dir_bltn.c exec_single.c set_redirect.c \
-		exec_pipeline.c close_fds.c
+		exec_pipeline.c close_fds.c exit_bltn.c
 		   
 COMMANDS = programs_init.c programs_free.c \
 		   programs_populate.c  program_validate.c program_validate2.c \

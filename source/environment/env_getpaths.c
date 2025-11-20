@@ -66,7 +66,7 @@ static char	**add_cwd(char **src, int cwd_in)
 	return (arr);
 }
 
-char	**env_getpaths(t_arr *env)
+char	**env_getpaths(t_arr *env, t_shell *sh)
 {
 	char	*value;
 	char	**arr;
@@ -82,7 +82,7 @@ char	**env_getpaths(t_arr *env)
 		free(value);
 		value = NULL;
 		if (arr == NULL)
-			return (g_return = errno, NULL);
+			return (sh->status = errno, NULL);
 	}
 	arr = add_cwd(arr, cwd_in);
 	free(value);

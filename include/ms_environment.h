@@ -79,6 +79,6 @@ char	*env_getkey(char *str);
  * From the t_arr environment structure returns a char **array of all
  * the paths included in the environment and separated by the ':' character.
  */
-char	**env_getpaths(t_arr *env);
+char	**env_getpaths(t_arr *env, t_shell *sh);
 
 #endif
