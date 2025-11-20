@@ -15,6 +15,7 @@
 int	bltn_cd(t_arr *args, t_shell *sh)
 {
 	char	*home;
+	char	*str;
 	char	*key;
 	int		id;
 
@@ -30,12 +31,10 @@ int	bltn_cd(t_arr *args, t_shell *sh)
 	if (!home || !*home)
 		return (free(home), 1);
 	if (!args->arr[1])
-	{
-		if ((!chdir(home)))
-			return (free(home), 1);
-		return (cmd_perror(ER_CD, home, strerror(errno)), free(home), 0);
-	}
-	if (!chdir(args->arr[1]))
+		str = home;
+	else
+		str = args->arr[1];
+	if (!chdir(str))
 		return (free(home), 1);
 	return (cmd_perror(ER_CD, args->arr[1], strerror(errno)), free(home), 0);
 }
