@@ -40,7 +40,8 @@ int	bltn_env(t_arr *args, t_shell *sh)
 {
 	int	i;
 
-	(void)args;
+	if (args->size > 1)
+		return (cmd_perror(ER_MINI, "env", ER_AC), 0);
 	i = 0;
 	while (i < sh->env->size)
 	{

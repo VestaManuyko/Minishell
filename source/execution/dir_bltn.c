@@ -68,7 +68,7 @@ int	bltn_cd(t_arr *args, t_shell *sh)
 	int		id;
 
 	if (args->size > 2)
-		return (ft_putendl_fd(ER_CDAC, 2), 0);
+		return (cmd_perror(ER_MINI, "cd", ER_AC), 0);
 	key = env_getkey("HOME");
 	id = env_getid((char **)sh->env->arr, key);
 	free(key);
