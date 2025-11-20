@@ -30,4 +30,7 @@
 # define ER_NOEXEC "Permission denied"
 # define ER_EXP "Error\nminishell: export: "
 # define ER_EXIT "minishell: exit: "
+# define ER_CDAC "Error\nminishell: cd: too many arguments"
+# define ER_CDHM "Error\nminishell: cd: HOME not set"
+
 #endif

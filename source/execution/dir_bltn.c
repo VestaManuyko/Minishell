@@ -18,27 +18,26 @@ int	bltn_cd(t_arr *args, t_shell *sh)
 	char	*key;
 	int		id;
 
+	if (args->size > 2)
+		return (ft_putendl_fd(ER_CDAC, 2), 0);
 	key = env_getkey("HOME");
 	id = env_getid((char **)sh->env->arr, key);
 	free(key);
 	if (id == -1)
-		return (0);
+		return (ft_putendl_fd(ER_CDHM, 2), 0);
 	if (!env_getvalue((char **)sh->env->arr, &home, id))
-		return (0);
-	if (!home)
-		return (0);
+		return (cmd_perror(ER_MINI, "cd", strerror(ENOMEM)), 0);
+	if (!home || !*home)
+		return (free(home), 1);
 	if (!args->arr[1])
 	{
 		if ((!chdir(home)))
 			return (free(home), 1);
-		errno = ENOTDIR;
-		cmd_perror(ER_CD, home, strerror(errno));
-		return (free(home), 0);
+		return (cmd_perror(ER_CD, home, strerror(errno)), free(home), 0);
 	}
 	if (!chdir(args->arr[1]))
 		return (free(home), 1);
-	cmd_perror(ER_CD, args->arr[1], strerror(errno));
-	return (free(home), 1);
+	return (cmd_perror(ER_CD, args->arr[1], strerror(errno)), free(home), 0);
 }
 
 int	bltn_pwd(t_arr *args, t_shell *sh)
