@@ -32,5 +32,6 @@
 # define ER_EXIT "minishell: exit: "
 # define ER_CDAC "Error\nminishell: cd: too many arguments"
 # define ER_CDHM "Error\nminishell: cd: HOME not set"
+# define ER_CDENV "Error\nminishell: failure when setting env after cd"
 
 #endif
