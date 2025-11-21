@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 11:06:57 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/21 13:01:56 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/21 16:13:04 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int expand_var(t_arr *istr, t_arr *env)
 				return (0);
 			if (tmp->type == 0)
 				tmp->connect = check_connectivity(line);
+			else
+			 	tmp->connect = 3;
 			free(tmp->str);
 			tmp->str = line;
 			line = NULL;
@@ -96,7 +98,7 @@ int append_or_connect(t_arr *arr, char *str, int connect)
 {
 	char *line;
 	
-	if (connect == 0)
+	if (connect == 0 || arr->size == 0)
 		return (tar_putstr(arr, str));
 	else
 	{
@@ -155,7 +157,7 @@ int merge_by_connectivity(t_arr *arr, t_arr *istr)
 		else
 		{
 			connect_last = (tmp->connect > 1);
-			if (!split_and_connect1st(arr, tmp))
+			if (arr->size > 0 && !split_and_connect1st(arr, tmp))
 				return (0);
 		}
 		i++;
@@ -163,25 +165,52 @@ int merge_by_connectivity(t_arr *arr, t_arr *istr)
 	return (1);
 }
 
-t_arr	*clear_dollar(t_arr *arr, t_arr *env)
+t_arr *elaborate_a_line(char *str, t_arr *env)
 {
-	t_arr	*strarr;
+	t_arr *tar;
+	t_arr *istr;
+
+	istr = str_split_by_quote(str);
+	tar = tar_init(NULL, free);
+	if (istr == NULL || tar == NULL)
+		return (tar_free(istr), tar_free(tar), NULL);
+	if (!expand_var(istr, env))
+		return (tar_free(istr), NULL);
+	if (!merge_by_connectivity(tar, istr))
+		return (tar_free(tar), tar_free(istr), NULL);
+	arr_print((char **)tar->arr, '\n', 1);
+	return (free(istr), tar);
+	
+}
+
+int tar_merge(t_arr *tar, t_arr *tmp)
+{
+	int i = 0;
+
+	while (i < tmp->size)
+	{
+		if (!tar_putstr(tar, tmp->arr[i]))
+			return (0);
+		i++;		
+	}
+	return (1);
+}
+
+t_arr	*cmd_expand_prog(t_arr *arr, t_arr *env)
+{
+	t_arr	*tar;
 	t_arr	*tmp;
 	int 	i;
 
-	strarr = tar_init(NULL, free);
-	if (strarr == NULL)
+	tar = tar_init(NULL, free);
+	if (tar == NULL)
 		return (NULL);
 	i = 0;
 	while (i < arr->size)
 	{
-		tmp = str_split_by_quote(arr->arr[i]);
-		if (tmp == NULL)
-			return (tar_free(strarr), NULL);
-		if (!expand_var(tmp, env))
-			return (tar_free(tmp), tar_free(strarr), NULL);
-		if (!merge_by_connectivity(strarr, tmp))
-			return (tar_free(tmp), tar_free(strarr), NULL);
+		tmp = elaborate_a_line(arr->arr[i], env);
+		tar_merge(tar, tmp);
+		tar_free(tmp);
 		i++;
 	}
 	/*
@@ -198,7 +227,7 @@ t_arr	*clear_dollar(t_arr *arr, t_arr *env)
 			join the one that require to be connected
 	return the arr
 	*/
-	return (strarr);
+	return (tar);
 }
 
 // static int	clear_quotes(char **arr, t_arr *env)
@@ -228,7 +257,7 @@ int	cmd_parse_progs(t_prog *proc, t_arr *env)
 	// if (ft_strncmp((char *)proc->prog->arr[0], "export", 6) == 0)
 	// 	arr = clear_export((char **)proc->prog->arr, env);
 	// else
-	tar = clear_dollar(proc->prog, env);
+	tar = cmd_expand_prog(proc->prog, env);
 	if (tar == NULL)
 		return (0);
 	printf("after clearing dollar:\n");
