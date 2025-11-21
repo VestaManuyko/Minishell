@@ -31,8 +31,14 @@ int	bltn_export(t_arr *args, t_shell *sh)
 
 int	bltn_unset(t_arr *args, t_shell *sh)
 {
-	if (!env_entry_remove(sh->env, (char *)args->arr[1], sh))
-		return (0);
+	int	i;
+
+	i = 0;
+	while (i < args->size)
+	{
+		env_entry_remove(sh->env, (char *)args->arr[i], sh);
+		i++;
+	}
 	return (1);
 }
 
