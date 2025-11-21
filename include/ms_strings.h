@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/19 15:23:03 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/21 10:28:32 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char	*str_expand(int (*f)(t_quote *data, char *str, int use_quote),
 			t_arr *env, char *str, int use_quote);
 int		quotes(t_quote *data, char *str, int use_quote);
 int		dollar(t_quote *data, char *str, int use_quote);
+
+t_arr	*str_split_by_quote(char *str);
 
 /*
  ************************************************
@@ -127,5 +129,9 @@ int		tar_popone(t_arr *tar, int id);
 int		tar_linkone(t_arr *tar, void *item);
 
 int		tar_putred(t_arr *arr, char *str);
+
+int	tar_putinfostr(t_arr *arr, char *str, int value, int connect);
+
+void	istr_free(void *item);
 
 #endif

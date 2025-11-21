@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/11/19 15:27:46 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/11/21 09:44:05 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,12 +27,13 @@ H_INCLUDES = minishell.h err_mes.h ms_commands.h ms_environment.h ms_init.h \
 # Groups of source files 
 STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
 		  arr_double.c arr_merge.c \
-		  str_split_by_set.c str_isquoted.c \
+		  str_split_by_set.c str_split_by_quote.c str_isquoted.c \
 		  str_clearquotes.c \
 		  str_expand.c str_expand_quotes.c str_expand_dollar.c \
 		  tar_init.c tar_free.c tar_print.c \
 		  tar_popone.c tar_linkone.c \
-		  tar_putstr.c tar_putred.c 
+		  tar_putstr.c tar_putred.c tar_putinfostr.c \
+		  istr_free.c
 
 ENVIRON = env_getid.c env_getkey.c env_getvalue.c env_getpaths.c \
 		  env_entry_update.c  env_entry_remove.c  
