@@ -154,7 +154,7 @@ char	*get_filename(void);
  * Return value:
  * 0 on error, 1 on success.
 */
-int		handle_heredocs(t_shell *shell, t_arr *redirect, int heredocs);
+int		handle_heredocs(t_shell *shell, t_arr *redirect, int hd, t_arr *cmds);
 
 /*			INIT			*/
 

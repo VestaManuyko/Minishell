@@ -67,7 +67,7 @@ int	programs_populate(t_shell *sh)
 		sh->items[i].id = i;
 		if (i == cmds->size -1)
 			sh->items[i].go_to = end;
-		if (!cmd_str2prog(&sh->items[i], cmds->arr[i], sh))
+		if (!cmd_str2prog(&sh->items[i], cmds->arr[i], sh, cmds))
 			return (tar_free(cmds), 0);
 		i++;
 	}

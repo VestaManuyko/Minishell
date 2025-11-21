@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-int	cmd_str2prog(t_prog *proc, char *str, t_shell *sh)
+int	cmd_str2prog(t_prog *proc, char *str, t_shell *sh, t_arr *cmds)
 {
 	size_t	i;
 
@@ -25,7 +25,7 @@ int	cmd_str2prog(t_prog *proc, char *str, t_shell *sh)
 		return (0);
 	if (!cmd_split_tokens(proc, str, proc->redirect))
 		return (0);
-	if (!cmd_parse_redirect(proc->redirect, proc, sh))
+	if (!cmd_parse_red(proc->redirect, proc, sh, cmds))
 		return (0);
 	if (!cmd_parse_progs(proc, sh))
 		return (0);

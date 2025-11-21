@@ -21,7 +21,7 @@ char	*str_clearquotes(char *str, int use_quote, t_shell *sh)
 	line = str_expand(dollar, str, use_quote, sh);
 	if (line == NULL)
 		return (NULL);
-	line2 = str_expand(quotes,line, use_quote, sh);
+	line2 = str_expand(quotes, line, use_quote, sh);
 	if (line2 == NULL)
 		return (free(line), NULL);
 	free(line);

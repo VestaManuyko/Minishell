@@ -118,31 +118,31 @@ static int	chld_hd(t_arr *redirect, t_shell *sh, char **files, int amnt)
  * Return value:
  * 0 on error, 1 on success.
 */
-int	handle_heredocs(t_shell *shell, t_arr *redirect, int heredocs)
+int	handle_heredocs(t_shell *shell, t_arr *redirect, int hd, t_arr *cmds)
 {
 	pid_t	pid;
 	char	**tmp_files;
 	int		i;
 
 	i = 0;
-	tmp_files = malloc (heredocs * sizeof(char *));
+	tmp_files = malloc (hd * sizeof(char *));
 	if (!tmp_files)
 		return (0);
-	while (i < heredocs)
+	while (i < hd)
 		tmp_files[i++] = get_filename();
 	pid = fork();
 	if (pid == -1)
-		return (perror(ER_FORK), 0);
+		return (perror(ER_FORK), free_files(tmp_files, hd), 0);
 	if (pid == 0)
 	{
-		if (!chld_hd(redirect, shell, tmp_files, heredocs))
-			clean_exit(0, shell, 1);
-		clean_exit(0, shell, 0);
+		if (!chld_hd(redirect, shell, tmp_files, hd))
+			return (tar_free(cmds), clean_exit(0, shell, 1), 0);
+		return (tar_free(cmds), clean_exit(0, shell, 0), 1);
 	}
 	else
 	{
 		if (!par_hd(pid, tmp_files, shell, redirect))
-			return (free_files(tmp_files, heredocs), 0);
+			return (free_files(tmp_files, hd), 0);
 	}
 	return (signal_set(0, shell), free(tmp_files), 1);
 }
