@@ -17,6 +17,30 @@
 #include <minishell.h>
 #include <time.h>
 
+
+void print_istr(t_arr *istr)
+{
+	int i;
+	t_istr *tmp;
+
+	i = 0;
+	while (i < istr->size)
+	{
+		tmp = (t_istr *)istr->arr[i];
+		printf("quotes: %c\tconnectivity: %d\n%s\n-----------------\n", 
+			tmp->type, tmp->connect, tmp->str);
+		i++;
+	}
+
+}
+
+static int	quote_val(char c)
+{
+	if (c == '"' || c == '\'')
+		return ((int)c);
+	return (0);
+}
+
 char	**split_byequal(char *str);
 /*
 
@@ -120,15 +144,15 @@ int split_and_connect1st(t_arr *arr, t_istr *tmp)
 	tmparr = str_split_by_set(tmp->str, MS_BLANKS, 0);
 	if (tmparr == NULL)
 		return (0);
-	if (tmp->connect == 1 || tmp->connect == 3)
+	if (arr->size > 0 && (tmp->connect == 1 || tmp->connect == 3))
 	{
 		line = ft_strjoin(arr->arr[arr->size - 1], tmparr[0]);
 		if (line == NULL)
 			return (arr_free(tmparr), 0);
-		if (!tar_putstr(arr, line))
-			return (arr_free(tmparr), 0);
+		free(arr->arr[arr->size - 1]);
+		arr->arr[arr->size - 1] = line;
 	}
-	i = (tmp->connect == 1 || tmp->connect == 3);
+	i = (arr->size > 0 && (tmp->connect == 1 || tmp->connect == 3));
 	while (tmparr[i] != NULL)
 	{
 		if (!tar_putstr(arr, tmparr[i]))
@@ -157,7 +181,7 @@ int merge_by_connectivity(t_arr *arr, t_arr *istr)
 		else
 		{
 			connect_last = (tmp->connect > 1);
-			if (arr->size > 0 && !split_and_connect1st(arr, tmp))
+			if (!split_and_connect1st(arr, tmp))
 				return (0);
 		}
 		i++;
@@ -171,11 +195,13 @@ t_arr *elaborate_a_line(char *str, t_arr *env)
 	t_arr *istr;
 
 	istr = str_split_by_quote(str);
+	print_istr(istr);
 	tar = tar_init(NULL, free);
 	if (istr == NULL || tar == NULL)
 		return (tar_free(istr), tar_free(tar), NULL);
 	if (!expand_var(istr, env))
 		return (tar_free(istr), NULL);
+	print_istr(istr);
 	if (!merge_by_connectivity(tar, istr))
 		return (tar_free(tar), tar_free(istr), NULL);
 	arr_print((char **)tar->arr, '\n', 1);
@@ -196,6 +222,22 @@ int tar_merge(t_arr *tar, t_arr *tmp)
 	return (1);
 }
 
+int quotes_or_var(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (quote_val(str[i]))
+			return (1);
+		i++;
+	}
+	if (ft_strchr(str, '$') != NULL)
+		return (1);
+	return (0);
+}
+
 t_arr	*cmd_expand_prog(t_arr *arr, t_arr *env)
 {
 	t_arr	*tar;
@@ -208,9 +250,17 @@ t_arr	*cmd_expand_prog(t_arr *arr, t_arr *env)
 	i = 0;
 	while (i < arr->size)
 	{
-		tmp = elaborate_a_line(arr->arr[i], env);
-		tar_merge(tar, tmp);
-		tar_free(tmp);
+		if (!quotes_or_var(arr->arr[i]))
+		{
+			if (!tar_putstr(tar, arr->arr[i]))
+				return (tar_free(tar), NULL);
+		}
+		else
+		{
+			tmp = elaborate_a_line(arr->arr[i], env);
+			tar_merge(tar, tmp);
+			tar_free(tmp);
+		}
 		i++;
 	}
 	/*
