@@ -10,13 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "ms_strings.h"
-#include "ms_structs.h"
-#include "ms_structs_support.h"
 #include <minishell.h>
-#include <time.h>
-
 
 void print_istr(t_arr *istr)
 {

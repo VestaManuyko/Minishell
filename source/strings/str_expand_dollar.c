@@ -100,7 +100,7 @@ int	dollar(t_quote *data, char *str, int use_quote)
 	end = str;
 	while (*str)
 	{
-		data->quote = str_isquoted(*end) * use_quote;
+		data->quote = str_isquoted_mute(*end, use_quote == 0);
 		d_type = which_dollar_exp(str, data->quote);
 		if (d_type == 1)
 			res = expand_dollar_special(&str, &end, data);

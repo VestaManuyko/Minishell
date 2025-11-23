@@ -12,6 +12,13 @@
 
 #include <minishell.h>
 
+int str_isquoted_mute(char c, int ignore)
+{
+	if (ignore)
+		return (0);
+	return (str_isquoted(c));
+}
+
 int	str_isquoted(char c)
 {
 	static int	quote = 0;
