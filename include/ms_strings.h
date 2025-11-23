@@ -44,6 +44,8 @@
  */
 char	*str_clearquotes(t_arr *env, char *str, int use_quote);
 
+int		str_isquoted_mute(char c, int ignore);
+
 /* 
  * Given a string returns a new string based on the pointer function given.
  * currently there are 2 available pointer functions that can be used:
