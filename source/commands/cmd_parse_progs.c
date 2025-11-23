@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ms_strings.h"
 #include <minishell.h>
 
 void print_istr(t_arr *istr)
@@ -36,9 +37,8 @@ static int	quote_val(char c)
 }
 
 char	**split_byequal(char *str);
-/*
 
-static char	**clear_export(char **arr, t_arr *env)
+t_arr	*clear_export(char **arr, t_arr *env)
 {
 	t_expo	ex;
 	int		i;
@@ -62,9 +62,9 @@ static char	**clear_export(char **arr, t_arr *env)
 		free(ex.arr_inter);
 		i++;
 	}
-	return (ex.arr_out);
+	return (tar_init(ex.arr_out, free));
 }
-*/
+
 int check_connectivity(char *str)
 {	
 	size_t	len;
@@ -298,16 +298,14 @@ int	cmd_parse_progs(t_prog *proc, t_arr *env)
 	// char	**arr;
 
 	
-	// if (ft_strncmp((char *)proc->prog->arr[0], "export", 6) == 0)
-	// 	arr = clear_export((char **)proc->prog->arr, env);
-	// else
-	tar = cmd_expand_prog(proc->prog, env);
+	if (ft_strncmp((char *)proc->prog->arr[0], "export", 6) == 0)
+		tar = clear_export((char **)proc->prog->arr, env);
+	else
+		tar = cmd_expand_prog(proc->prog, env);
 	if (tar == NULL)
 		return (0);
 	printf("after clearing dollar:\n");
 	arr_print((char **)tar->arr, '\n', 1);
-	// if (!clear_quotes(arr, env))
-	// 	return (arr_free(arr), 0);
 	tar_free(proc->prog);
 	// printf("after clearing quotes:\n");
 	// arr_print((char **)tar->arr, '\n', 1);
