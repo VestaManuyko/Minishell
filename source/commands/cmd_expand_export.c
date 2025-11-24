@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 12:29:24 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/24 12:33:23 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/24 16:49:12 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ static int	merge_istr(t_arr *arr, t_arr *istr)
 	return (free(str), 1);
 }
 
+/* This function equals the cmd_elaborate line with the sole
+ * exception of the merging method everything comes back to
+ * one string 
+ */
 static t_arr	*expand_line(char *str, t_arr *env)
 {
 	t_arr	*tar;
@@ -55,6 +59,9 @@ static t_arr	*expand_line(char *str, t_arr *env)
 	return (tar_free(istr), tar);
 }
 
+/* Evaluates if the key includes any variable or quote
+ * Special case for the export functionality.
+ */
 static int	quotes_or_var(char *str)
 {
 	int	i;

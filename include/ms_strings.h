@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/24 10:52:41 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/24 16:34:45 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,15 @@ char	*str_expand(int (*f)(t_quote *data, char *str, int use_quote),
 int		quotes(t_quote *data, char *str, int use_quote);
 int		dollar(t_quote *data, char *str, int use_quote);
 
+/* Given a string splitps it's content based on the quotation types:
+ * single, double or no quotes and returns a t_arr of t_istr items for further
+ * analysis and processing.
+ * The intent of this function is to support in the decision making of how to 
+ * merge the string back as it my resolve in a string or an array depending on
+ * executable to be used.
+ * Please see description of the t_istr structure data type to understand
+ * the inner content
+ */
 t_arr	*str_split_by_quote(char *str);
 
 /*

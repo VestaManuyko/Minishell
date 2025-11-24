@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_elaborate_line.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 12:27:14 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/24 12:28:38 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/24 16:01:08 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static int	merge_by_connectivity(t_arr *arr, t_arr *istr)
 		{
 			if (!append_or_connect(arr, tmp->str, connect_last))
 				return (0);
+			connect_last = 1;
 		}
 		else
 		{

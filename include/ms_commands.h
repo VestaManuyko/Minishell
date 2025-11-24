@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:41:04 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/24 12:50:08 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/24 16:43:38 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ int		cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect);
  */
 int		cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_shell *sh);
 
+/* For each t_prog structure expand the input array based on:
+ * the usage of variable and quotations returning the final data to 
+ * pass to the execution process.
+ */
 int		cmd_parse_progs(t_prog *proc, t_arr *env);
 
 /* Take a string and split it in a tarr of strings based on expansion.
@@ -79,7 +83,19 @@ t_arr	*cmd_elaborate_line(char *str, t_arr *env);
 t_arr	*cmd_expand_prog(t_arr *arr, t_arr *env);
 
 /* given the program array clears it from quotes and dollar expansion 
- * following the rules of the export built in.
+ * following the rules of the export built in:
+ * 
+ * case 1: key has no $ or quotes (var=)
+ * case 2: key has $ or quotes (var"= ; $var= 'var'=)
+ * 
+ * case 1 
+ * The value will always return a single string regardless MS_BLANK 
+ * case 2
+ * Key and value will be expanded resulting in an arbitrary 
+ * amount of strings depending on the expansion of unquoted variables.
+ * 
+ * The resulting strings will be owned by the t_arr that will grow as
+ * per needs.
  */
 t_arr	*cmd_expand_export(t_arr *arr, t_arr *env);
 
