@@ -28,6 +28,11 @@ int	main(int ac, char **av, char **env)
 	{
 		if (get_command(&sh))
 		{
+			if (g_return == 130)
+			{
+				sh.status = 130;
+				g_return = 0;
+			}
 			if (programs_populate(&sh))
 			{
 				exec_programs(&sh);

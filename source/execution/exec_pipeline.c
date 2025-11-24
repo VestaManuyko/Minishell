@@ -134,7 +134,8 @@ int	exec_pipeline(t_shell *sh)
 	}
 	close_fds(sh);
 	signal_set(2, sh);
-	while ((waitpid(-1, &status, 0)) > 0)
-		;
+	waitpid(pid, &status, 0);
+	while (waitpid(-1, NULL, 0) > 0)
+    	;
 	return (set_status(status, sh), signal_set(0, sh), 1);
 }

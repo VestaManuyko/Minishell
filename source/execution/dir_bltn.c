@@ -64,14 +64,11 @@ static int	cd2(char *home, char *arg, t_shell *sh)
 int	bltn_cd(t_arr *args, t_shell *sh)
 {
 	char	*home;
-	char	*key;
 	int		id;
 
 	if (args->size > 2)
 		return (cmd_perror(ER_MINI, "cd", ER_AC), 0);
-	key = env_getkey("HOME");
-	id = env_getid((char **)sh->env->arr, key);
-	free(key);
+	id = env_getid((char **)sh->env->arr, "HOME");
 	if (id == -1)
 		return (ft_putendl_fd(ER_CDHM, 2), 0);
 	if (!env_getvalue((char **)sh->env->arr, &home, id))
