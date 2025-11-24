@@ -17,8 +17,13 @@ void	arr_free(char **arr)
 	int	i;
 
 	i = 0;
-	if (arr == NULL || *arr == NULL)
+	if (arr == NULL)
 		return ;
+	if (*arr == NULL)
+	{
+		free(arr);
+		return ;
+	}
 	while (arr[i] != NULL)
 	{
 		free(arr[i]);
