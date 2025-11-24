@@ -6,11 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:10:47 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/19 14:27:25 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/24 16:07:07 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_commands.h"
 #include <minishell.h>
 
 int	cmd_str2prog(t_prog *proc, char *str, t_shell *sh)
