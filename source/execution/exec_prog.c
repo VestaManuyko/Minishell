@@ -111,7 +111,10 @@ void	exec_programs(t_shell *shell)
 	if (shell->count == 1)
 	{
 		if (!set_redirect(shell, &shell->items[0]))
+		{
+			shell->status = 1;
 			return ;
+		}
 		if (shell->items[0].bltin == NULL)
 			exec_single(shell);
 		else
