@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/11/21 09:44:05 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/11/24 11:37:11 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
 		  tar_init.c tar_free.c tar_print.c \
 		  tar_popone.c tar_linkone.c \
 		  tar_putstr.c tar_putred.c tar_putinfostr.c \
-		  istr_free.c
+		  tar_merge_strarr.c \
+		  istr_free.c istr_expand_var.c 
 
 ENVIRON = env_getid.c env_getkey.c env_getvalue.c env_getpaths.c \
 		  env_entry_update.c  env_entry_remove.c  
@@ -57,7 +58,8 @@ COMMANDS = programs_init.c programs_free.c \
 		   cmd_perror.c \
 		   cmd_validate_pipes.c \
 		   cmd_str2prog.c \
-		   cmd_split_tokens.c cmd_parse_progs.c cmd_parse_progs2.c \
+		   cmd_split_tokens.c cmd_parse_progs.c \
+		   cmd_expand_progs.c cmd_expand_export.c cmd_elaborate_line.c \
 		   cmd_parse_redirect.c
 
 # Add source paths to files 

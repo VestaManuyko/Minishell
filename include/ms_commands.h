@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:41:04 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/28 13:25:45 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/24 12:50:08 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,27 @@ int		cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect);
 int		cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_shell *sh);
 
 int		cmd_parse_progs(t_prog *proc, t_arr *env);
+
+/* Take a string and split it in a tarr of strings based on expansion.
+ * Any str that is not in quote is expanded as many rows as needed.
+ * Connectivity to bridge the first and last token are executed in case
+ * no MS_BLANKS are found at the beginning and / or at the end of the
+ * string:
+ * 0 no connectivity
+ * 1 start of str connects with previous;
+ * 2 end of str connect with next;
+ * 3 both ends are to be reconnected
+ */
+t_arr	*cmd_elaborate_line(char *str, t_arr *env);
+
+/* given the program array clears it from quotes and dollar expansion 
+ * for any other task but export.
+ */
+t_arr	*cmd_expand_prog(t_arr *arr, t_arr *env);
+
+/* given the program array clears it from quotes and dollar expansion 
+ * following the rules of the export built in.
+ */
+t_arr	*cmd_expand_export(t_arr *arr, t_arr *env);
 
 #endif

@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_parse_progs.c                                  :+:      :+:    :+:   */
+/*   tar_merge_strarr.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/24 11:06:57 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/24 12:39:40 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/11/24 12:37:24 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/11/24 12:38:18 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	cmd_parse_progs(t_prog *proc, t_arr *env)
+int	tar_merge_strarr(t_arr *dest, t_arr *src)
 {
-	t_arr	*tar;
+	int	i;
 
-	if (ft_strncmp((char *)proc->prog->arr[0], "export", 6) == 0)
-		tar = cmd_expand_export(proc->prog, env);
-	else
-		tar = cmd_expand_prog(proc->prog, env);
-	if (tar == NULL)
+	i = 0;
+	if (!dest || !src)
 		return (0);
-	tar_free(proc->prog);
-	proc->prog = tar;
+	while (i < src->size)
+	{
+		if (!tar_putstr(dest, src->arr[i]))
+			return (0);
+		i++;
+	}
 	return (1);
 }

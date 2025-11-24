@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_split_by_quote.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/21 10:54:40 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/21 10:57:26 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/24 12:02:23 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ t_arr	*str_split_by_quote(char *str)
 			return (NULL);
 		if (!tar_putinfostr(istr, line, quote, 0))
 			return (tar_free(istr), NULL);
+		free(line);
 		str = end + (quote != 0);
 	}
 	return (istr);

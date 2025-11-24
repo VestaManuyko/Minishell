@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 10:03:00 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/19 15:48:18 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/24 12:42:35 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,4 @@ typedef struct s_quote
 	int		quote;
 }			t_quote;
 
-typedef struct s_expo
-{
-	char	**tmp;
-	char	**arr_inter;
-	char	**arr_out;
-	char	*str;
-} t_expo;
 #endif

@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/21 10:28:32 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/24 10:52:41 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,13 @@ void	tar_print_char(t_arr *tar);
  */
 int		tar_putstr(t_arr *tar, char *str);
 
+/* Append at the end of dest array all the strings from source array.
+ * RETURNS:
+ * - 1 on success;
+ * - 0 on allocation error;
+ */
+int		tar_merge_strarr(t_arr *dest, t_arr *src);
+
 /* Remove an item from the t_arr and rebase all the other strings to keep 
  * the content contiguous.
  * 
@@ -132,8 +139,14 @@ int		tar_linkone(t_arr *tar, void *item);
 
 int		tar_putred(t_arr *arr, char *str);
 
-int	tar_putinfostr(t_arr *arr, char *str, int value, int connect);
+int		tar_putinfostr(t_arr *arr, char *str, int value, int connect);
 
 void	istr_free(void *item);
+
+/* given a tar of istrings (informed strings) expand every raw to their
+ * final value and introduce connectivity informations to determine how
+ * each line should be treated.
+ */
+int		istr_expand_var(t_arr *istr, t_arr *env);
 
 #endif
