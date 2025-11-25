@@ -57,3 +57,4 @@ dkms.conf
 # temp editors file
 *.sw[po]
 minishell
+mstest_output*
