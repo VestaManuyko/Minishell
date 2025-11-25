@@ -59,7 +59,7 @@ static int	is_valid_path(char *exec, t_shell *sh)
 	if ((stat(exec, &info)) == -1)
 		return (sh->status = 1, 0);
 	if S_ISDIR(info.st_mode)
-		return (errno = EISDIR, sh->status = EISDIR, 0);
+		return (errno = EISDIR, sh->status = 126, 0);
 	else if (!(S_ISREG(info.st_mode) || S_ISLNK(info.st_mode)))
 		return (errno = EACCES, sh->status = 126, 0);
 	else if (access(exec, X_OK) == -1)
