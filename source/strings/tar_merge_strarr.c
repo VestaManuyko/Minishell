@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_isquoted.c                                     :+:      :+:    :+:   */
+/*   tar_merge_strarr.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/01 09:12:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/25 12:52:51 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/11/24 12:37:24 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/11/24 12:38:18 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	str_isquoted_mute(char c, int ignore)
+int	tar_merge_strarr(t_arr *dest, t_arr *src)
 {
-	if (ignore)
+	int	i;
+
+	i = 0;
+	if (!dest || !src)
 		return (0);
-	return (str_isquoted(c));
-}
-
-int	str_isquoted(char c)
-{
-	static int	quote = 0;
-
-	if (c == '"' || c == '\'')
+	while (i < src->size)
 	{
-		if (quote == 0)
-			quote = (int)c;
-		else if (quote == (int)c)
-			quote = 0;
+		if (!tar_putstr(dest, src->arr[i]))
+			return (0);
+		i++;
 	}
-	return (quote);
+	return (1);
 }

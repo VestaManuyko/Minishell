@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_structs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:51 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/27 18:41:01 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/24 16:18:49 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,29 @@ typedef struct s_red
 	char		*val;
 	int			fd;
 }	t_red;
+
+/*
+ * This structure augment the string "str" with informations useful for the 
+ * expanstion of strings that includes quotes.
+ * 
+ * - type:		type of quotes (0 for none)
+ * - connect:	identify how this one string should interact with the 
+ 				surrounding in case it is not quoted (if quoted should always
+				reconnect)
+				0 = no connections as the first and last chars are MS_BLANKS;
+				1 = connects at the beginning;
+				2 = connects at the end;
+				3 = connects both sides;
+ * - len:		represent the lenght;
+ * - str:		the string to be used
+ */
+typedef struct s_istr
+{
+	int		type;
+	int		connect;
+	size_t	len;
+	char	*str;
+}	t_istr;
 
 /*
  * NOT YET IN USE

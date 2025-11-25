@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/13 15:49:42 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/25 13:38:47 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
  */
 char	*str_clearquotes(char *str, int use_quote, t_shell *sh);
 
+int		str_isquoted_mute(char c, int ignore);
+
 /* 
  * Given a string returns a new string based on the pointer function given.
  * currently there are 2 available pointer functions that can be used:
@@ -60,6 +62,17 @@ char	*str_expand(int (*f)(t_quote *data, char *str, int use_quote),
 int		quotes(t_quote *data, char *str, int use_quote);
 int		dollar(t_quote *data, char *str, int use_quote);
 
+/* Given a string splitps it's content based on the quotation types:
+ * single, double or no quotes and returns a t_arr of t_istr items for further
+ * analysis and processing.
+ * The intent of this function is to support in the decision making of how to 
+ * merge the string back as it my resolve in a string or an array depending on
+ * executable to be used.
+ * Please see description of the t_istr structure data type to understand
+ * the inner content
+ */
+t_arr	*str_split_by_quote(char *str);
+
 /*
  ************************************************
  *                    ARRAYS                    *
@@ -73,6 +86,12 @@ char	**arr_deepcpy(char **src);
 /* return an array size that is double the size of the give capacity 
  */
 void	**arr_double(void **src, int capacity);
+
+/* return an array that is the sum of the 2 given ones.
+ * NULL arrays can be passed.
+ * in case all the source array are empty an array of size 1 will be returned.
+ */
+char	**arr_merge(char **arr1, char **arr2);
 
 /*
  ************************************************
@@ -104,6 +123,13 @@ void	tar_print_char(t_arr *tar);
  */
 int		tar_putstr(t_arr *tar, char *str);
 
+/* Append at the end of dest array all the strings from source array.
+ * RETURNS:
+ * - 1 on success;
+ * - 0 on allocation error;
+ */
+int		tar_merge_strarr(t_arr *dest, t_arr *src);
+
 /* Remove an item from the t_arr and rebase all the other strings to keep 
  * the content contiguous.
  * 
@@ -121,5 +147,15 @@ int		tar_popone(t_arr *tar, int id);
 int		tar_linkone(t_arr *tar, void *item);
 
 int		tar_putred(t_arr *arr, char *str);
+
+int		tar_putinfostr(t_arr *arr, char *str, int value, int connect);
+
+void	istr_free(void *item);
+
+/* given a tar of istrings (informed strings) expand every raw to their
+ * final value and introduce connectivity informations to determine how
+ * each line should be treated.
+ */
+int		istr_expand_var(t_arr *istr, t_shell *sh);
 
 #endif
