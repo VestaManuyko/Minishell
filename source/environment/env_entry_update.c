@@ -6,11 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 16:09:33 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/25 13:49:04 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/25 14:02:50 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <minishell.h>
 
 static int	does_assign(char *str)
@@ -24,7 +23,7 @@ static int	does_assign(char *str)
 	return (assign);
 }
 
-int	env_entry_update(t_arr *env, char *str, t_shell *sh)
+int	env_entry_update(t_arr *env, char *str)
 {
 	int		id;
 	char	*key;

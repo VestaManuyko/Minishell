@@ -6,28 +6,23 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 10:55:27 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 18:40:58 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/25 14:08:48 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	env_entry_remove(t_arr *env, char *str, t_shell *sh)
+int	env_entry_remove(t_arr *env, char *str)
 {
 	int		id;
-	char	*exp_str;
 	char	*key;
 
-	exp_str = str_clearquotes(str, 0, sh);
-	if (exp_str == NULL)
-		return (0);
-	key = env_getkey(exp_str);
+	key = env_getkey(str);
 	if (key == NULL)
-		return (free(exp_str), 0);
+		return (0);
 	id = env_getid((char **)env->arr, key);
 	if (id != -1)
 		tar_popone(env, id);
 	free(key);
-	free(exp_str);
 	return (1);
 }

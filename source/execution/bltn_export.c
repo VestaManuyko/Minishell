@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 15:10:09 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/19 15:10:57 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/25 14:02:58 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	bltn_export(t_arr *args, t_shell *sh)
 		if (!env_entry_update(sh->env, (char *)args->arr[i]))
 		{
 			cmd_perror(ER_EXP, (char *)args->arr[i], ER_IDENT);
-			g_return = 1;
+			sh->status = 1;
 		}
 		i++;
 	}

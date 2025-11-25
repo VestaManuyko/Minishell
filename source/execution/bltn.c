@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 16:44:45 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/25 13:34:02 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/25 14:09:13 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	bltn_unset(t_arr *args, t_shell *sh)
 	i = 0;
 	while (i < args->size)
 	{
-		env_entry_remove(sh->env, (char *)args->arr[i], sh);
+		env_entry_remove(sh->env, (char *)args->arr[i]);
 		i++;
 	}
 	return (1);
