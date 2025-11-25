@@ -6,13 +6,14 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:51:58 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/17 12:32:31 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/25 12:52:19 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	is_valid_file(char *exec);
+int		is_valid_file(char *exec);
+void	print_correct_error(char *exec);
 
 /* Verify if the executable matches any of the available built ins.
  * If true set the param bltin of the t_prog* to the appropriate 
@@ -141,7 +142,7 @@ int	is_executable(t_arr *env, void **exec)
 	free(slash);
 	arr_free(paths);
 	g_return = 127;
-	cmd_perror("", *exec, ER_CMD);
+	print_correct_error(*exec);
 	return (0);
 }
 
@@ -154,7 +155,8 @@ int	program_validate(t_shell *sh, t_prog *proc)
 	exec = &proc->prog->arr[0];
 	if (!(ft_strchr(*exec, '/') != NULL))
 	{
-		is_builtin(sh, proc, *exec);
+		if (((char **)exec)[0][0] != '\0')
+			is_builtin(sh, proc, *exec);
 		if (proc->bltin == NULL)
 		{
 			if (!is_executable(sh->env, exec))
