@@ -83,10 +83,8 @@ int	dup_fds(t_prog *item)
 /*
  * Programs_validate validates each program if its executable
  * and has valid redirections.
- * Return value:
- * 0 on error, 1 on success.
 */
-static int	programs_validate(t_shell *shell)
+static void	programs_validate(t_shell *shell)
 {
 	int		i;
 	char	*red_val;
@@ -95,14 +93,19 @@ static int	programs_validate(t_shell *shell)
 	while (i < shell->count)
 	{
 		if (!program_validate(shell, &shell->items[i]))
-			return (0);
+		{
+			shell->items[i].prog->size = 0;
+			shell->items[i].complete = shell->status;
+		}
 		red_val = set_redirect(shell, &shell->items[i]);
 		if (red_val)
+		{
+			shell->items[i].complete = 1;
 			cmd_perror(ER_MINI, red_val, strerror(errno));
+		}
 		i++;
 	}
 	cl_red_fds(shell);
-	return (1);
 }
 
 /*
@@ -111,8 +114,7 @@ static int	programs_validate(t_shell *shell)
 */
 void	exec_programs(t_shell *shell)
 {
-	if (!programs_validate(shell))
-		return ;
+	programs_validate(shell);
 	if (shell->count == 1)
 	{
 		if (set_redirect(shell, &shell->items[0]))

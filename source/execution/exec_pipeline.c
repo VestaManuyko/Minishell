@@ -121,9 +121,8 @@ int	exec_pipeline(t_shell *sh)
 				clean_exit(0, sh, 1);
 			if (sh->items[i].prog->size == 0)
 			{
-				sh->status = 1;
 				close_fds(sh);
-				clean_exit(0, sh, 1);
+				clean_exit(0, sh, sh->items[i].complete);
 			}
 			clean_exit(0, sh, exec_child(&sh->items[i], sh));
 		}
