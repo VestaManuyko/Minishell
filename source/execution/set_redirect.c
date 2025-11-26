@@ -19,7 +19,7 @@ static int	create_out_files(t_red *red, t_prog *item)
 	else if (red->type == out_append)
 		red->fd = open(red->val, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (red->fd == -1)
-		return (cmd_perror(ER_MINI, red->val, strerror(errno)), 0);
+		return (0);
 	else
 	{
 		if (item->fd_io[1] > 0)
@@ -36,7 +36,7 @@ static int	create_in_files(t_red *red, t_prog *item)
 	else if (red->type == in_heredoc)
 		red->fd = open(red->val, O_RDONLY);
 	if (red->fd == -1)
-		return (cmd_perror(ER_MINI, red->val, strerror(errno)), 0);
+		return (0);
 	else
 	{
 		if (item->fd_io[0] > 0)
@@ -50,9 +50,10 @@ static int	create_in_files(t_red *red, t_prog *item)
  * Checks if the redirection files are valid and
  * sets all the needed fds for execution of a program.
  * Return value:
- * 0 on error, 1 on valid.
+ * Filename failed to open on error, NULL on success
+ * (if no opening file failed).
 */
-int	set_redirect(t_shell *shell, t_prog *item)
+char	*set_redirect(t_shell *shell, t_prog *item)
 {
 	t_red	*red;
 	int		i;
@@ -68,8 +69,8 @@ int	set_redirect(t_shell *shell, t_prog *item)
 		else if (red->type == in_file || red->type == in_heredoc)
 			ret = create_in_files(red, item);
 		if (!ret)
-			return (close_fds(shell), 0);
+			return (close_fds(shell), red->val);
 		i++;
 	}
-	return (1);
+	return (0);
 }

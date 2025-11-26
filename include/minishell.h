@@ -205,26 +205,30 @@ void	set_status(int status, t_shell *sh);
 int		dup_fds(t_prog *item);
 
 /*
- * Close all fds.
- * Return value:
- * 0 on error, 1 on success.
+ * Closes fds for redirections.
 */
-int		close_fds(t_shell *sh);
+void	cl_red_fds(t_shell *sh);
+
+/*
+ * Close all opened fds.
+*/
+void	close_fds(t_shell *sh);
 
 /*
  * Called from a child process to close all unused fds by that process.
  * Return value:
  * 0 on error, 1 0n success.
 */
-int		close_unused_fds(t_prog *item, t_shell *sh);
+void	close_unused_fds(t_prog *item, t_shell *sh);
 
 /*
  * Checks if the redirection files are valid and
  * sets all the needed fds for execution of a program.
  * Return value:
- * 0 on error, 1 on valid.
+ * Filename failed to open on error, NULL on success
+ * (if no opening file failed).
 */
-int		set_redirect(t_shell *shell, t_prog *item);
+char	*set_redirect(t_shell *shell, t_prog *item);
 
 /*
  * Executes a single child process if not built-in.

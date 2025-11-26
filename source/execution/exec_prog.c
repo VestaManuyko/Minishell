@@ -88,15 +88,20 @@ int	dup_fds(t_prog *item)
 */
 static int	programs_validate(t_shell *shell)
 {
-	int	i;
+	int		i;
+	char	*red_val;
 
 	i = 0;
 	while (i < shell->count)
 	{
 		if (!program_validate(shell, &shell->items[i]))
 			return (0);
+		red_val = set_redirect(shell, &shell->items[i]);
+		if (red_val)
+			cmd_perror(ER_MINI, red_val, strerror(errno));
 		i++;
 	}
+	cl_red_fds(shell);
 	return (1);
 }
 
@@ -110,7 +115,7 @@ void	exec_programs(t_shell *shell)
 		return ;
 	if (shell->count == 1)
 	{
-		if (!set_redirect(shell, &shell->items[0]))
+		if (set_redirect(shell, &shell->items[0]))
 		{
 			shell->status = 1;
 			return ;

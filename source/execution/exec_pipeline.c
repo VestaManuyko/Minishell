@@ -69,8 +69,7 @@ static int	exec_child(t_prog *item, t_shell *sh)
 	set_pipe_fds(item, sh);
 	if (!dup_fds(item))
 		return (0);
-	if (!close_unused_fds(item, sh))
-		return (0);
+	close_unused_fds(item, sh);
 	if (item->bltin != NULL)
 	{
 		if (!item->bltin->func(item->prog, sh))
@@ -118,7 +117,7 @@ int	exec_pipeline(t_shell *sh)
 		if (pid == 0)
 		{
 			signal_set(1, sh);
-			if (!set_redirect(sh, &sh->items[i]))
+			if (set_redirect(sh, &sh->items[i]))
 				clean_exit(0, sh, 1);
 			if (sh->items[i].prog->size == 0)
 			{

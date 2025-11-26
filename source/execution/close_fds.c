@@ -15,7 +15,7 @@
 /*
  * Closes fds for redirections.
 */
-int	cl_red_fds(t_shell *sh)
+void	cl_red_fds(t_shell *sh)
 {
 	int	i;
 
@@ -37,16 +37,17 @@ int	cl_red_fds(t_shell *sh)
 		}
 		i++;
 	}
-	return (1);
 }
 
-int	close_fds(t_shell *sh)
+/*
+ * Close all opened fds.
+*/
+void	close_fds(t_shell *sh)
 {
 	int	i;
 
 	i = 0;
-	if (!cl_red_fds(sh))
-		return (0);
+	cl_red_fds(sh);
 	while (i < (sh->count - 1))
 	{
 		if (sh->pipes[i][0] != -1)
@@ -57,15 +58,12 @@ int	close_fds(t_shell *sh)
 		sh->pipes[i][1] = -1;
 		i++;
 	}
-	return (1);
 }
 
 /*
  * Called from a child process to close all unused fds by that process.
- * Return value:
- * 0 on error, 1 0n success.
 */
-int	close_unused_fds(t_prog *item, t_shell *sh)
+void	close_unused_fds(t_prog *item, t_shell *sh)
 {
 	int	i;
 
@@ -84,5 +82,4 @@ int	close_unused_fds(t_prog *item, t_shell *sh)
 		}
 		i++;
 	}
-	return (1);
 }
