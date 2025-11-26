@@ -149,11 +149,7 @@ int	program_validate(t_shell *sh, t_prog *proc)
 	void	**exec;
 
 	if (proc->prog->size == 0)
-	{
-		if (!set_redirect(sh, &sh->items[0]))
-			sh->status = 1;
-		return (0);
-	}
+		return (1);
 	exec = &proc->prog->arr[0];
 	if (!(ft_strchr(*exec, '/') != NULL))
 	{

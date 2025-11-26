@@ -89,12 +89,8 @@ static int	exec_child(t_prog *item, t_shell *sh)
 	if (item->bltin != NULL)
 	{
 		if (!item->bltin->func(item->prog, sh))
-		{
-			free_shell(sh);
-			exit (1);
-		}
-		free_shell(sh);
-		exit(0);
+			clean_exit(0, sh, 1);
+		clean_exit(0, sh, 0);
 	}
 	else
 	{
@@ -128,6 +124,11 @@ int	exec_pipeline(t_shell *sh)
 			signal_set(1, sh);
 			if (!set_redirect(sh, &sh->items[i]))
 				clean_exit(0, sh, 1);
+			if (sh->items[i].prog->size == 0)
+			{
+				sh->status = 1;
+				clean_exit(0, sh, 1);
+			}
 			clean_exit(0, sh, exec_child(&sh->items[i], sh));
 		}
 		i++;
