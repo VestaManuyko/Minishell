@@ -17,17 +17,23 @@
  * Return value:
  * 0 on error, 1 on success.
 */
-static int	set_pwd(t_shell *sh, char *home, char *arg, char *dir)
+static int	set_pwd(t_shell *sh, char *nextdir, char *dir, int ishome)
 {
+	char	*temp;
 	char	*pwd;
 	char	*oldpwd;
-	char	*temp;
+	char 	*tmp;
 
-	if (!arg)
-		temp = home;
+	if (ishome == 0)
+	{
+		tmp = ft_strjoin(dir, "/");
+		temp = ft_strjoin(tmp, nextdir);
+		pwd = ft_strjoin("PWD=", temp);
+		free(tmp);
+		free(temp);
+	}
 	else
-		temp = arg;
-	pwd = ft_strjoin("PWD=", temp);
+		pwd = ft_strjoin("PWD=", nextdir);
 	if (!pwd)
 		return (0);
 	oldpwd = ft_strjoin("OLDPWD=", dir);
@@ -40,25 +46,20 @@ static int	set_pwd(t_shell *sh, char *home, char *arg, char *dir)
 	return (free(pwd), free(oldpwd), 1);
 }
 
-static int	cd2(char *home, char *arg, t_shell *sh)
+static int	cd2(char *nextdir, t_shell *sh, int ishome)
 {
-	char	*str;
 	char	*dir;
 
-	if (!arg)
-		str = home;
-	else
-		str = arg;
 	dir = getcwd(NULL, 0);
 	if (!dir)
-		return (ft_putendl_fd(ER_CDENV, 2), free(home), 0);
-	if (!chdir(str))
+		return (ft_putendl_fd(ER_CDENV, 2), free(nextdir), 0);
+	if (!chdir(nextdir))
 	{
-		if (!set_pwd(sh, home, arg, dir))
-			return (ft_putendl_fd(ER_CDENV, 2), free(home), free(dir), 0);
-		return (free(home), free(dir), 1);
+		if (!set_pwd(sh, nextdir, dir, ishome))
+			return (ft_putendl_fd(ER_CDENV, 2), free(dir), 0);
+		return (free(dir), 1);
 	}
-	return (cmd_perror(ER_CD, arg, strerror(errno)), free(home), free(dir), 0);
+	return (cmd_perror(ER_CD, nextdir, strerror(errno)), free(dir), 0);
 }
 
 int	bltn_cd(t_arr *args, t_shell *sh)
@@ -68,14 +69,25 @@ int	bltn_cd(t_arr *args, t_shell *sh)
 
 	if (args->size > 2)
 		return (cmd_perror(ER_MINI, "cd", ER_AC), 0);
-	id = env_getid((char **)sh->env->arr, "HOME");
-	if (id == -1)
-		return (ft_putendl_fd(ER_CDHM, 2), 0);
-	if (!env_getvalue((char **)sh->env->arr, &home, id))
-		return (cmd_perror(ER_MINI, "cd", strerror(ENOMEM)), 0);
-	if (!home || !*home)
-		return (free(home), 1);
-	return (cd2(home, args->arr[1], sh));
+	if (args->size == 1)
+	{
+		id = env_getid((char **)sh->env->arr, "HOME");
+		if (id == -1)
+			return (ft_putendl_fd(ER_CDHM, 2), 0);
+		if (!env_getvalue((char **)sh->env->arr, &home, id))
+			return (cmd_perror(ER_MINI, "cd", strerror(ENOMEM)), 0);
+		if (!home || !*home)
+			return (free(home), 1);
+		if (!cd2(home, sh, 1))
+			return (free(home), 0);
+		free(home);
+	}
+	else
+	{
+		if (!cd2(args->arr[1], sh, 0))
+			return (0);
+	}
+	return (1);
 }
 
 int	bltn_pwd(t_arr *args, t_shell *sh)
