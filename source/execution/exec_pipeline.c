@@ -72,12 +72,14 @@ static int	exec_child(t_prog *item, t_shell *sh)
 	close_unused_fds(item, sh);
 	if (item->bltin != NULL)
 	{
+		signal(SIGPIPE, SIG_IGN);
 		if (!item->bltin->func(item->prog, sh))
 			return (1);
 		return (0);
 	}
 	else
 	{
+		signal(SIGPIPE, SIG_DFL);
 		if (execve(pth, (char **)item->prog->arr, (char **)sh->env->arr) == -1)
 			return (cmd_perror(ER_MINI, "execve", strerror(errno)), 0);
 	}
