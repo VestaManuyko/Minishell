@@ -73,8 +73,8 @@ static int	exec_child(t_prog *item, t_shell *sh)
 	if (item->bltin != NULL)
 	{
 		if (!item->bltin->func(item->prog, sh))
-			clean_exit(0, sh, 1);
-		clean_exit(0, sh, 0);
+			return (1);
+		return (0);
 	}
 	else
 	{
