@@ -6,11 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:29:47 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 10:30:22 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/25 13:33:32 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <minishell.h>
 
 char	*str_expand(int (*f)(t_quote *data, char *str, int use_quote),

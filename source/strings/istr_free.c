@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_entry_remove.c                                 :+:      :+:    :+:   */
+/*   istr_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 10:55:27 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/25 14:08:48 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/11/21 10:54:20 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/11/21 10:54:22 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	env_entry_remove(t_arr *env, char *str)
+void	istr_free(void *item)
 {
-	int		id;
-	char	*key;
-
-	key = env_getkey(str);
-	if (key == NULL)
-		return (0);
-	id = env_getid((char **)env->arr, key);
-	if (id != -1)
-		tar_popone(env, id);
-	free(key);
-	return (1);
+	if (item == NULL)
+		return ;
+	if (((t_istr *)item)->str != NULL)
+		free(((t_istr *)item)->str);
+	free(item);
 }

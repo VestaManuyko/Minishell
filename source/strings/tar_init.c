@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 09:57:29 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 11:19:23 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/26 09:49:00 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ static int	arr_cpystr(char **src, char ***dest, int dest_capacity)
 			return (arr_free(*dest), 0);
 		(*dest)[i] = ft_strdup(src[i]);
 		if ((*dest)[i] == NULL)
-			return (arr_free(*dest), 0);
+		{
+			arr_free(*dest);
+			*dest = NULL;
+			return (0);
+		}
 		i++;
 	}
 	(*dest)[i] = NULL;

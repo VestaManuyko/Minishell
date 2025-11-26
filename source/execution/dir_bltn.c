@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dir_bltn.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 16:45:58 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/05 16:46:08 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/11/25 14:03:22 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static int	set_pwd(t_shell *sh, char *home, char *arg, char *dir)
 	oldpwd = ft_strjoin("OLDPWD=", dir);
 	if (!oldpwd)
 		return (free(pwd), 0);
-	if (!env_entry_update(sh->env, pwd, sh))
+	if (!env_entry_update(sh->env, pwd))
 		return (free(pwd), free(oldpwd), 0);
-	if (!env_entry_update(sh->env, oldpwd, sh))
+	if (!env_entry_update(sh->env, oldpwd))
 		return (free(pwd), free(oldpwd), 0);
 	return (free(pwd), free(oldpwd), 1);
 }

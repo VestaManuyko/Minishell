@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_entry_remove.c                                 :+:      :+:    :+:   */
+/*   tar_merge_strarr.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 10:55:27 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/25 14:08:48 by fpaglia          ###   ########.fr       */
+/*   Created: 2025/11/24 12:37:24 by fpaglia           #+#    #+#             */
+/*   Updated: 2025/11/24 12:38:18 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	env_entry_remove(t_arr *env, char *str)
+int	tar_merge_strarr(t_arr *dest, t_arr *src)
 {
-	int		id;
-	char	*key;
+	int	i;
 
-	key = env_getkey(str);
-	if (key == NULL)
+	i = 0;
+	if (!dest || !src)
 		return (0);
-	id = env_getid((char **)env->arr, key);
-	if (id != -1)
-		tar_popone(env, id);
-	free(key);
+	while (i < src->size)
+	{
+		if (!tar_putstr(dest, src->arr[i]))
+			return (0);
+		i++;
+	}
 	return (1);
 }

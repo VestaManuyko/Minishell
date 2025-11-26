@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   str_isquoted.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:12:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/07 12:11:15 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/25 12:52:51 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	str_isquoted_mute(char c, int ignore)
+{
+	if (ignore)
+		return (0);
+	return (str_isquoted(c));
+}
 
 int	str_isquoted(char c)
 {

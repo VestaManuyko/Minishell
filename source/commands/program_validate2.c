@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   program_validate2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpaglia <fpaglia@student.42vienna.com      +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 12:40:49 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/17 12:40:53 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/25 12:47:41 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	print_correct_error(char *exec)
+{
+	if (*exec == '\0')
+		cmd_perror("", "''", ER_CMD);
+	else
+		cmd_perror("", exec, ER_CMD);
+}
 
 int	is_valid_file(char *exec)
 {
