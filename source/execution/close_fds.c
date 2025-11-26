@@ -12,7 +12,10 @@
 
 #include <minishell.h>
 
-static int	cl_red_fds(t_shell *sh)
+/*
+ * Closes fds for redirections.
+*/
+int	cl_red_fds(t_shell *sh)
 {
 	int	i;
 
@@ -23,14 +26,12 @@ static int	cl_red_fds(t_shell *sh)
 		{
 			if (sh->items[i].fd_io[0] != -1)
 			{
-				if (close(sh->items[i].fd_io[0]) == -1)
-					return (perror(ER_CLOSE), 0);
+				close(sh->items[i].fd_io[0]);
 				sh->items[i].fd_io[0] = -1;
 			}
 			if (sh->items[i].fd_io[1] != -1)
 			{
-				if (close(sh->items[i].fd_io[1]) == -1)
-					return (perror(ER_CLOSE), 0);
+				close(sh->items[i].fd_io[1]);
 				sh->items[i].fd_io[1] = -1;
 			}
 		}
@@ -49,15 +50,9 @@ int	close_fds(t_shell *sh)
 	while (i < (sh->count - 1))
 	{
 		if (sh->pipes[i][0] != -1)
-		{
-			if (close(sh->pipes[i][0]) == -1)
-				return (perror(ER_CLOSE), 0);
-		}
+			close(sh->pipes[i][0]);
 		if (sh->pipes[i][1] != -1)
-		{
-			if (close(sh->pipes[i][1]) == -1)
-				return (perror(ER_CLOSE), 0);
-		}
+			close(sh->pipes[i][1]);
 		sh->pipes[i][0] = -1;
 		sh->pipes[i][1] = -1;
 		i++;
@@ -79,14 +74,12 @@ int	close_unused_fds(t_prog *item, t_shell *sh)
 	{
 		if (i != (item->id - 1) && sh->pipes[i][0] != -1)
 		{
-			if (close(sh->pipes[i][0]) == -1)
-				return (perror(ER_CLOSE), 0);
+			close(sh->pipes[i][0]);
 			sh->pipes[i][0] = -1;
 		}
 		if (i != item->id && sh->pipes[i][1] != -1)
 		{
-			if (close(sh->pipes[i][1]) == -1)
-				return (perror(ER_CLOSE), 0);
+			close(sh->pipes[i][1]);
 			sh->pipes[i][1] = -1;
 		}
 		i++;
