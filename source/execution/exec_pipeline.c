@@ -63,9 +63,9 @@ static void	set_pipe_fds(t_prog *item, t_shell *sh)
 */
 static int	exec_child(t_prog *item, t_shell *sh)
 {
-	char	*path;
+	char	*pth;
 
-	path = item->prog->arr[0];
+	pth = item->prog->arr[0];
 	set_pipe_fds(item, sh);
 	if (!dup_fds(item))
 		return (0);
@@ -78,7 +78,7 @@ static int	exec_child(t_prog *item, t_shell *sh)
 	}
 	else
 	{
-		if (execve(path, (char **)item->prog->arr, (char **)sh->env->arr) == -1)
+		if (execve(pth, (char **)item->prog->arr, (char **)sh->env->arr) == -1)
 			return (cmd_perror(ER_MINI, "execve", strerror(errno)), 0);
 	}
 	return (1);
