@@ -12,53 +12,36 @@
 
 #include <minishell.h>
 
-/*
- * Called from a child process to close all unused fds by that process.
- * Return value:
- * 0 on error, 1 0n success.
-*/
-static int	close_unused_fds(t_prog *item, t_shell *sh)
+static void	set_pipe_fds2(t_prog *item, t_shell *sh)
 {
-	int	i;
-
-	i = 0;
-	while (i < (sh->count - 1))
-	{
-		if (i != (item->id - 1) && sh->pipes[i][0] != -1)
-		{
-			if (close(sh->pipes[i][0]) == -1)
-				return (perror(ER_CLOSE), 0);
-			sh->pipes[i][0] = -1;
-		}
-		if (i != item->id && sh->pipes[i][1] != -1)
-		{
-			if (close(sh->pipes[i][1]) == -1)
-				return (perror(ER_CLOSE), 0);
-			sh->pipes[i][1] = -1;
-		}
-		i++;
-	}
-	return (1);
+	if (item->fd_io[0] == -1)
+		item->fd_io[0] = sh->pipes[item->id - 1][0];
+	else
+		close (sh->pipes[item->id - 1][0]);
+	if (item->fd_io[1] == -1)
+		item->fd_io[1] = sh->pipes[item->id][1];
+	else
+		close (sh->pipes[item->id][1]);
 }
 
 /*
  * Checks for exsisting redirections of stdin/out
  * and sets fds for each program according  to pipe
  * redirections.
+ * If statements in this order: all items with both pipe ends,
+ * then last item with no write end of pipe and then
+ * first item with no pipe end for read.
 */
 static void	set_pipe_fds(t_prog *item, t_shell *sh)
 {
 	if (item->go_to == ispipe && item->id != 0)
-	{
-		if (item->fd_io[0] == -1)
-			item->fd_io[0] = sh->pipes[item->id - 1][0];
-		if (item->fd_io[1] == -1)
-			item->fd_io[1] = sh->pipes[item->id][1];
-	}
+		set_pipe_fds2(item, sh);
 	else if (item->go_to == end)
 	{
 		if (item->fd_io[0] == -1)
 			item->fd_io[0] = sh->pipes[item->id - 1][0];
+		else
+			close (sh->pipes[item->id - 1][0]);
 		if (item->fd_io[1] == -1)
 			item->fd_io[1] = 1;
 	}
@@ -68,6 +51,8 @@ static void	set_pipe_fds(t_prog *item, t_shell *sh)
 			item->fd_io[0] = 0;
 		if (item->fd_io[1] == -1)
 			item->fd_io[1] = sh->pipes[item->id][1];
+		else
+			close (sh->pipes[item->id][1]);
 	}
 }
 
@@ -100,6 +85,18 @@ static int	exec_child(t_prog *item, t_shell *sh)
 	return (1);
 }
 
+static void	exec_parent(pid_t pid, t_shell *sh)
+{
+	int		status;
+
+	close_fds(sh);
+	signal_set(2, sh);
+	waitpid(pid, &status, 0);
+	while (waitpid(-1, NULL, 0) > 0)
+    	;
+	set_status(status, sh);
+}
+
 /*
  * Executes multiple programs and redirects the stdin stdout
  * from the pipe between the processes.
@@ -110,7 +107,6 @@ static int	exec_child(t_prog *item, t_shell *sh)
 int	exec_pipeline(t_shell *sh)
 {
 	pid_t	pid;
-	int		status;
 	int		i;
 
 	i = 0;
@@ -127,16 +123,12 @@ int	exec_pipeline(t_shell *sh)
 			if (sh->items[i].prog->size == 0)
 			{
 				sh->status = 1;
+				close_fds(sh);
 				clean_exit(0, sh, 1);
 			}
 			clean_exit(0, sh, exec_child(&sh->items[i], sh));
 		}
 		i++;
 	}
-	close_fds(sh);
-	signal_set(2, sh);
-	waitpid(pid, &status, 0);
-	while (waitpid(-1, NULL, 0) > 0)
-    	;
-	return (set_status(status, sh), signal_set(0, sh), 1);
+	return (exec_parent(pid, sh), signal_set(0, sh), 1);
 }

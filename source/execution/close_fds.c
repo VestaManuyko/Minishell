@@ -64,3 +64,32 @@ int	close_fds(t_shell *sh)
 	}
 	return (1);
 }
+
+/*
+ * Called from a child process to close all unused fds by that process.
+ * Return value:
+ * 0 on error, 1 0n success.
+*/
+int	close_unused_fds(t_prog *item, t_shell *sh)
+{
+	int	i;
+
+	i = 0;
+	while (i < (sh->count - 1))
+	{
+		if (i != (item->id - 1) && sh->pipes[i][0] != -1)
+		{
+			if (close(sh->pipes[i][0]) == -1)
+				return (perror(ER_CLOSE), 0);
+			sh->pipes[i][0] = -1;
+		}
+		if (i != item->id && sh->pipes[i][1] != -1)
+		{
+			if (close(sh->pipes[i][1]) == -1)
+				return (perror(ER_CLOSE), 0);
+			sh->pipes[i][1] = -1;
+		}
+		i++;
+	}
+	return (1);
+}

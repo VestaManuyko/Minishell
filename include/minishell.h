@@ -212,6 +212,13 @@ int		dup_fds(t_prog *item);
 int		close_fds(t_shell *sh);
 
 /*
+ * Called from a child process to close all unused fds by that process.
+ * Return value:
+ * 0 on error, 1 0n success.
+*/
+int		close_unused_fds(t_prog *item, t_shell *sh);
+
+/*
  * Checks if the redirection files are valid and
  * sets all the needed fds for execution of a program.
  * Return value:

@@ -115,6 +115,11 @@ void	exec_programs(t_shell *shell)
 			shell->status = 1;
 			return ;
 		}
+		if (shell->items[0].prog->size == 0)
+		{
+			close_fds(shell);
+			return ;
+		}
 		if (shell->items[0].bltin == NULL)
 			exec_single(shell);
 		else
