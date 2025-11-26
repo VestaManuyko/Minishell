@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:18:08 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/26 12:26:16 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/26 14:59:39 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 
 char	set_next_char(char c, t_pipe status)
 {
-	if (c == '\0' && status == ispipe)
+	if ((c == '\0' || c == '\n') && status == ispipe)
 		return ('|');
+	if (c == '\0')
+		return ('\n');
 	return (c);
 }
 
