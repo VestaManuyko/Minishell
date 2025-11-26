@@ -41,7 +41,7 @@ typedef struct s_arr
 	ssize_t	size;
 	ssize_t	capacity;
 	void	(*u_free)(void *item);
-}			t_arr;
+}	t_arr;
 
 typedef int	(*t_bltnf)(t_arr *args, t_shell *sh);
 

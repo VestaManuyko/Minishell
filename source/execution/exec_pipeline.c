@@ -92,7 +92,7 @@ static void	exec_parent(pid_t pid, t_shell *sh)
 	signal_set(2, sh);
 	waitpid(pid, &status, 0);
 	while (waitpid(-1, NULL, 0) > 0)
-    	;
+		;
 	set_status(status, sh);
 }
 

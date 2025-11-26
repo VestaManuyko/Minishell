@@ -59,7 +59,6 @@ int		cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect);
  */
 int		cmd_parse_red(t_arr *redirect, t_prog *proc, t_shell *sh, t_arr *cmds);
 
-
 /* For each t_prog structure expand the input array based on:
  * the usage of variable and quotations returning the final data to 
  * pass to the execution process.
