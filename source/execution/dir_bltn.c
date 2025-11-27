@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 16:45:58 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/25 14:03:22 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/27 11:33:14 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,12 @@
  * Return value:
  * 0 on error, 1 on success.
 */
-static int	set_pwd(t_shell *sh, char *nextdir, char *dir, int ishome)
+static int	set_pwd(t_shell *sh, char *nextdir, char *dir)
 {
-	char	*temp;
 	char	*pwd;
 	char	*oldpwd;
-	char 	*tmp;
 
-	if (ishome == 0)
-	{
-		tmp = ft_strjoin(dir, "/");
-		temp = ft_strjoin(tmp, nextdir);
-		pwd = ft_strjoin("PWD=", temp);
-		free(tmp);
-		free(temp);
-	}
-	else
-		pwd = ft_strjoin("PWD=", nextdir);
+	pwd = ft_strjoin("PWD=", nextdir);
 	if (!pwd)
 		return (0);
 	oldpwd = ft_strjoin("OLDPWD=", dir);
@@ -46,20 +35,24 @@ static int	set_pwd(t_shell *sh, char *nextdir, char *dir, int ishome)
 	return (free(pwd), free(oldpwd), 1);
 }
 
-static int	cd2(char *nextdir, t_shell *sh, int ishome)
+static int	cd2(char *nextdir, t_shell *sh)
 {
-	char	*dir;
+	char	*curdir;
+	char	*newdir;
 
-	dir = getcwd(NULL, 0);
-	if (!dir)
+	curdir = getcwd(NULL, 0);
+	if (!curdir)
 		return (ft_putendl_fd(ER_CDENV, 2), free(nextdir), 0);
 	if (!chdir(nextdir))
 	{
-		if (!set_pwd(sh, nextdir, dir, ishome))
-			return (ft_putendl_fd(ER_CDENV, 2), free(dir), 0);
-		return (free(dir), 1);
+		newdir = getcwd(NULL, 0);
+		if (!newdir)
+			return (ft_putendl_fd(ER_CDENV, 2), free(nextdir), 0);
+		if (!set_pwd(sh, newdir, curdir))
+			return (ft_putendl_fd(ER_CDENV, 2), free(curdir), free(newdir), 0);
+		return (free(curdir), free(newdir), 1);
 	}
-	return (cmd_perror(ER_CD, nextdir, strerror(errno)), free(dir), 0);
+	return (cmd_perror(ER_CD, nextdir, strerror(errno)), free(curdir), 0);
 }
 
 int	bltn_cd(t_arr *args, t_shell *sh)
@@ -78,13 +71,13 @@ int	bltn_cd(t_arr *args, t_shell *sh)
 			return (cmd_perror(ER_MINI, "cd", strerror(ENOMEM)), 0);
 		if (!home || !*home)
 			return (free(home), 1);
-		if (!cd2(home, sh, 1))
+		if (!cd2(home, sh))
 			return (free(home), 0);
 		free(home);
 	}
 	else
 	{
-		if (!cd2(args->arr[1], sh, 0))
+		if (!cd2(args->arr[1], sh))
 			return (0);
 	}
 	return (1);
