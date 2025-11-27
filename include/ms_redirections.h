@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 01:50:34 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 13:50:21 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/26 11:57:57 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	red_perror(char token);
  * put in the remaining string (cleaned by any unquoted blank) into
  * the field char *raw.
  */
-t_red	*red_str2struct(char *str);
+t_red	*red_str2struct(char *str, char next);
 
 /* Expands into the val field the data set in the raw field.
  * $ and quotes are getting expanded with the exception of the heredoc case
