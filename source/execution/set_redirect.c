@@ -69,7 +69,11 @@ char	*set_redirect(t_shell *shell, t_prog *item)
 		else if (red->type == in_file || red->type == in_heredoc)
 			ret = create_in_files(red, item);
 		if (!ret)
+		{
+			if (red->raw[0] == '$')
+				return (close_fds(shell), red->raw);
 			return (close_fds(shell), red->val);
+		}
 		i++;
 	}
 	return (0);

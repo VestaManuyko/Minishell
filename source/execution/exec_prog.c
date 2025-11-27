@@ -94,14 +94,19 @@ static void	programs_validate(t_shell *shell)
 	{
 		if (!program_validate(shell, &shell->items[i]))
 		{
+			arr_free((char **)shell->items[i].prog->arr);
+			shell->items[i].prog->arr = NULL;
 			shell->items[i].prog->size = 0;
 			shell->items[i].complete = shell->status;
 		}
 		red_val = set_redirect(shell, &shell->items[i]);
 		if (red_val)
 		{
+			if (red_val[0] == '$')
+				cmd_perror(ER_MINI, red_val, "ambiguous redirect");
+			else
+				cmd_perror(ER_MINI, red_val, strerror(errno));
 			shell->items[i].complete = 1;
-			cmd_perror(ER_MINI, red_val, strerror(errno));
 		}
 		i++;
 	}
