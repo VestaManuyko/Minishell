@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 13:17:54 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/26 15:53:03 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/27 09:18:23 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	check_boundaries(char *nbr, int sign)
 {
 	const char	*intmax = "9223372036854775807";
-	size_t		i;
+	int			i;
 
 	i = 0;
 	while (i < 19)
@@ -30,12 +30,12 @@ static int	check_boundaries(char *nbr, int sign)
 	return (nbr[i - (i == 19)] <= intmax[i - (i == 19)]);
 }
 
-int	get_number(char *s)
+static int	get_number(char *s)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (*s && s[i])
+	while (*s)
 	{
 		if (!(s[i] >= '0' && s[i] <= '9'))
 			break ;
@@ -49,10 +49,10 @@ int	get_number(char *s)
 	return (100);
 }
 
-int	legit_signedlongint(char *s)
+static int	legit_signedlongint(char *s)
 {
-	size_t	i;
-	int		sign;
+	int	i;
+	int	sign;
 
 	sign = 1;
 	if (!s || !s[0])
