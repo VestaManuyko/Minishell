@@ -24,11 +24,11 @@ static int	init_pipes(t_shell *sh, int ***pipes)
 	i = 0;
 	while (i < (sh->count - 1))
 	{
-		if (pipe(*pipes[i]) == -1)
+		if (pipe((*pipes)[i]) == -1)
 		{
 			i = 0;
 			while (i < (sh->count - 1))
-				free(*pipes[i++]);
+				free((*pipes)[i++]);
 			free (*pipes);
 			*pipes = NULL;
 			return (0);
