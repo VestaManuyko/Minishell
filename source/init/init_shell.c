@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 00:23:58 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/27 13:01:40 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/27 13:11:08 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static int	setpwd(t_arr *env)
 {
-	char *tmp;
-	char *pwd;
-	
+	char	*tmp;
+	char	*pwd;
+
 	tmp = getcwd(NULL, 0);
 	pwd = ft_strjoin("PWD=", tmp);
 	if (pwd == NULL)
@@ -29,8 +29,8 @@ static int	setpwd(t_arr *env)
 
 static int	ismax999(char *val, char **newval)
 {
-	int i;
-	int nbr;
+	int	i;
+	int	nbr;
 
 	*newval = NULL;
 	if (val == NULL)
@@ -39,7 +39,7 @@ static int	ismax999(char *val, char **newval)
 	while (val[i] && i < 3)
 	{
 		if (!ft_isdigit(val[i]))
-			return (0) ;
+			return (0);
 		i++;
 	}
 	if (val[i] != '\0')
@@ -54,7 +54,7 @@ static int	setshlvl(t_arr *env, int id)
 {
 	char	*val;
 	char	*newval;
-	
+
 	if (!env_getvalue((char **)env->arr, &val, id))
 		return (0);
 	if (val == NULL || !ismax999(val, &newval))
@@ -78,8 +78,8 @@ static int	setshlvl(t_arr *env, int id)
 
 static int	minimalsetup(t_shell *sh)
 {
-	int shlvl;
-	
+	int	shlvl;
+
 	if (!setpwd(sh->env))
 		return (0);
 	shlvl = env_getid((char **)sh->env->arr, "SHLVL");
@@ -89,7 +89,7 @@ static int	minimalsetup(t_shell *sh)
 			return (0);
 	}
 	else if (!setshlvl(sh->env, shlvl))
-		return (0);	
+		return (0);
 	return (1);
 }
 
