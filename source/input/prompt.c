@@ -90,7 +90,10 @@ int	get_command(t_shell *shell)
 		clean_exit(0, shell, shell->status);
 	}
 	if (quote_opened(line))
+	{
+		shell->status = 1;
 		return (add_history(line), free(line), ft_putendl_fd(ER_QUOTES, 2), 0);
+	}
 	shell->cmd_line = line;
 	if (*line)
 		add_history(line);
