@@ -17,20 +17,20 @@
  * Return value:
  * 0 on error, 1 on success.
 */
-static int	init_pipes(t_shell *sh, int **pipes)
+static int	init_pipes(t_shell *sh, int ***pipes)
 {
 	int	i;
 
 	i = 0;
 	while (i < (sh->count - 1))
 	{
-		if (pipe(pipes[i]) == -1)
+		if (pipe(*pipes[i]) == -1)
 		{
 			i = 0;
 			while (i < (sh->count - 1))
-				free(pipes[i++]);
-			free (pipes);
-			pipes = NULL;
+				free(*pipes[i++]);
+			free (*pipes);
+			*pipes = NULL;
 			return (0);
 		}
 		i++;
@@ -66,7 +66,7 @@ int	create_pipes(t_shell *sh)
 		}
 		i++;
 	}
-	if (!init_pipes(sh, sh->pipes))
+	if (!init_pipes(sh, &sh->pipes))
 		return (0);
 	return (1);
 }
