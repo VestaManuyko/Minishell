@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/05 12:19:12 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:38:02 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # include "ms_redirections.h"
 # include "ms_commands.h"
 
-# define MS_METACHAR "\n|&;()<>"
+# define MS_METACHAR "\n|<>"
 # define MS_BLANKS " \t\n"
 # define MS_METAERR "&;()\\"
 
