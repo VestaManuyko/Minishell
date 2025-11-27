@@ -6,10 +6,11 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 02:55:10 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/26 11:57:43 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/27 15:54:59 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ms_structs.h"
 #include <minishell.h>
 
 static t_redtype	red_settype(char *str)
@@ -29,7 +30,7 @@ static t_redtype	red_settype(char *str)
 	return (type);
 }
 
-static char	*string_start(char *str, char next)
+static char	*string_start(char *str, char next, t_shell *sh)
 {
 	int	i;
 
@@ -37,27 +38,27 @@ static char	*string_start(char *str, char next)
 	while (str[i] && ft_strchr(MS_BLANKS, str[i]) != NULL)
 		i++;
 	if (ft_strchr(MS_METACHAR, str[i]) != NULL)
-		return (red_perror(next), NULL);
+		return (red_perror(next, sh), NULL);
 	return (&str[i]);
 }
 
-static char	*extract_value(t_red *item, char *str, char next)
+static char	*extract_value(t_red *item, char *str, char next, t_shell *sh)
 {
 	char		*start;
 	char		*tmp;
 
 	start = NULL;
 	if (item->type == in_heredoc || item->type == out_append)
-		start = string_start(str + 2, next);
+		start = string_start(str + 2, next, sh);
 	else
-		start = string_start(str + 1, next);
+		start = string_start(str + 1, next, sh);
 	if (start == NULL)
 		return (NULL);
 	tmp = ft_strdup(start);
 	return (tmp);
 }
 
-t_red	*red_str2struct(char *str, char next)
+t_red	*red_str2struct(char *str, char next, t_shell *sh)
 {
 	t_red		*item;
 
@@ -66,7 +67,7 @@ t_red	*red_str2struct(char *str, char next)
 		return (NULL);
 	if (item->type == none)
 		return (NULL);
-	item->raw = extract_value(item, str, next);
+	item->raw = extract_value(item, str, next, sh);
 	if (item->raw == NULL)
 		return (free(item), NULL);
 	return (item);

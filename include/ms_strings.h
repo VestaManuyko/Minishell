@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 14:54:02 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/26 11:53:19 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/27 15:57:04 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ int		tar_popone(t_arr *tar, int id);
  */
 int		tar_linkone(t_arr *tar, void *item);
 
-int		tar_putred(t_arr *arr, char *str, char next);
+int		tar_putred(t_arr *arr, char *str, char next, t_reder *d);
 
 int		tar_putinfostr(t_arr *arr, char *str, int value, int connect);
 

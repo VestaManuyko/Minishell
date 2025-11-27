@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:18:08 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/26 14:59:39 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/27 15:56:37 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	extract_red(char **str, char **end, t_arr *tar, t_reder *d)
 	line = ft_strncpy(*str, *end - *str + 1);
 	if (line == NULL)
 		return (0);
-	if (!tar_putred(tar, line, set_next_char(*(*end + 1), d->proctype)))
+	if (!tar_putred(tar, line, set_next_char(*(*end + 1), d->proctype), d))
 		return (free(line), 0);
 	free(line);
 	*str = *end + 1;
@@ -64,14 +64,19 @@ static int	append_prog(char *str, char *end, t_arr *tar)
 	return (1);
 }
 
-int	cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect)
+void set_reder(t_reder *d, t_prog *proc, t_shell *sh)
+{
+	d->res = 1;
+	d->proctype = proc->go_to;
+	d->sh = sh;
+}
+int	cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect, t_shell *sh)
 {
 	char	*end;
 	t_reder	d;
 
 	end = str;
-	d.res = 1;
-	d.proctype = proc->go_to;
+	set_reder(&d, proc, sh);
 	while (*str)
 	{
 		d.quotes = str_isquoted(*end);
@@ -90,5 +95,5 @@ int	cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect)
 			return (0);
 		end++;
 	}
-	return (1);
+	return (0);
 }
