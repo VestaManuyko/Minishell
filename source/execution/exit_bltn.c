@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 13:17:54 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/27 09:18:23 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/28 09:50:26 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static int	legit_signedlongint(char *s)
 		sign = 1 - (2 * (*s == '-'));
 		s++;
 	}
+	while (*s == '0')
+		s++;
 	i = get_number(s);
 	if (i == 19)
 		return (check_boundaries(s, sign));
