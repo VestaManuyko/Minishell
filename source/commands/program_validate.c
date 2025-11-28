@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:51:58 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/25 13:25:05 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/28 09:32:18 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	is_valid_path(char *exec, t_shell *sh)
 	struct stat	info;
 
 	if ((stat(exec, &info)) == -1)
-		return (sh->status = 1, 0);
+		return (sh->status = 127, 0);
 	if S_ISDIR(info.st_mode)
 		return (errno = EISDIR, sh->status = 126, 0);
 	else if (!(S_ISREG(info.st_mode) || S_ISLNK(info.st_mode)))
