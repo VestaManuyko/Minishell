@@ -21,15 +21,25 @@ static int	set_pwd(t_shell *sh, char *newdir, char *curdir)
 {
 	char	*pwd;
 	char	*oldpwd;
+	int		id;
 
-	pwd = ft_strjoin("PWD=", newdir);
-	if (!pwd)
-		return (0);
+	pwd = NULL;
+	id = env_getid((char **)sh->env->arr, "PWD");
+	if (id != -1)
+	{
+		if (!newdir)
+			return (1);
+		pwd = ft_strjoin("PWD=", newdir);
+		if (!pwd)
+			return (0);
+		if (!env_entry_update(sh->env, pwd))
+			return (free(pwd), 0);
+	}
+	if (!curdir)
+		return (free(pwd), 1);
 	oldpwd = ft_strjoin("OLDPWD=", curdir);
 	if (!oldpwd)
 		return (free(pwd), 0);
-	if (!env_entry_update(sh->env, pwd))
-		return (free(pwd), free(oldpwd), 0);
 	if (!env_entry_update(sh->env, oldpwd))
 		return (free(pwd), free(oldpwd), 0);
 	return (free(pwd), free(oldpwd), 1);
@@ -37,20 +47,18 @@ static int	set_pwd(t_shell *sh, char *newdir, char *curdir)
 
 static int	cd2(char *nextdir, t_shell *sh)
 {
-	char	*curdir;
 	char	*newdir;
+	char	*curdir;
 
 	curdir = getcwd(NULL, 0);
-	if (!curdir)
-		return (ft_putendl_fd(ER_CDENV, 2), 0);
 	if (!chdir(nextdir))
 	{
 		newdir = getcwd(NULL, 0);
 		if (!newdir)
-			return (ft_putendl_fd(ER_CDENV, 2), 0);
+			return (ft_putendl_fd(ER_CDENV, 2), free(curdir), 0);
 		if (!set_pwd(sh, newdir, curdir))
-			return (ft_putendl_fd(ER_CDENV, 2), free(curdir), free(newdir), 0);
-		return (free(curdir), free(newdir), 1);
+			return (ft_putendl_fd(ER_CDENV, 2), free(newdir), free(curdir), 0);
+		return (free(newdir), free(curdir), 1);
 	}
 	return (cmd_perror(ER_CD, nextdir, strerror(errno)), free(curdir), 0);
 }
