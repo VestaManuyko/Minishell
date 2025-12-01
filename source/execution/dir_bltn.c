@@ -17,15 +17,15 @@
  * Return value:
  * 0 on error, 1 on success.
 */
-static int	set_pwd(t_shell *sh, char *nextdir, char *dir)
+static int	set_pwd(t_shell *sh, char *newdir, char *curdir)
 {
 	char	*pwd;
 	char	*oldpwd;
 
-	pwd = ft_strjoin("PWD=", nextdir);
+	pwd = ft_strjoin("PWD=", newdir);
 	if (!pwd)
 		return (0);
-	oldpwd = ft_strjoin("OLDPWD=", dir);
+	oldpwd = ft_strjoin("OLDPWD=", curdir);
 	if (!oldpwd)
 		return (free(pwd), 0);
 	if (!env_entry_update(sh->env, pwd))
@@ -42,12 +42,12 @@ static int	cd2(char *nextdir, t_shell *sh)
 
 	curdir = getcwd(NULL, 0);
 	if (!curdir)
-		return (ft_putendl_fd(ER_CDENV, 2), free(nextdir), 0);
+		return (ft_putendl_fd(ER_CDENV, 2), 0);
 	if (!chdir(nextdir))
 	{
 		newdir = getcwd(NULL, 0);
 		if (!newdir)
-			return (ft_putendl_fd(ER_CDENV, 2), free(nextdir), 0);
+			return (ft_putendl_fd(ER_CDENV, 2), 0);
 		if (!set_pwd(sh, newdir, curdir))
 			return (ft_putendl_fd(ER_CDENV, 2), free(curdir), free(newdir), 0);
 		return (free(curdir), free(newdir), 1);
