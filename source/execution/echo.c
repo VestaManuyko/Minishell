@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 18:00:41 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/14 09:57:01 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/28 10:01:17 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	only_n(char *str)
 {
+	if (!*str)
+		return (0);
 	while (*str != 0)
 	{
 		if (*str != 'n')

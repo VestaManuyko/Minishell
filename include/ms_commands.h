@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 15:41:04 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/25 13:42:50 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/27 15:58:05 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	cmd_perror(char *pre, char *str, char *err);
  * - 1 if the portion of string is not empty.
  * - 0 otherwise.
  */
-int		cmd_validate_pipes(char *str);
+int		cmd_validate_pipes(char *str, t_shell *sh);
 
 /* separate the incoming string of a single process (pipe separated) into 
  * 2 arrays:
@@ -46,7 +46,7 @@ int		cmd_validate_pipes(char *str);
  */
 int		cmd_str2prog(t_prog *proc, char *str, t_shell *sh, t_arr *cmds);
 
-int		cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect);
+int		cmd_split_tokens(t_prog *proc, char *str, t_arr *redirect, t_shell *sh);
 
 /* For each redirection but heredoc, the funciton 
  * takes the string saved in the raw param and expands it 

@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:44:48 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/28 13:25:53 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/27 15:58:23 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	programs_populate(t_shell *sh)
 	t_arr	*cmds;
 	int		i;
 
-	if (is_only_space(sh->cmd_line, sh) || !cmd_validate_pipes(sh->cmd_line))
+	if (is_only_space(sh->cmd_line, sh) || !cmd_validate_pipes(sh->cmd_line, sh))
 		return (0);
 	cmds = split_commands(sh->cmd_line);
 	if (cmds == NULL)
