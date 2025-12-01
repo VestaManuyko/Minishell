@@ -14,14 +14,20 @@
 
 static void	set_pipe_fds2(t_prog *item, t_shell *sh)
 {
-	if (item->fd_io[0] == -1)
+	if (item->fd_io[0] == 0)
 		item->fd_io[0] = sh->pipes[item->id - 1][0];
-	else
+	else if (item->fd_io[0] > 0)
+	{
 		close (sh->pipes[item->id - 1][0]);
-	if (item->fd_io[1] == -1)
+		sh->pipes[item->id - 1][0] = -1;
+	}
+	if (item->fd_io[1] == 1)
 		item->fd_io[1] = sh->pipes[item->id][1];
-	else
+	else if (item->fd_io[1] > 1)
+	{
 		close (sh->pipes[item->id][1]);
+		sh->pipes[item->id][1] = -1;
+	}
 }
 
 /*
@@ -38,21 +44,23 @@ static void	set_pipe_fds(t_prog *item, t_shell *sh)
 		set_pipe_fds2(item, sh);
 	else if (item->go_to == end)
 	{
-		if (item->fd_io[0] == -1)
+		if (item->fd_io[0] == 0)
 			item->fd_io[0] = sh->pipes[item->id - 1][0];
-		else
+		else if (item->fd_io[0] > 0)
+		{
 			close (sh->pipes[item->id - 1][0]);
-		if (item->fd_io[1] == -1)
-			item->fd_io[1] = 1;
+			sh->pipes[item->id - 1][0] = -1;
+		}
 	}
 	else if (item->go_to == ispipe && item->id == 0)
 	{
-		if (item->fd_io[0] == -1)
-			item->fd_io[0] = 0;
-		if (item->fd_io[1] == -1)
+		if (item->fd_io[1] == 1)
 			item->fd_io[1] = sh->pipes[item->id][1];
-		else
+		else if (item->fd_io[1] > 1)
+		{
 			close (sh->pipes[item->id][1]);
+			sh->pipes[item->id][1] = -1;
+		}
 	}
 }
 

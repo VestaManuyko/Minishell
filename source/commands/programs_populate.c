@@ -33,7 +33,7 @@ static t_arr	*split_commands(char *str)
  * Checks for input containing only spaces or empty input
  * If only spaces or empty returns 1, otherwise 0.
 */
-static int	is_only_space(char	*line)
+static int	is_only_space(char	*line, t_shell *sh)
 {
 	size_t	i;
 
@@ -43,7 +43,7 @@ static int	is_only_space(char	*line)
 	while (line[i] == ' ')
 		i++;
 	if (i == ft_strlen(line))
-		return (1);
+		return (sh->status = 0, 1);
 	return (0);
 }
 
@@ -52,7 +52,7 @@ int	programs_populate(t_shell *sh)
 	t_arr	*cmds;
 	int		i;
 
-	if (is_only_space(sh->cmd_line) || !cmd_validate_pipes(sh->cmd_line, sh))
+	if (is_only_space(sh->cmd_line, sh) || !cmd_validate_pipes(sh->cmd_line, sh))
 		return (0);
 	cmds = split_commands(sh->cmd_line);
 	if (cmds == NULL)

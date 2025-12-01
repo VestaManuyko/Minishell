@@ -113,7 +113,6 @@ char	**str_split_by_set(char *str, char *set, bool eval_quote);
  * Return value:
  * 1 on success, 0 on error.
  * If ctrl D(EOF) encountered cleans up and exits.
- * On system function call error cleans up and exits the shell.
  */
 int		get_command(t_shell *shell);
 

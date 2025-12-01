@@ -26,7 +26,7 @@ int	cmd_str2prog(t_prog *proc, char *str, t_shell *sh, t_arr *cmds)
 		return (0);
 	if (!cmd_parse_progs(proc, sh))
 		return (0);
-	proc->fd_io[0] = -1;
-	proc->fd_io[1] = -1;
+	proc->fd_io[0] = 0;
+	proc->fd_io[1] = 1;
 	return (1);
 }

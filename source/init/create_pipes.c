@@ -53,7 +53,7 @@ int	create_pipes(t_shell *sh)
 	j = 0;
 	sh->pipes = malloc(sizeof(int *) * (sh->count - 1));
 	if (!sh->pipes)
-		return (0);
+		return (sh->status = 1, 0);
 	while (i < (sh->count - 1))
 	{
 		sh->pipes[i] = malloc(sizeof(int) * 2);
@@ -67,6 +67,6 @@ int	create_pipes(t_shell *sh)
 		i++;
 	}
 	if (!init_pipes(sh, &sh->pipes))
-		return (0);
+		return (sh->status = 1, 0);
 	return (1);
 }
