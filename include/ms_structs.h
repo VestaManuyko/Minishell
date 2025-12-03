@@ -18,6 +18,7 @@
 # include <sys/types.h>
 
 typedef struct s_shell	t_shell;
+typedef struct s_arr	t_arr;
 typedef int				(*t_bltnf)(t_arr *args, t_shell *sh);
 /* This stucture represents the way the current program relates to the 
  * surrounding ones.
