@@ -21,20 +21,15 @@ static int	set_pwd(t_shell *sh, char *newdir, char *curdir)
 {
 	char	*pwd;
 	char	*oldpwd;
-	int		id;
 
 	pwd = NULL;
-	id = env_getid((char **)sh->env->arr, "PWD");
-	if (id != -1)
-	{
-		if (!newdir)
-			return (1);
-		pwd = ft_strjoin("PWD=", newdir);
-		if (!pwd)
-			return (0);
-		if (!env_entry_update(sh->env, pwd))
-			return (free(pwd), 0);
-	}
+	if (!newdir)
+		return (1);
+	pwd = ft_strjoin("PWD=", newdir);
+	if (!pwd)
+		return (0);
+	if (!env_entry_update(sh->env, pwd))
+		return (free(pwd), 0);
 	if (!curdir)
 		return (free(pwd), 1);
 	oldpwd = ft_strjoin("OLDPWD=", curdir);
