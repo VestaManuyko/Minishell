@@ -32,7 +32,7 @@ void	cmd_perror(char *pre, char *str, char *err);
  * - 1 if the portion of string is not empty.
  * - 0 otherwise.
  */
-int		cmd_validate_pipes(char *str, t_shell *sh);
+int		cmd_valid_pipes(char *str, t_shell *sh);
 
 /* separate the incoming string of a single process (pipe separated) into 
  * 2 arrays:

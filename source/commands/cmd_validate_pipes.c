@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_validate_pipes.c                               :+:      :+:    :+:   */
+/*   cmd_valid_pipes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,7 +13,7 @@
 #include "ms_redirections.h"
 #include <minishell.h>
 
-int	cmd_validate_pipes(char *str, t_shell *sh)
+int	cmd_valid_pipes(char *str, t_shell *sh)
 {
 	int	cmd_size;
 	int	quotes;

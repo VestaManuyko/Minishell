@@ -43,7 +43,7 @@ typedef struct s_reder
 	t_pipe	proctype;
 	int		res;
 	t_shell	*sh;
-	
+
 }	t_reder;
 
 #endif
