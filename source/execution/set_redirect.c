@@ -22,7 +22,7 @@ static int	create_out_files(t_red *red, t_prog *item)
 		return (0);
 	else
 	{
-		if (item->fd_io[1] > 0)
+		if (item->fd_io[1] > 1)
 			close (item->fd_io[1]);
 		item->fd_io[1] = red->fd;
 	}
@@ -39,7 +39,7 @@ static int	create_in_files(t_red *red, t_prog *item)
 		return (0);
 	else
 	{
-		if (item->fd_io[0] > 0)
+		if (item->fd_io[0] > 1)
 			close (item->fd_io[0]);
 		item->fd_io[0] = red->fd;
 	}
