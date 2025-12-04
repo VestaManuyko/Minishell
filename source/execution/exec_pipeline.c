@@ -127,8 +127,13 @@ int	exec_pipeline(t_shell *sh)
 		if (pid == 0)
 		{
 			signal_set(1, sh);
-			if (set_redirect(sh, &sh->items[i]))
+			if (set_redirect(&sh->items[i]))
+			{
+				set_pipe_fds(&sh->items[i], sh);
+				dup_fds(&sh->items[i]);
+				close_fds(sh);
 				clean_exit(0, sh, 1);
+			}
 			if (sh->items[i].prog->size == 0)
 			{
 				close_fds(sh);

@@ -99,7 +99,7 @@ static void	programs_validate(t_shell *shell)
 			shell->items[i].prog->size = 0;
 			shell->items[i].complete = shell->status;
 		}
-		red_val = set_redirect(shell, &shell->items[i]);
+		red_val = set_redirect(&shell->items[i]);
 		if (red_val)
 		{
 			if (red_val[0] == '$')
@@ -122,9 +122,10 @@ void	exec_programs(t_shell *shell)
 	programs_validate(shell);
 	if (shell->count == 1)
 	{
-		if (set_redirect(shell, &shell->items[0]))
+		if (set_redirect(&shell->items[0]))
 		{
 			shell->status = 1;
+			close_fds(shell);
 			return ;
 		}
 		if (shell->items[0].prog->size == 0)

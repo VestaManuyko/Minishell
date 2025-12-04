@@ -227,7 +227,7 @@ void	close_unused_fds(t_prog *item, t_shell *sh);
  * Filename failed to open on error, NULL on success
  * (if no opening file failed).
 */
-char	*set_redirect(t_shell *shell, t_prog *item);
+char	*set_redirect(t_prog *item);
 
 /*
  * Executes a single child process if not built-in.

@@ -53,7 +53,7 @@ static int	create_in_files(t_red *red, t_prog *item)
  * Filename failed to open on error, NULL on success
  * (if no opening file failed).
 */
-char	*set_redirect(t_shell *shell, t_prog *item)
+char	*set_redirect(t_prog *item)
 {
 	t_red	*red;
 	int		i;
@@ -71,8 +71,8 @@ char	*set_redirect(t_shell *shell, t_prog *item)
 		if (!ret)
 		{
 			if (red->raw[0] == '$')
-				return (close_fds(shell), red->raw);
-			return (close_fds(shell), red->val);
+				return (red->raw);
+			return (red->val);
 		}
 		i++;
 	}
