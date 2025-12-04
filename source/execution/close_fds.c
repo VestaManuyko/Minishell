@@ -50,9 +50,9 @@ void	close_fds(t_shell *sh)
 	cl_red_fds(sh);
 	while (i < (sh->count - 1))
 	{
-		if (sh->pipes[i][0] > 1)
+		if (sh->pipes[i][0] != -1)
 			close(sh->pipes[i][0]);
-		if (sh->pipes[i][1] > 1)
+		if (sh->pipes[i][1] != -1)
 			close(sh->pipes[i][1]);
 		sh->pipes[i][0] = -1;
 		sh->pipes[i][1] = -1;
