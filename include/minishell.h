@@ -124,6 +124,12 @@ int		get_command(t_shell *shell);
 void	clean_exit(char *message, t_shell *shell, int status);
 
 /*
+ * Checks for input containing only spaces or empty input
+ * If only spaces or empty returns 1, otherwise 0.
+*/
+int		is_only_space(char	*line);
+
+/*
  * Reads input from stdin until a limiter is met.
  * If limiter was quoted expands the environment variables.
  * Return value:
