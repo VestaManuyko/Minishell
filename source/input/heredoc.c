@@ -58,24 +58,15 @@ static int	process_line(char **line, int expand, t_shell *sh, char *lim)
 }
 
 /*
- * Displays an eof message if reached eof, otherwise closes
- * write fd and returns.
+ * Displays an eof message when reached eof.
  * Return value:
- * NULL on error, tmp_filename on eof.
+ * 1 on success.
 */
 static int	readline_eof(int fd, char *lim)
 {
-	if (errno == 0)
-	{
-		printf("minishell: here-doc delimited by eof (wanted `%s')\n", lim);
-		close (fd);
-		return (1);
-	}
-	else
-	{
-		close (fd);
-		return (0);
-	}
+	printf("minishell: here-doc delimited by eof (wanted `%s')\n", lim);
+	close (fd);
+	return (1);
 }
 
 /*
