@@ -66,6 +66,12 @@ void	clean_exit(char *message, t_shell *shell, int status)
 		free_shell(shell);
 		exit(status);
 	}
+	if (!strcmp(message, CLOSE_FDS))
+	{
+		close_fds(shell);
+		free_shell(shell);
+		exit(status);
+	}
 	else
 	{
 		perror(message);

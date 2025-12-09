@@ -33,5 +33,6 @@
 # define ER_AC "too many arguments"
 # define ER_CDHM "Error\nminishell: cd: HOME not set"
 # define ER_CDENV "Error\nminishell: cd: error retrieving current directory"
+# define CLOSE_FDS "Close fds"
 
 #endif

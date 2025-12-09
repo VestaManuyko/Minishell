@@ -61,16 +61,17 @@ static int	cd2(char *nextdir, t_shell *sh)
 int	bltn_cd(t_arr *args, t_shell *sh)
 {
 	char	*home;
-	int		id;
 
+	if (g_return == 130)
+		return (0);
 	if (args->size > 2)
 		return (cmd_perror(ER_MINI, "cd", ER_AC), 0);
 	if (args->size == 1)
 	{
-		id = env_getid((char **)sh->env->arr, "HOME");
-		if (id == -1)
+		if (env_getid((char **)sh->env->arr, "HOME") == -1)
 			return (ft_putendl_fd(ER_CDHM, 2), 0);
-		if (!env_getvalue((char **)sh->env->arr, &home, id))
+		if (!env_getvalue((char **)sh->env->arr, &home,
+				env_getid((char **)sh->env->arr, "HOME")))
 			return (cmd_perror(ER_MINI, "cd", strerror(ENOMEM)), 0);
 		if (!home || !*home)
 			return (free(home), 1);
@@ -92,6 +93,8 @@ int	bltn_pwd(t_arr *args, t_shell *sh)
 
 	(void)args;
 	(void)sh;
+	if (g_return == 130)
+		return (0);
 	dir = getcwd(NULL, 0);
 	if (!dir)
 	{

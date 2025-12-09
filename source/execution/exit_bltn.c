@@ -76,6 +76,8 @@ int	bltn_exit(t_arr *args, t_shell *sh)
 {
 	char	*str;
 
+	if (g_return == 130)
+		return (0);
 	printf("exit\n");
 	if (args->size > 2)
 		return (cmd_perror(ER_MINI, "exit", "too many arguments"), 0);

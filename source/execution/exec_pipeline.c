@@ -131,14 +131,10 @@ int	exec_pipeline(t_shell *sh)
 			{
 				set_pipe_fds(&sh->items[i], sh);
 				dup_fds(&sh->items[i]);
-				close_fds(sh);
-				clean_exit(0, sh, 1);
+				clean_exit(CLOSE_FDS, sh, 1);
 			}
 			if (sh->items[i].prog->size == 0)
-			{
-				close_fds(sh);
-				clean_exit(0, sh, sh->items[i].complete);
-			}
+				clean_exit(CLOSE_FDS, sh, sh->items[i].complete);
 			clean_exit(0, sh, exec_child(&sh->items[i], sh));
 		}
 		i++;

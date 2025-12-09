@@ -46,6 +46,8 @@ int	bltn_export(t_arr *args, t_shell *sh)
 	int	status;
 
 	status = 1;
+	if (g_return == 130)
+		return (0);
 	if (args->size == 1)
 		export_print(sh->env);
 	i = 1;

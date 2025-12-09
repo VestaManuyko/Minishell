@@ -17,6 +17,8 @@ int	bltn_unset(t_arr *args, t_shell *sh)
 	int	i;
 
 	i = 0;
+	if (g_return == 130)
+		return (0);
 	while (i < args->size)
 	{
 		env_entry_remove(sh->env, (char *)args->arr[i]);
@@ -29,6 +31,8 @@ int	bltn_env(t_arr *args, t_shell *sh)
 {
 	int	i;
 
+	if (g_return == 130)
+		return (0);
 	if (args->size > 1)
 		return (cmd_perror(ER_MINI, "env", ER_AC), 0);
 	i = 0;

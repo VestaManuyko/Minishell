@@ -46,6 +46,8 @@ int	bltn_echo(t_arr *args, t_shell *sh)
 	int		flag;
 
 	(void)sh;
+	if (g_return == 130)
+		return (0);
 	flag = 1;
 	if (args->size <= 1)
 		write(1, "\n", 1);
