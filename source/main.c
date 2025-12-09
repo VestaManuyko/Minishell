@@ -19,7 +19,10 @@ void	red_shellstatus(t_shell *sh)
 	if (sh->status == 0)
 		sh->status = 1;
 	if (is_only_space(sh->cmd_line))
-		sh->status = 0;
+	{
+		if (sh->status != 130)
+			sh->status = 0;
+	}
 }
 
 void	gret_to_status(t_shell *sh)
