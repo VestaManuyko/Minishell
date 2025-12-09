@@ -64,9 +64,10 @@ static int	process_line(char **line, int expand, t_shell *sh, char *lim)
 */
 static int	readline_eof(int fd, char *lim)
 {
+	if (g_return == 130 || g_return == 131)
+		return (close(fd), 0);
 	printf("minishell: here-doc delimited by eof (wanted `%s')\n", lim);
-	close (fd);
-	return (1);
+	return (close (fd), 1);
 }
 
 /*
