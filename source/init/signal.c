@@ -29,7 +29,11 @@ int	rl_hook(void)
 	}
 	return (0);
 }
-
+/*
+ * When int is_child is set to 0, means that those are signal handlers 
+ * to be set for the parent, if it's 1 means it's in a child process,
+ * if more than 1, means its from the parent waiting for the child.
+*/
 void	signal_set(int is_child, t_shell *shell)
 {
 	struct sigaction	sa;
