@@ -83,11 +83,11 @@ static int	par_hd(pid_t pid, char **files, t_shell *sh, t_arr *red)
 */
 static int	chld_hd(t_arr *redirect, t_shell *sh, char **files, int amnt)
 {
-	int		i;
-	int		j;
-	t_red	*red;
-	int		stdin_main;
-	struct termios saved_term;
+	int				i;
+	int				j;
+	t_red			*red;
+	int				stdin_main;
+	struct termios	saved_term;
 
 	i = 0;
 	j = 0;
@@ -127,14 +127,10 @@ int	handle_heredocs(t_shell *shell, t_arr *redirect, int hd, t_arr *cmds)
 {
 	pid_t	pid;
 	char	**tmp_files;
-	int		i;
 
-	i = 0;
-	tmp_files = malloc (hd * sizeof(char *));
+	tmp_files = create_files(hd);
 	if (!tmp_files)
 		return (0);
-	while (i < hd)
-		tmp_files[i++] = get_filename();
 	pid = fork();
 	if (pid == -1)
 		return (perror(ER_FORK), free_files(tmp_files, hd), 0);

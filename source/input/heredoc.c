@@ -70,36 +70,6 @@ static int	readline_eof(int fd, char *lim)
 	return (close (fd), 1);
 }
 
-/*
- * Get_filename sets the expand flag for the heredoc function if
- * quotes are found within the raw limiter value. Creates a string with
- * the temporary filename as follows:
- * "/tmp/heredoc_(int)1[pid]";
- * Then opens a write fd.
- * Return value:
- * NULL on errors, tmp_filename on success.
-*/
-char	*get_filename(void)
-{
-	char		*tmp_filename;
-	static int	nbr = 0;
-	char		*path;
-	char		*temp;
-
-	if (nbr++ == 2147483645)
-		nbr = 0;
-	temp = ft_itoa(nbr);
-	path = ft_strjoin("/tmp/heredoc_", temp);
-	free(temp);
-	temp = ft_itoa(getpid());
-	tmp_filename = ft_strjoin(path, temp);
-	free(temp);
-	free(path);
-	if (!tmp_filename)
-		return (NULL);
-	return (tmp_filename);
-}
-
 int	heredoc(char *raw_lim, char *lim, char *tmp_filename, t_shell *sh)
 {
 	int		expand;

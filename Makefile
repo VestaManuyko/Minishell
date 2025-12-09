@@ -39,7 +39,7 @@ STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
 ENVIRON = env_getid.c env_getkey.c env_getvalue.c env_getpaths.c \
 		  env_entry_update.c  env_entry_remove.c  
 
-INPUT = prompt.c heredoc.c handle_heredoc.c
+INPUT = prompt.c heredoc.c handle_heredoc.c create_files.c
 
 INIT = init_shell.c free_shell.c reset_shell.c \
 	   signal.c init_builtin.c create_pipes.c

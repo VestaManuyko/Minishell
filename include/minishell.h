@@ -139,13 +139,11 @@ int		is_only_space(char	*line);
 int		heredoc(char *raw_lim, char *limiter, char *tmp_filename, t_shell *sh);
 
 /*
- * Creates a tmp_filename for heredoc using the programs pid
- * and random int number.
+ * Creates tmp_files for heredocs.
  * Return value:
- * NULL on error,
- * freeable pointer to a string containing the tmp_filename.
+ * char ** with all the names of the tmp files needed or 0 on error.
 */
-char	*get_filename(void);
+char	**create_files(int hd);
 
 /*
  * Creates tmp_files for the amount of heredocs,
