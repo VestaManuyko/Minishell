@@ -94,7 +94,10 @@ int	bltn_pwd(t_arr *args, t_shell *sh)
 	(void)sh;
 	dir = getcwd(NULL, 0);
 	if (!dir)
+	{
+		cmd_perror(ER_MINI, "pwd", "getcwd failure");
 		return (0);
+	}
 	printf("%s\n", dir);
 	free(dir);
 	return (1);
