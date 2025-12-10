@@ -33,7 +33,7 @@ static int	check_connectivity(char *str)
 	return (conn);
 }
 
-char	*set_value(t_istr *tmp, int item, int max, t_shell *sh)
+static char	*set_value(t_istr *tmp, int item, int max, t_shell *sh)
 {
 	char	*line;
 
