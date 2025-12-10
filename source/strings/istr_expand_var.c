@@ -33,19 +33,13 @@ static int	check_connectivity(char *str)
 	return (conn);
 }
 
-/* to try:
- * find last $ sign, check if the next is a null then remove it 
- * from the string 
-*/
 char	*set_value(t_istr *tmp, int item, int max, t_shell *sh)
 {
 	char	*line;
 
-
-	if (tmp->type == 0 && item < max && tmp->str[0] == '$' && tmp->len == 1)
-		line = ft_strdup("");
-	else
-		line = str_expand(dollar, tmp->str, 0, sh);
+	if (tmp->str[tmp->len - 1] == '$' && item < max && tmp->type == 0)
+		tmp->str[tmp->len - 1] = '\0';
+	line = str_expand(dollar, tmp->str, 0, sh);
 	return (line);
 }
 
