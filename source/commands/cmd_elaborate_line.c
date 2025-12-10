@@ -74,7 +74,7 @@ static int	merge_by_connectivity(t_arr *arr, t_arr *istr)
 				return (0);
 			connect_last = 1;
 		}
-		else
+		else if (tmp->str[0])
 		{
 			connect_last = (tmp->connect > 1);
 			if (!split_and_connect1st(arr, tmp))

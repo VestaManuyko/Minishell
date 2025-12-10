@@ -33,6 +33,16 @@ static int	check_connectivity(char *str)
 	return (conn);
 }
 
+static char	*set_value(t_istr *tmp, int item, int max, t_shell *sh)
+{
+	char	*line;
+
+	if (tmp->str[tmp->len - 1] == '$' && item < max && tmp->type == 0)
+		tmp->str[tmp->len - 1] = '\0';
+	line = str_expand(dollar, tmp->str, 0, sh);
+	return (line);
+}
+
 int	istr_expand_var(t_arr *istr, t_shell *sh)
 {
 	int		i;
@@ -45,7 +55,7 @@ int	istr_expand_var(t_arr *istr, t_shell *sh)
 		tmp = istr->arr[i];
 		if (tmp->type != '\'')
 		{
-			line = str_expand(dollar, tmp->str, 0, sh);
+			line = set_value(tmp, i, istr->size - 1, sh);
 			if (line == NULL)
 				return (0);
 			if (tmp->type == 0)
