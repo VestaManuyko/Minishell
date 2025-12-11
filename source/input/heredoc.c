@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include <minishell.h>
 
 /*
@@ -66,7 +67,9 @@ static int	readline_eof(int fd, char *lim)
 {
 	if (g_return == 130 || g_return == 131)
 		return (close(fd), 0);
-	printf("minishell: here-doc delimited by eof (wanted `%s')\n", lim);
+	ft_putstr_fd("minishell: here-doc delimited by eof (wanted `", 2);
+	ft_putstr_fd(lim, 2);
+	ft_putendl_fd("')", 2);
 	return (close (fd), 1);
 }
 
