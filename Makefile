@@ -6,7 +6,7 @@
 #    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/11/17 12:43:29 by fpaglia          ###   ########.fr        #
+#    Updated: 2025/11/25 13:50:25 by fpaglia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,18 +26,20 @@ H_INCLUDES = minishell.h err_mes.h ms_commands.h ms_environment.h ms_init.h \
 			ms_redirections.h ms_strings.h ms_structs_support.h ms_structs.h
 # Groups of source files 
 STRINGS = arr_deepcpy.c arr_print.c  arr_to_str.c arr_free.c arr_size.c \
-		  arr_double.c \
-		  str_split_by_set.c str_isquoted.c \
+		  arr_double.c arr_merge.c \
+		  str_split_by_set.c str_split_by_quote.c str_isquoted.c \
 		  str_clearquotes.c \
 		  str_expand.c str_expand_quotes.c str_expand_dollar.c \
 		  tar_init.c tar_free.c tar_print.c \
 		  tar_popone.c tar_linkone.c \
-		  tar_putstr.c tar_putred.c 
+		  tar_putstr.c tar_putred.c tar_putinfostr.c \
+		  tar_merge_strarr.c \
+		  istr_free.c istr_expand_var.c 
 
 ENVIRON = env_getid.c env_getkey.c env_getvalue.c env_getpaths.c \
 		  env_entry_update.c  env_entry_remove.c  
 
-INPUT = prompt.c heredoc.c handle_heredoc.c
+INPUT = prompt.c heredoc.c handle_heredoc.c create_files.c
 
 INIT = init_shell.c free_shell.c reset_shell.c \
 	   signal.c init_builtin.c create_pipes.c
@@ -48,7 +50,7 @@ REDIRECT = red_init.c red_free.c \
 		   red_perror.c red_str2struct.c red_raw2val.c
 
 EXEC = exec_prog.c echo.c bltn.c dir_bltn.c exec_single.c set_redirect.c \
-		exec_pipeline.c close_fds.c
+		exec_pipeline.c close_fds.c exit_bltn.c bltn_export.c
 		   
 COMMANDS = programs_init.c programs_free.c \
 		   programs_populate.c  program_validate.c program_validate2.c \
@@ -56,7 +58,9 @@ COMMANDS = programs_init.c programs_free.c \
 		   cmd_perror.c \
 		   cmd_validate_pipes.c \
 		   cmd_str2prog.c \
-		   cmd_split_tokens.c cmd_parse_progs.c cmd_parse_redirect.c
+		   cmd_split_tokens.c cmd_parse_progs.c \
+		   cmd_expand_progs.c cmd_expand_export.c cmd_elaborate_line.c \
+		   cmd_parse_redirect.c
 
 # Add source paths to files 
 STRINGS_SRC = $(addprefix $(SRC_DIR)/strings/, $(STRINGS))

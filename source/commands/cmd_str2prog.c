@@ -6,30 +6,27 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:10:47 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/28 13:24:55 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/28 10:22:14 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	cmd_str2prog(t_prog *proc, char *str, t_shell *sh)
+int	cmd_str2prog(t_prog *proc, char *str, t_shell *sh, t_arr *cmds)
 {
-	size_t	i;
-
-	i = 0;
 	proc->redirect = tar_init(NULL, red_free);
 	if (proc->redirect == NULL)
 		return (0);
 	proc->prog = tar_init(NULL, free);
 	if (proc->prog == NULL)
 		return (0);
-	if (!cmd_split_tokens(proc, str, proc->redirect))
+	if (!cmd_split_tokens(proc, str, proc->redirect, sh))
 		return (0);
-	if (!cmd_parse_redirect(proc->redirect, proc, sh))
+	if (!cmd_parse_red(proc->redirect, proc, sh, cmds))
 		return (0);
-	if (!cmd_parse_progs(proc, sh->env))
+	if (!cmd_parse_progs(proc, sh))
 		return (0);
-	proc->fd_io[0] = -1;
-	proc->fd_io[1] = -1;
+	proc->fd_io[0] = 0;
+	proc->fd_io[1] = 1;
 	return (1);
 }

@@ -14,7 +14,7 @@
 # define ERR_MES_H
 
 # define ER_INIT "Error\ninit_shell failure"
-# define ER_QUOTES "Error\nreadline: open quotes detected"
+# define ER_QUOTES "Error\nminishell: open quotes detected"
 # define ER_READLINE "Error\nreadline"
 # define ER_PROMPT "Error\nget_prompt"
 # define ER_SIGACT "Error\nsigaction"
@@ -29,4 +29,10 @@
 # define ER_CLOSE "Error\nclose failure"
 # define ER_NOEXEC "Permission denied"
 # define ER_EXP "Error\nminishell: export: "
+# define ER_EXIT "minishell: exit: "
+# define ER_AC "too many arguments"
+# define ER_CDHM "Error\nminishell: cd: HOME not set"
+# define ER_CDENV "Error\nminishell: cd: error retrieving current directory"
+# define CLOSE_FDS "Close fds"
+
 #endif

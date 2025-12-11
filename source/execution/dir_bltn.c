@@ -3,42 +3,88 @@
 /*                                                        :::      ::::::::   */
 /*   dir_bltn.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 16:45:58 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/05 16:46:08 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:33:14 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
+ * Updates the OLDPWD and PWD env variables after cd command.
+ * Return value:
+ * 0 on error, 1 on success.
+*/
+static int	set_pwd(t_shell *sh, char *newdir, char *curdir)
+{
+	char	*pwd;
+	char	*oldpwd;
+
+	pwd = NULL;
+	if (!newdir)
+		return (1);
+	pwd = ft_strjoin("PWD=", newdir);
+	if (!pwd)
+		return (0);
+	if (!env_entry_update(sh->env, pwd))
+		return (free(pwd), 0);
+	if (!curdir)
+		return (free(pwd), 1);
+	oldpwd = ft_strjoin("OLDPWD=", curdir);
+	if (!oldpwd)
+		return (free(pwd), 0);
+	if (!env_entry_update(sh->env, oldpwd))
+		return (free(pwd), free(oldpwd), 0);
+	return (free(pwd), free(oldpwd), 1);
+}
+
+static int	cd2(char *nextdir, t_shell *sh)
+{
+	char	*newdir;
+	char	*curdir;
+
+	curdir = getcwd(NULL, 0);
+	if (!chdir(nextdir))
+	{
+		newdir = getcwd(NULL, 0);
+		if (!newdir)
+			return (ft_putendl_fd(ER_CDENV, 2), free(curdir), 0);
+		if (!set_pwd(sh, newdir, curdir))
+			return (ft_putendl_fd(ER_CDENV, 2), free(newdir), free(curdir), 0);
+		return (free(newdir), free(curdir), 1);
+	}
+	return (cmd_perror(ER_CD, nextdir, strerror(errno)), free(curdir), 0);
+}
+
 int	bltn_cd(t_arr *args, t_shell *sh)
 {
 	char	*home;
-	char	*key;
-	int		id;
 
-	key = env_getkey("HOME");
-	id = env_getid((char **)sh->env->arr, key);
-	free(key);
-	if (id == -1)
+	if (g_return == 130)
 		return (0);
-	if (!env_getvalue((char **)sh->env->arr, &home, id))
-		return (0);
-	if (!home)
-		return (0);
-	if (!args->arr[1])
+	if (args->size > 2)
+		return (cmd_perror(ER_MINI, "cd", ER_AC), 0);
+	if (args->size == 1)
 	{
-		if ((!chdir(home)))
+		if (env_getid((char **)sh->env->arr, "HOME") == -1)
+			return (ft_putendl_fd(ER_CDHM, 2), 0);
+		if (!env_getvalue((char **)sh->env->arr, &home,
+				env_getid((char **)sh->env->arr, "HOME")))
+			return (cmd_perror(ER_MINI, "cd", strerror(ENOMEM)), 0);
+		if (!home || !*home)
 			return (free(home), 1);
-		errno = ENOTDIR;
-		cmd_perror(ER_CD, home, strerror(errno));
-		return (free(home), 0);
+		if (!cd2(home, sh))
+			return (free(home), 0);
+		free(home);
 	}
-	if (!chdir(args->arr[1]))
-		return (free(home), 1);
-	cmd_perror(ER_CD, args->arr[1], strerror(errno));
-	return (free(home), 0);
+	else
+	{
+		if (!cd2(args->arr[1], sh))
+			return (0);
+	}
+	return (1);
 }
 
 int	bltn_pwd(t_arr *args, t_shell *sh)
@@ -47,9 +93,14 @@ int	bltn_pwd(t_arr *args, t_shell *sh)
 
 	(void)args;
 	(void)sh;
+	if (g_return == 130)
+		return (0);
 	dir = getcwd(NULL, 0);
 	if (!dir)
+	{
+		cmd_perror(ER_MINI, "pwd", "getcwd failure");
 		return (0);
+	}
 	printf("%s\n", dir);
 	free(dir);
 	return (1);

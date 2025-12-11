@@ -12,57 +12,55 @@
 
 #include <minishell.h>
 
-static int	close_unused_fds(t_prog *item, t_shell *sh)
+static void	set_pipe_fds2(t_prog *item, t_shell *sh)
 {
-	int	i;
-
-	i = 0;
-	while (i < (sh->count - 1))
+	if (item->fd_io[0] == 0)
+		item->fd_io[0] = sh->pipes[item->id - 1][0];
+	else if (item->fd_io[0] > 0)
 	{
-		if (i != (item->id - 1) && sh->pipes[i][0] != -1)
-		{
-			if (close(sh->pipes[i][0]) == -1)
-				return (perror(ER_CLOSE), 0);
-			sh->pipes[i][0] = -1;
-		}
-		if (i != item->id && sh->pipes[i][1] != -1)
-		{
-			if (close(sh->pipes[i][1]) == -1)
-				return (perror(ER_CLOSE), 0);
-			sh->pipes[i][1] = -1;
-		}
-		i++;
+		close (sh->pipes[item->id - 1][0]);
+		sh->pipes[item->id - 1][0] = -1;
 	}
-	return (1);
+	if (item->fd_io[1] == 1)
+		item->fd_io[1] = sh->pipes[item->id][1];
+	else if (item->fd_io[1] > 1)
+	{
+		close (sh->pipes[item->id][1]);
+		sh->pipes[item->id][1] = -1;
+	}
 }
 
 /*
  * Checks for exsisting redirections of stdin/out
  * and sets fds for each program according  to pipe
  * redirections.
+ * If statements in this order: all items with both pipe ends,
+ * then last item with no write end of pipe and then
+ * first item with no pipe end for read.
 */
 static void	set_pipe_fds(t_prog *item, t_shell *sh)
 {
 	if (item->go_to == ispipe && item->id != 0)
-	{
-		if (item->fd_io[0] == -1)
-			item->fd_io[0] = sh->pipes[item->id - 1][0];
-		if (item->fd_io[1] == -1)
-			item->fd_io[1] = sh->pipes[item->id][1];
-	}
+		set_pipe_fds2(item, sh);
 	else if (item->go_to == end)
 	{
-		if (item->fd_io[0] == -1)
+		if (item->fd_io[0] == 0)
 			item->fd_io[0] = sh->pipes[item->id - 1][0];
-		if (item->fd_io[1] == -1)
-			item->fd_io[1] = 1;
+		else if (item->fd_io[0] > 0)
+		{
+			close (sh->pipes[item->id - 1][0]);
+			sh->pipes[item->id - 1][0] = -1;
+		}
 	}
 	else if (item->go_to == ispipe && item->id == 0)
 	{
-		if (item->fd_io[0] == -1)
-			item->fd_io[0] = 0;
-		if (item->fd_io[1] == -1)
+		if (item->fd_io[1] == 1)
 			item->fd_io[1] = sh->pipes[item->id][1];
+		else if (item->fd_io[1] > 1)
+		{
+			close (sh->pipes[item->id][1]);
+			sh->pipes[item->id][1] = -1;
+		}
 	}
 }
 
@@ -73,26 +71,39 @@ static void	set_pipe_fds(t_prog *item, t_shell *sh)
 */
 static int	exec_child(t_prog *item, t_shell *sh)
 {
-	char	*path;
+	char	*pth;
 
-	path = item->prog->arr[0];
+	pth = item->prog->arr[0];
 	set_pipe_fds(item, sh);
 	if (!dup_fds(item))
 		return (0);
-	if (!close_unused_fds(item, sh))
-		return (0);
+	close_unused_fds(item, sh);
 	if (item->bltin != NULL)
 	{
+		signal(SIGPIPE, SIG_IGN);
 		if (!item->bltin->func(item->prog, sh))
-			exit (1);
-		exit(0);
+			return (1);
+		return (0);
 	}
 	else
 	{
-		if (execve(path, (char **)item->prog->arr, (char **)sh->env->arr) == -1)
+		signal(SIGPIPE, SIG_DFL);
+		if (execve(pth, (char **)item->prog->arr, (char **)sh->env->arr) == -1)
 			return (cmd_perror(ER_MINI, "execve", strerror(errno)), 0);
 	}
 	return (1);
+}
+
+static void	exec_parent(pid_t pid, t_shell *sh)
+{
+	int		status;
+
+	close_fds(sh);
+	signal_set(2, sh);
+	waitpid(pid, &status, 0);
+	while (waitpid(-1, NULL, 0) > 0)
+		;
+	set_status(status, sh);
 }
 
 /*
@@ -105,7 +116,6 @@ static int	exec_child(t_prog *item, t_shell *sh)
 int	exec_pipeline(t_shell *sh)
 {
 	pid_t	pid;
-	int		status;
 	int		i;
 
 	i = 0;
@@ -117,13 +127,17 @@ int	exec_pipeline(t_shell *sh)
 		if (pid == 0)
 		{
 			signal_set(1, sh);
-			return (exec_child(&sh->items[i], sh));
+			if (set_redirect(&sh->items[i]))
+			{
+				set_pipe_fds(&sh->items[i], sh);
+				dup_fds(&sh->items[i]);
+				clean_exit(CLOSE_FDS, sh, 1);
+			}
+			if (sh->items[i].prog->size == 0)
+				clean_exit(CLOSE_FDS, sh, sh->items[i].complete);
+			clean_exit(0, sh, exec_child(&sh->items[i], sh));
 		}
 		i++;
 	}
-	close_fds(sh);
-	signal_set(2, sh);
-	while ((waitpid(-1, &status, 0)) > 0)
-		;
-	return (set_status(status), signal_set(0, sh), 1);
+	return (exec_parent(pid, sh), signal_set(0, sh), 1);
 }

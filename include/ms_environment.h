@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 16:24:15 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/27 14:27:32 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/25 14:13:03 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		env_getvalue(char **arr, char **str, int id);
  * - 0 on error, please note the source env, str will need to be free'd
  *     by the caller. 
  */
-int		env_entry_update(t_arr *env, char *str);
+int		env_entry_update(t_arr *env, char *key);
 
 /* 
  * Search through the env for the provided key, if found will remove the
@@ -79,6 +79,6 @@ char	*env_getkey(char *str);
  * From the t_arr environment structure returns a char **array of all
  * the paths included in the environment and separated by the ':' character.
  */
-char	**env_getpaths(t_arr *env);
+char	**env_getpaths(t_arr *env, t_shell *sh);
 
 #endif

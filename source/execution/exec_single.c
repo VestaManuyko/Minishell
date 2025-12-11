@@ -28,7 +28,7 @@ int	exec_single(t_shell *sh)
 	{
 		signal_set(1, sh);
 		if (!dup_fds(item))
-			exit(1);
+			clean_exit(0, sh, 1);
 		if (execve(path, (char **)item->prog->arr, (char **)sh->env->arr) == -1)
 			return (cmd_perror(ER_MINI, "execve", strerror(errno)), 1);
 	}
@@ -36,7 +36,7 @@ int	exec_single(t_shell *sh)
 	{
 		signal_set(2, sh);
 		waitpid(pid, &status, 0);
-		set_status(status);
+		set_status(status, sh);
 	}
 	return (signal_set(0, sh), 1);
 }

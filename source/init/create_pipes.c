@@ -17,19 +17,20 @@
  * Return value:
  * 0 on error, 1 on success.
 */
-static int	init_pipes(t_shell *sh, int **pipes)
+static int	init_pipes(t_shell *sh, int ***pipes)
 {
 	int	i;
 
 	i = 0;
 	while (i < (sh->count - 1))
 	{
-		if (pipe(pipes[i]) == -1)
+		if (pipe((*pipes)[i]) == -1)
 		{
 			i = 0;
 			while (i < (sh->count - 1))
-				free(pipes[i++]);
-			free (pipes);
+				free((*pipes)[i++]);
+			free (*pipes);
+			*pipes = NULL;
 			return (0);
 		}
 		i++;
@@ -52,7 +53,7 @@ int	create_pipes(t_shell *sh)
 	j = 0;
 	sh->pipes = malloc(sizeof(int *) * (sh->count - 1));
 	if (!sh->pipes)
-		return (0);
+		return (sh->status = 1, 0);
 	while (i < (sh->count - 1))
 	{
 		sh->pipes[i] = malloc(sizeof(int) * 2);
@@ -61,10 +62,11 @@ int	create_pipes(t_shell *sh)
 			while (j < i)
 				free(sh->pipes[j++]);
 			free(sh->pipes);
+			sh->pipes = NULL;
 		}
 		i++;
 	}
-	if (!init_pipes(sh, sh->pipes))
-		return (0);
+	if (!init_pipes(sh, &sh->pipes))
+		return (sh->status = 1, 0);
 	return (1);
 }

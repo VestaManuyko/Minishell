@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/05 12:19:12 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:38:02 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <readline/history.h>
 # include <asm-generic/errno-base.h>
 # include <fcntl.h>
+# include <termios.h>
 
 # include <libft.h>
 # include "ms_structs.h"
@@ -36,7 +37,7 @@
 # include "ms_redirections.h"
 # include "ms_commands.h"
 
-# define MS_METACHAR "\n|&;()<>"
+# define MS_METACHAR "\n|<>"
 # define MS_BLANKS " \t\n"
 # define MS_METAERR "&;()\\"
 
@@ -113,30 +114,37 @@ char	**str_split_by_set(char *str, char *set, bool eval_quote);
  * Return value:
  * 1 on success, 0 on error.
  * If ctrl D(EOF) encountered cleans up and exits.
- * On system function call error cleans up and exits the shell.
  */
 int		get_command(t_shell *shell);
+
 /*
  * Prints an error message with perror if not NULL
  * checks if anything needs to be freed and cleans up,
  * then exits.
 */
-void	clean_exit(char *message, t_shell *shell);
+void	clean_exit(char *message, t_shell *shell, int status);
+
+/*
+ * Checks for input containing only spaces or empty input
+ * If only spaces or empty returns 1, otherwise 0.
+*/
+int		is_only_space(char	*line);
+
 /*
  * Reads input from stdin until a limiter is met.
  * If limiter was quoted expands the environment variables.
  * Return value:
  * 0 on error, 1 on success or EOF;
 */
-int		heredoc(char *raw_lim, char *limiter, t_arr *env, char *tmp_filename);
+int		heredoc(char *raw_lim, char *limiter, char *tmp_filename, t_shell *sh);
+
 /*
- * Creates a tmp_filename for heredoc using the programs pid
- * and random int number.
+ * Creates tmp_files for heredocs.
  * Return value:
- * NULL on error,
- * freeable pointer to a string containing the tmp_filename.
+ * char ** with all the names of the tmp files needed or 0 on error.
 */
-char	*get_filename(void);
+char	**create_files(int hd);
+
 /*
  * Creates tmp_files for the amount of heredocs,
  * then calles a child process, which calls heredoc function
@@ -150,7 +158,7 @@ char	*get_filename(void);
  * Return value:
  * 0 on error, 1 on success.
 */
-int		handle_heredocs(t_shell *shell, t_arr *redirect, int heredocs);
+int		handle_heredocs(t_shell *shell, t_arr *redirect, int hd, t_arr *cmds);
 
 /*			INIT			*/
 
@@ -170,6 +178,7 @@ void	signal_set(int is_child, t_shell *shell);
  * Hook function to call after a signal interrupted readline.
 */
 int		rl_hook(void);
+int 	rl_hd_hook(void);
 
 /*
  * Allocates memory for a 2d array of size nbr of commands - 1.
@@ -190,7 +199,7 @@ void	exec_programs(t_shell *shell);
 /*
  * Called by parent, sets the exit status of a child process.
 */
-void	set_status(int status);
+void	set_status(int status, t_shell *sh);
 
 /*
  * Dup_fds function checks the existing programs fds
@@ -201,18 +210,30 @@ void	set_status(int status);
 int		dup_fds(t_prog *item);
 
 /*
- * Close all fds.
- * Return value:
- * 0 on error, 1 on success.
+ * Closes fds for redirections.
 */
-int		close_fds(t_shell *sh);
+void	cl_red_fds(t_shell *sh);
+
+/*
+ * Close all opened fds.
+*/
+void	close_fds(t_shell *sh);
+
+/*
+ * Called from a child process to close all unused fds by that process.
+ * Return value:
+ * 0 on error, 1 0n success.
+*/
+void	close_unused_fds(t_prog *item, t_shell *sh);
+
 /*
  * Checks if the redirection files are valid and
- * sets all the needed fds for execution.
+ * sets all the needed fds for execution of a program.
  * Return value:
- * 0 on error, 1 on valid.
+ * Filename failed to open on error, NULL on success
+ * (if no opening file failed).
 */
-int		set_redirect(t_shell *shell);
+char	*set_redirect(t_prog *item);
 
 /*
  * Executes a single child process if not built-in.

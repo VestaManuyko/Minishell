@@ -6,15 +6,14 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:29:47 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 10:30:22 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/25 13:33:32 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <minishell.h>
 
 char	*str_expand(int (*f)(t_quote *data, char *str, int use_quote),
-			t_arr *env, char *str, int use_quote)
+			char *str, int use_quote, t_shell *sh)
 {
 	char	*line;
 	t_quote	data;
@@ -25,7 +24,8 @@ char	*str_expand(int (*f)(t_quote *data, char *str, int use_quote),
 		return (ft_strdup(""));
 	line = NULL;
 	data.expand = tar_init(NULL, free);
-	data.env = env;
+	data.env = sh->env;
+	data.status = &sh->status;
 	data.quote = 0;
 	if (data.expand == NULL)
 		return (NULL);

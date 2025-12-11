@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 01:50:34 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 13:50:21 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/27 16:02:02 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,19 @@ t_red	*red_init(t_redtype type, char *raw);
 
 void	red_free(void *item);
 
-void	red_perror(char token);
+void	red_perror(char token, t_shell *sh);
 
 /* Given a string that includes the redirection char as str[0,1], 
  * convert the symbol into its t_redtype enum to define the redirection.
  * put in the remaining string (cleaned by any unquoted blank) into
  * the field char *raw.
  */
-t_red	*red_str2struct(char *str);
+t_red	*red_str2struct(char *str, char next, t_shell *sh);
 
 /* Expands into the val field the data set in the raw field.
  * $ and quotes are getting expanded with the exception of the heredoc case
  * where only quotes are expanded.
  */
-int		red_raw2val(t_red *item, t_arr *env);
+int		red_raw2val(t_red *item, t_shell *sh);
 
 #endif

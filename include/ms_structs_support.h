@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 10:03:00 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 13:53:08 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/27 15:48:14 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ typedef struct s_quote
 	t_arr	*env;
 	t_arr	*expand;
 	int		quote;
-}			t_quote;
+	int		*status;
+}	t_quote;
+
+typedef struct s_reder
+{
+	int		quotes;
+	t_pipe	proctype;
+	int		res;
+	t_shell	*sh;
+
+}	t_reder;
 
 #endif

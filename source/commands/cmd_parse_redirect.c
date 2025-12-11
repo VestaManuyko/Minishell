@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_parse_redirect.c                               :+:      :+:    :+:   */
+/*   cmd_parse_red.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,7 +13,7 @@
 #include "ms_structs.h"
 #include <minishell.h>
 
-int	cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_shell *sh)
+int	cmd_parse_red(t_arr *redirect, t_prog *proc, t_shell *sh, t_arr *cmds)
 {
 	int		i;
 	t_red	*tmp;
@@ -25,7 +25,7 @@ int	cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_shell *sh)
 	while (i < redirect->size)
 	{
 		tmp = (t_red *)redirect->arr[i];
-		if (!red_raw2val(tmp, sh->env))
+		if (!red_raw2val(tmp, sh))
 			return (0);
 		if (tmp->type == in_heredoc)
 			heredocs++;
@@ -33,7 +33,7 @@ int	cmd_parse_redirect(t_arr *redirect, t_prog *proc, t_shell *sh)
 	}
 	if (heredocs)
 	{
-		if (!handle_heredocs(sh, redirect, heredocs))
+		if (!handle_heredocs(sh, redirect, heredocs, cmds))
 			return (0);
 	}
 	return (1);

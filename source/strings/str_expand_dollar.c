@@ -39,7 +39,7 @@ static int	expand_dollar_special(char **str, char **end, t_quote *data)
 	if (*(*str + 1) == '$')
 		line = ft_itoa(getpid());
 	else
-		line = ft_itoa(g_return);
+		line = ft_itoa(*data->status);
 	if (line == NULL)
 		return (0);
 	if (!tar_putstr(data->expand, line))
@@ -100,7 +100,7 @@ int	dollar(t_quote *data, char *str, int use_quote)
 	end = str;
 	while (*str)
 	{
-		data->quote = str_isquoted(*end) * use_quote;
+		data->quote = str_isquoted_mute(*end, use_quote == 0);
 		d_type = which_dollar_exp(str, data->quote);
 		if (d_type == 1)
 			res = expand_dollar_special(&str, &end, data);

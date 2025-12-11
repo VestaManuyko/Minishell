@@ -19,6 +19,7 @@ void	reset_shell(t_shell *sh)
 	i = 0;
 	if (sh == NULL)
 		return ;
+	close_fds(sh);
 	if (sh->cmd_line != NULL)
 		free(sh->cmd_line);
 	sh->cmd_line = NULL;

@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 18:00:41 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/14 09:57:01 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/11/28 10:01:17 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	only_n(char *str)
 {
+	if (!*str)
+		return (0);
 	while (*str != 0)
 	{
 		if (*str != 'n')
@@ -44,6 +46,8 @@ int	bltn_echo(t_arr *args, t_shell *sh)
 	int		flag;
 
 	(void)sh;
+	if (g_return == 130)
+		return (0);
 	flag = 1;
 	if (args->size <= 1)
 		write(1, "\n", 1);
@@ -52,5 +56,5 @@ int	bltn_echo(t_arr *args, t_shell *sh)
 		print_ptr = find_flags((char **)&args->arr[1], &flag);
 		arr_print(print_ptr, ' ', flag);
 	}
-	return (g_return = 0, 1);
+	return (1);
 }

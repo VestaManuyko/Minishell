@@ -14,7 +14,7 @@
 /*
  * Execution of a bulit-in function passed as a parameter
  * Return value:
- * 0 on error, 1 on success.
+ * 1 on error, 0 on success.
 */
 int	exec_bltn(t_bltn *bltn, t_shell *shell)
 {
@@ -28,7 +28,7 @@ int	exec_bltn(t_bltn *bltn, t_shell *shell)
 		stdin_main = dup(STDIN_FILENO);
 		stdout_main = dup(STDOUT_FILENO);
 		if (!dup_fds(&shell->items[0]) || stdin_main == -1 || stdout_main == -1)
-			return (close(stdin_main), close(stdout_main), 0);
+			return (close(stdin_main), close(stdout_main), 1);
 	}
 	if (!bltn->func(shell->items[0].prog, shell))
 		err_ret = 1;
@@ -40,19 +40,19 @@ int	exec_bltn(t_bltn *bltn, t_shell *shell)
 		close(stdout_main);
 	}
 	if (err_ret == 1)
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
 /*
  * Called by parent, sets the exit status of a child process.
 */
-void	set_status(int status)
+void	set_status(int status, t_shell *sh)
 {
 	if (WIFEXITED(status))
-		g_return = WEXITSTATUS(status);
+		sh->status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
-		g_return = 128 + WTERMSIG(status);
+		sh->status = 128 + WTERMSIG(status);
 }
 
 /*
@@ -63,14 +63,14 @@ void	set_status(int status)
 */
 int	dup_fds(t_prog *item)
 {
-	if (item->fd_io[0] != -1 && item->fd_io[0] != 0)
+	if (item->fd_io[0] > 0)
 	{
 		if ((dup2(item->fd_io[0], STDIN_FILENO)) == -1)
 			return (0);
 		close (item->fd_io[0]);
 		item->fd_io[0] = -1;
 	}
-	if (item->fd_io[1] != -1 && item->fd_io[1] != 1)
+	if (item->fd_io[1] != 1)
 	{
 		if ((dup2(item->fd_io[1], STDOUT_FILENO)) == -1)
 			return (0);
@@ -83,23 +83,34 @@ int	dup_fds(t_prog *item)
 /*
  * Programs_validate validates each program if its executable
  * and has valid redirections.
- * Return value:
- * 0 on error, 1 on success.
 */
-static int	programs_validate(t_shell *shell)
+static void	programs_validate(t_shell *shell)
 {
-	int	i;
+	int		i;
+	char	*red_val;
 
 	i = 0;
 	while (i < shell->count)
 	{
 		if (!program_validate(shell, &shell->items[i]))
-			return (0);
+		{
+			arr_free((char **)shell->items[i].prog->arr);
+			shell->items[i].prog->arr = NULL;
+			shell->items[i].prog->size = 0;
+			shell->items[i].complete = shell->status;
+		}
+		red_val = set_redirect(&shell->items[i]);
+		if (red_val)
+		{
+			if (red_val[0] == '$')
+				cmd_perror(ER_MINI, red_val, "ambiguous redirect");
+			else
+				cmd_perror(ER_MINI, red_val, strerror(errno));
+			shell->items[i].complete = 1;
+		}
 		i++;
 	}
-	if (!set_redirect(shell))
-		return (0);
-	return (1);
+	cl_red_fds(shell);
 }
 
 /*
@@ -108,14 +119,24 @@ static int	programs_validate(t_shell *shell)
 */
 void	exec_programs(t_shell *shell)
 {
-	if (!programs_validate(shell))
-		return ;
+	programs_validate(shell);
 	if (shell->count == 1)
 	{
+		if (set_redirect(&shell->items[0]))
+		{
+			shell->status = 1;
+			close_fds(shell);
+			return ;
+		}
+		if (shell->items[0].prog->size == 0)
+		{
+			close_fds(shell);
+			return ;
+		}
 		if (shell->items[0].bltin == NULL)
 			exec_single(shell);
 		else
-			exec_bltn(shell->items[0].bltin, shell);
+			shell->status = exec_bltn(shell->items[0].bltin, shell);
 		close_fds(shell);
 	}
 	else

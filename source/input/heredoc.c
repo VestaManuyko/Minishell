@@ -40,73 +40,37 @@ static int	is_quoted(char *str)
 /*
  * Processes the line by expanding the env values if found.
  * Return value:
- * -1 on error, 0 on success.
+ * 0 on error, 1 on success.
 */
-static int	process_line(char **line, t_arr *env, int expand)
+static int	process_line(char **line, int expand, t_shell *sh, char *lim)
 {
 	char	*expand_line;
 
-	expand_line = str_expand(dollar, env, *line, expand);
-	if (!expand_line)
-		return (-1);
-	free (*line);
-	*line = expand_line;
-	return (0);
+	if (strcmp(*line, lim))
+	{
+		expand_line = str_expand(dollar, *line, expand, sh);
+		if (!expand_line)
+			return (0);
+		free (*line);
+		*line = expand_line;
+	}
+	return (1);
 }
 
 /*
- * Displays an eof message if reached eof, otherwise closes
- * write fd and returns.
+ * Displays an eof message when reached eof.
  * Return value:
- * NULL on error, tmp_filename on eof.
+ * 1 on success.
 */
-static int	readline_eof(int fd, char *limiter)
+static int	readline_eof(int fd, char *lim)
 {
-	if (errno == 0)
-	{
-		printf("minishell: here-doc delimited by eof (wanted `%s')\n",
-			limiter);
-		close (fd);
-		return (1);
-	}
-	else
-	{
-		close (fd);
-		return (0);
-	}
+	if (g_return == 130 || g_return == 131)
+		return (close(fd), 0);
+	printf("minishell: here-doc delimited by eof (wanted `%s')\n", lim);
+	return (close (fd), 1);
 }
 
-/*
- * Get_filename sets the expand flag for the heredoc function if
- * quotes are found within the raw limiter value. Creates a string with
- * the temporary filename as follows:
- * "/tmp/heredoc_(int)1[pid]";
- * Then opens a write fd.
- * Return value:
- * NULL on errors, tmp_filename on success.
-*/
-char	*get_filename(void)
-{
-	char		*tmp_filename;
-	static int	nbr = 0;
-	char		*path;
-	char		*temp;
-
-	if (nbr++ == 2147483645)
-		nbr = 0;
-	temp = ft_itoa(nbr);
-	path = ft_strjoin("/tmp/heredoc_", temp);
-	free(temp);
-	temp = ft_itoa(getpid());
-	tmp_filename = ft_strjoin(path, temp);
-	free(temp);
-	free(path);
-	if (!tmp_filename)
-		return (NULL);
-	return (tmp_filename);
-}
-
-int	heredoc(char *raw_lim, char *limiter, t_arr *env, char *tmp_filename)
+int	heredoc(char *raw_lim, char *lim, char *tmp_filename, t_shell *sh)
 {
 	int		expand;
 	int		fd;
@@ -122,14 +86,14 @@ int	heredoc(char *raw_lim, char *limiter, t_arr *env, char *tmp_filename)
 	{
 		line = readline("> ");
 		if (!line)
-			return (readline_eof(fd, limiter));
+			return (readline_eof(fd, lim));
 		if (ft_strchr(line, '$') && expand == 1)
 		{
-			if (process_line(&line, env, expand) == -1)
-				return (free(line), free(tmp_filename), close (fd), 0);
+			if (!process_line(&line, expand, sh, lim))
+				return (free(line), close (fd), 0);
 		}
-		if (!ft_strncmp(line, limiter, ft_strlen(limiter) + 1))
-			return (close (fd), free(tmp_filename), 1);
+		if (!ft_strncmp(line, lim, ft_strlen(lim) + 1))
+			return (close (fd), 1);
 		ft_putendl_fd(line, fd);
 		free (line);
 	}

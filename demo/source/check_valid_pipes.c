@@ -32,7 +32,7 @@ int main(int ac, char **av, char **env)
 	while (1)
 	{
 		if (get_command(&sh))
-			cmd_validate_pipes(sh.cmd_line);
+			cmd_valid_pipes(sh.cmd_line);
 		reset_shell(&sh);		
 	}
 	free_shell(&sh);

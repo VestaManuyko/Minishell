@@ -59,18 +59,24 @@ static int	quote_opened(char *line)
 	return (1);
 }
 
-void	clean_exit(char *message, t_shell *shell)
+void	clean_exit(char *message, t_shell *shell, int status)
 {
 	if (!message)
 	{
 		free_shell(shell);
-		exit(EXIT_SUCCESS);
+		exit(status);
+	}
+	if (!strcmp(message, CLOSE_FDS))
+	{
+		close_fds(shell);
+		free_shell(shell);
+		exit(status);
 	}
 	else
 	{
 		perror(message);
 		free_shell(shell);
-		exit(EXIT_FAILURE);
+		exit(status);
 	}
 }
 
@@ -81,18 +87,19 @@ int	get_command(t_shell *shell)
 
 	prompt = get_prompt((char **)shell->env->arr);
 	if (!prompt)
-		clean_exit(ER_PROMPT, shell);
+		clean_exit(ER_PROMPT, shell, 1);
 	line = readline(prompt);
 	free(prompt);
 	if (!line)
 	{
-		if (errno != 0)
-			clean_exit(ER_READLINE, shell);
 		write(1, "exit\n", 5);
-		clean_exit(0, shell);
+		clean_exit(0, shell, shell->status);
 	}
 	if (quote_opened(line))
+	{
+		shell->status = 1;
 		return (add_history(line), free(line), ft_putendl_fd(ER_QUOTES, 2), 0);
+	}
 	shell->cmd_line = line;
 	if (*line)
 		add_history(line);

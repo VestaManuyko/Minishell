@@ -12,20 +12,20 @@
 
 #include <minishell.h>
 
-int	red_raw2val(t_red *item, t_arr *env)
+int	red_raw2val(t_red *item, t_shell *sh)
 {
 	char	*line_d;
 	char	*line_q;
 
 	if (item->type != in_heredoc)
 	{
-		line_d = str_expand(dollar, env, item->raw, 1);
+		line_d = str_expand(dollar, item->raw, 1, sh);
 		if (line_d == NULL)
 			return (0);
 	}
 	else
 		line_d = item->raw;
-	line_q = str_expand(quotes, env, line_d, 0);
+	line_q = str_expand(quotes, line_d, 0, sh);
 	if (item->type != in_heredoc)
 		free(line_d);
 	if (line_q == NULL)
