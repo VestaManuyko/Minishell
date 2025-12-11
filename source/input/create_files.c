@@ -12,6 +12,8 @@
 
 #include <minishell.h>
 
+void	free_files(char **files, int amnt);
+
 /*
  * Get_filename sets the expand flag for the heredoc function if
  * quotes are found within the raw limiter value. Creates a string with
@@ -50,8 +52,13 @@ char	**create_files(int hd)
 	i = 0;
 	tmp_files = malloc (hd * sizeof(char *));
 	if (!tmp_files)
-		return (0);
+		return (NULL);
 	while (i < hd)
-		tmp_files[i++] = get_filename();
+	{
+		tmp_files[i] = get_filename();
+		if (tmp_files[i] == NULL)
+			return (free_files(tmp_files, i), NULL);
+		i++;
+	}
 	return (tmp_files);
 }
