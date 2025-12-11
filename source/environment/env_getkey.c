@@ -20,13 +20,13 @@ char	*env_getkey(char *str)
 
 	i = 0;
 	if (str == NULL || *str == '\0')
-		return (errno = EINVAL, NULL);
+		return (NULL);
 	if (!(ft_isalpha(*str) || *str == '_'))
-		return (errno = EINVAL, NULL);
+		return (NULL);
 	while (str[i] != '\0' && str[i] != '=')
 	{
 		if (!(ft_isalnum(str[i]) || str[i] == '_'))
-			return (errno = EINVAL, NULL);
+			return (NULL);
 		i++;
 	}
 	key = ft_strncpy(str, i);
