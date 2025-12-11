@@ -30,7 +30,7 @@ int	rl_hook(void)
 	return (0);
 }
 
-void hd_handler(int signum)
+void	hd_handler(int signum)
 {
 	if (signum == SIGINT)
 		g_return = 130;
@@ -38,7 +38,7 @@ void hd_handler(int signum)
 		g_return = 131;
 }
 
-int rl_hd_hook(void)
+int	rl_hd_hook(void)
 {
 	close(STDIN_FILENO);
 	return (0);

@@ -178,7 +178,7 @@ void	signal_set(int is_child, t_shell *shell);
  * Hook function to call after a signal interrupted readline.
 */
 int		rl_hook(void);
-int 	rl_hd_hook(void);
+int		rl_hd_hook(void);
 
 /*
  * Allocates memory for a 2d array of size nbr of commands - 1.
