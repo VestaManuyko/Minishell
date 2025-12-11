@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <minishell.h>
 
 /*
@@ -47,7 +46,7 @@ static int	process_line(char **line, int expand, t_shell *sh, char *lim)
 {
 	char	*expand_line;
 
-	if (strcmp(*line, lim))
+	if (ft_strncmp(*line, lim, ft_strlen(lim) + 1))
 	{
 		expand_line = str_expand(dollar, *line, expand, sh);
 		if (!expand_line)
