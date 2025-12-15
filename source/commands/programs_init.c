@@ -16,7 +16,7 @@ t_prog	*programs_init(int count)
 {
 	t_prog	*proc;
 
-	proc = (t_prog *)calloc(count, sizeof(t_prog));
+	proc = (t_prog *)ft_calloc(count, sizeof(t_prog));
 	if (proc == NULL)
 		return (NULL);
 	return (proc);

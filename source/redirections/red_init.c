@@ -16,7 +16,7 @@ t_red	*red_init(t_redtype type, char *raw)
 {
 	t_red	*item;
 
-	item = (t_red *)calloc(1, sizeof(t_red));
+	item = (t_red *)ft_calloc(1, sizeof(t_red));
 	if (item == NULL)
 		return (NULL);
 	item->type = type;

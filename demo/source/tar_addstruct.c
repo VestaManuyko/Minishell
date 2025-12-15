@@ -29,7 +29,7 @@ int main(int ac, char **av, char **env)
 	test = tar_init(NULL, red_free);
 	while (env[i] != NULL)
 	{ 
-		item = (t_red *)calloc(1, sizeof(t_red));
+		item = (t_red *)ft_calloc(1, sizeof(t_red));
 		if (item == NULL)
 			return (tar_free(test), 0);
 		/* here I'm just leveraging the env array to feed some string*/
