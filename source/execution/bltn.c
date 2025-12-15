@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 16:44:45 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/25 14:09:13 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 08:57:36 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	bltn_unset(t_arr *args, t_shell *sh)
 	int	i;
 
 	i = 0;
-	if (g_return == 130)
-		return (0);
 	while (i < args->size)
 	{
+		if (g_return == 130)
+			return (0);
 		env_entry_remove(sh->env, (char *)args->arr[i]);
 		i++;
 	}
@@ -31,13 +31,13 @@ int	bltn_env(t_arr *args, t_shell *sh)
 {
 	int	i;
 
-	if (g_return == 130)
-		return (0);
 	if (args->size > 1)
 		return (cmd_perror(ER_MINI, "env", ER_AC), 0);
 	i = 0;
 	while (i < sh->env->size)
 	{
+		if (g_return == 130)
+			return (0);
 		if (ft_strchr(sh->env->arr[i], '=') != NULL)
 			ft_putendl_fd(sh->env->arr[i], 1);
 		i++;

@@ -27,9 +27,9 @@ void	red_shellstatus(t_shell *sh)
 
 void	gret_to_status(t_shell *sh)
 {
-	if (g_return == 130)
+	if (g_return >= 130)
 	{
-		sh->status = 130;
+		sh->status = g_return;
 		g_return = 0;
 	}
 }

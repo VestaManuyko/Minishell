@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 15:10:09 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/28 10:17:19 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 09:04:31 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	export_print(t_arr *env)
 	char	*str;
 
 	i = 0;
-	while (i < env->size)
+	while (i < env->size && g_return != 130)
 	{
 		ft_putstr_fd("declare -x ", 1);
 		if (ft_strchr((char *)env->arr[i], '=') != NULL)
@@ -46,13 +46,17 @@ int	bltn_export(t_arr *args, t_shell *sh)
 	int	status;
 
 	status = 1;
-	if (g_return == 130)
-		return (0);
 	if (args->size == 1)
+	{
 		export_print(sh->env);
+		if (g_return == 130)
+			return (0);
+	}
 	i = 1;
 	while (i < args->size)
 	{
+		if (g_return == 130)
+			return (0);
 		if (!env_entry_update(sh->env, (char *)args->arr[i]))
 		{
 			cmd_perror(ER_EXP, (char *)args->arr[i], ER_IDENT);
