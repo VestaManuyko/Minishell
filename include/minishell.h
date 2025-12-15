@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/27 09:38:02 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 11:12:13 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void	signal_set(int is_child, t_shell *shell);
  * Hook function to call after a signal interrupted readline.
 */
 int		rl_hook(void);
-int 	rl_hd_hook(void);
+int		rl_hd_hook(void);
 
 /*
  * Allocates memory for a 2d array of size nbr of commands - 1.
