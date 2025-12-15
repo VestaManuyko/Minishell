@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 09:50:13 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/12/15 17:00:31 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 17:47:03 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	expand_dollar_special(char **str, char **end, t_quote *data)
 
 	line = NULL;
 	if (*(*str + 1) == '$')
-		line = ft_itoa(getpid());
+		line = ft_itoa(ft_getpid());
 	else
 		line = ft_itoa(*data->status);
 	if (line == NULL)

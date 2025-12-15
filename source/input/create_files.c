@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_files.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 18:14:19 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/12/09 18:14:20 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/12/15 17:46:53 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*get_filename(void)
 	temp = ft_itoa(nbr);
 	path = ft_strjoin("/tmp/heredoc_", temp);
 	free(temp);
-	temp = ft_itoa(getpid());
+	temp = ft_itoa(ft_getpid());
 	tmp_filename = ft_strjoin(path, temp);
 	free(temp);
 	free(path);
