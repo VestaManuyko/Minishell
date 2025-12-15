@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:44:48 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/27 15:58:23 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 11:29:18 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	is_only_space(char	*line)
 	i = 0;
 	if (!*line)
 		return (1);
-	while (line[i] == ' ')
+	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (i == ft_strlen(line))
 		return (1);
