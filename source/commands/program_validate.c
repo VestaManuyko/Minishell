@@ -6,11 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:51:58 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/12/15 09:12:32 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 16:57:41 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <minishell.h>
 
 int		is_valid_file(char *exec);
@@ -33,7 +32,7 @@ static int	is_builtin(t_shell *sh, t_prog *pr, char *exec)
 	while (i < MS_BUILTINS)
 	{
 		blt_name = sh->bltn[i].name;
-		if (ft_strncmp(blt_name, exec, ft_strlen(blt_name)) == 0)
+		if (ft_strncmp(blt_name, exec, ft_strlen(blt_name) + 1) == 0)
 		{
 			pr->bltin = &sh->bltn[i];
 			return (1);
