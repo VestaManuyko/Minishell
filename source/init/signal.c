@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 16:09:53 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/04 18:49:01 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/12/15 11:10:32 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	rl_hook(void)
 	return (0);
 }
 
-void hd_handler(int signum)
+void	hd_handler(int signum)
 {
 	if (signum == SIGINT)
 		g_return = 130;
@@ -38,7 +38,7 @@ void hd_handler(int signum)
 		g_return = 131;
 }
 
-int rl_hd_hook(void)
+int	rl_hd_hook(void)
 {
 	close(STDIN_FILENO);
 	return (0);
