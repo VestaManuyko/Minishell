@@ -6,11 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 09:57:29 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/26 09:49:00 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 17:00:51 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_strings.h"
 #include <minishell.h>
 
 static int	arr_cpystr(char **src, char ***dest, int dest_capacity)

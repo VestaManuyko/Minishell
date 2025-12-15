@@ -6,12 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 11:02:53 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/24 09:27:13 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 16:59:42 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_init.h"
-#include "ms_strings.h"
 #include <minishell.h>
 
 void	free_shell(t_shell *sh)

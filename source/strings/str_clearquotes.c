@@ -6,11 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 15:36:25 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/20 18:51:01 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 17:00:26 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_strings.h"
 #include <minishell.h>
 
 char	*str_clearquotes(char *str, int use_quote, t_shell *sh)

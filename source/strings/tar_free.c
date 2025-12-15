@@ -6,12 +6,11 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 17:55:09 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 11:19:43 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 17:00:47 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-#include <sys/types.h>
 
 static void	voidarr_free(void **arr, void (*u_free)(void *item), ssize_t size)
 {

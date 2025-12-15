@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_redirections.h"
 #include <minishell.h>
 
 int	cmd_valid_pipes(char *str, t_shell *sh)

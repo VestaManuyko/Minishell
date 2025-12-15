@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_structs.h"
 #include <minishell.h>
 
 int	cmd_parse_red(t_arr *redirect, t_prog *proc, t_shell *sh, t_arr *cmds)

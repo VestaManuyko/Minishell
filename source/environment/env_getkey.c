@@ -6,11 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 18:45:47 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/14 10:34:50 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 16:59:19 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include <minishell.h>
 
 char	*env_getkey(char *str)

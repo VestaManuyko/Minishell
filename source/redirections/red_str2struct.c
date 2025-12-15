@@ -6,11 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 02:55:10 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/27 15:54:59 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 17:00:12 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_structs.h"
 #include <minishell.h>
 
 static t_redtype	red_settype(char *str)

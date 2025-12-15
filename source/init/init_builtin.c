@@ -6,11 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 17:43:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/27 18:32:39 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 16:59:45 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_structs.h"
 #include <minishell.h>
 
 void	init_bltn_list(t_bltn *list)

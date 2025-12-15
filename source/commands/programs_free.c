@@ -6,11 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 11:09:09 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/10/23 12:33:21 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 16:59:08 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_strings.h"
 #include <minishell.h>
 
 void	programs_free(t_prog *items, int count)

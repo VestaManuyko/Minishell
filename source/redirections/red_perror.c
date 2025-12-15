@@ -6,11 +6,10 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 01:49:05 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/27 15:55:18 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/15 17:00:06 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ms_structs.h"
 #include <minishell.h>
 
 void	red_perror(char token, t_shell *sh)
