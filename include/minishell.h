@@ -24,7 +24,6 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <asm-generic/errno-base.h>
 # include <fcntl.h>
 # include <termios.h>
 

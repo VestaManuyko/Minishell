@@ -48,11 +48,6 @@ static int	is_builtin(t_shell *sh, t_prog *pr, char *exec)
  * RETURNS:
  * 1 on success
  * 0 on error 
- *
- * errno values are set according to the following logic:
- * EISDIR if the path is a directory
- * EPERM if the path doesn't correspond to a regular file or link
- * EPERM if the file is not accessible in execution by the calling user.
  */
 static int	is_valid_path(char *exec, t_shell *sh)
 {
@@ -61,11 +56,11 @@ static int	is_valid_path(char *exec, t_shell *sh)
 	if ((stat(exec, &info)) == -1)
 		return (sh->status = 127, 0);
 	if S_ISDIR(info.st_mode)
-		return (errno = EISDIR, sh->status = 126, 0);
+		return (sh->status = 126, 0);
 	else if (!(S_ISREG(info.st_mode) || S_ISLNK(info.st_mode)))
-		return (errno = EACCES, sh->status = 126, 0);
+		return (sh->status = 126, 0);
 	else if (access(exec, X_OK) == -1)
-		return (errno = EACCES, sh->status = 126, 0);
+		return (sh->status = 126, 0);
 	return (1);
 }
 
@@ -109,9 +104,9 @@ static int	check_exec_path(char *path, char *slash, void **exec, t_shell *sh)
  * with the matching found string.
  * 
  * In case the executable is not found prints an error message and 
- * set errno to 127 (same value as BASH).
+ * set status to 127 (same value as BASH).
  * In case is found but permission are not available an error message
- * is also print and the errno is set by the access() funct.
+ * is also print and the status is set by the access() funct.
  *
  * RETURNS
  * - 1 if the executable is found

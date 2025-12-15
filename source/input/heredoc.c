@@ -46,7 +46,7 @@ static int	process_line(char **line, int expand, t_shell *sh, char *lim)
 {
 	char	*expand_line;
 
-	if (strcmp(*line, lim))
+	if (ft_strncmp(*line, lim, ft_strlen(lim) + 1))
 	{
 		expand_line = str_expand(dollar, *line, expand, sh);
 		if (!expand_line)
@@ -66,8 +66,10 @@ static int	readline_eof(int fd, char *lim)
 {
 	if (g_return == 130 || g_return == 131)
 		return (close(fd), 0);
-	printf("minishell: here-doc delimited by eof (wanted `%s')\n", lim);
-	return (close (fd), 1);
+	ft_putstr_fd("minishell: here-doc delimited by eof (wanted `", 2);
+	ft_putstr_fd(lim, 2);
+	ft_putendl_fd("')", 2);
+	return (close(fd), 1);
 }
 
 int	heredoc(char *raw_lim, char *lim, char *tmp_filename, t_shell *sh)
@@ -90,10 +92,10 @@ int	heredoc(char *raw_lim, char *lim, char *tmp_filename, t_shell *sh)
 		if (ft_strchr(line, '$') && expand == 1)
 		{
 			if (!process_line(&line, expand, sh, lim))
-				return (free(line), close (fd), 0);
+				return (free(line), close(fd), 0);
 		}
 		if (!ft_strncmp(line, lim, ft_strlen(lim) + 1))
-			return (close (fd), 1);
+			return (close(fd), 1);
 		ft_putendl_fd(line, fd);
 		free (line);
 	}

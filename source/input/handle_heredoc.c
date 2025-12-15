@@ -15,7 +15,7 @@
 /*
  * Frees all the tmp_files in the files 2d array.
 */
-static void	free_files(char **files, int amnt)
+void	free_files(char **files, int amnt)
 {
 	int	i;
 
