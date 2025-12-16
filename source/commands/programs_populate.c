@@ -6,11 +6,21 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:44:48 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/12/15 11:29:18 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/16 11:27:18 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+static void	reset_programs(t_shell *sh, t_arr *cmds)
+{
+	if (sh->cmd_line != NULL)
+		free(sh->cmd_line);
+	sh->cmd_line = NULL;
+	programs_free(sh->items, sh->count);
+	sh->items = NULL;
+	tar_free(cmds);
+}
 
 static t_arr	*split_commands(char *str)
 {
@@ -72,6 +82,6 @@ int	programs_populate(t_shell *sh)
 		i++;
 	}
 	if (!create_pipes(sh))
-		return (ft_putendl_fd(ER_PIPE, 2), tar_free(cmds), 0);
+		return (ft_putendl_fd(ER_PIPE, 2), reset_programs(sh, cmds), 0);
 	return (tar_free(cmds), 1);
 }

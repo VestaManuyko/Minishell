@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 13:34:08 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/11/28 10:22:00 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/16 11:23:06 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	red_shellstatus(t_shell *sh)
 {
 	if (sh->status == 0)
 		sh->status = 1;
-	if (is_only_space(sh->cmd_line))
+	if (sh->cmd_line && is_only_space(sh->cmd_line))
 	{
 		if (sh->status != 130)
 			sh->status = 0;
