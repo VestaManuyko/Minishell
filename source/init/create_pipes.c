@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 12:34:55 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/12/16 13:59:52 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/16 14:02:57 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 static int	init_pipes(t_shell *sh, int ***pipes)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	while (i < (sh->count - 1))
@@ -31,7 +31,7 @@ static int	init_pipes(t_shell *sh, int ***pipes)
 			while (j < i)
 			{
 				close((*pipes)[j][0]);
-                close((*pipes)[j][1]);
+				close((*pipes)[j][1]);
 				j++;
 			}
 			j = 0;
