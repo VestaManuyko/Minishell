@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+        */
+/*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 12:34:55 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/10 12:34:56 by vmanuyko         ###   ########.fr       */
+/*   Updated: 2025/12/16 13:59:52 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,23 @@
 static int	init_pipes(t_shell *sh, int ***pipes)
 {
 	int	i;
+	int j;
 
 	i = 0;
 	while (i < (sh->count - 1))
 	{
 		if (pipe((*pipes)[i]) == -1)
 		{
-			i = 0;
-			while (i < (sh->count - 1))
-				free((*pipes)[i++]);
+			j = 0;
+			while (j < i)
+			{
+				close((*pipes)[j][0]);
+                close((*pipes)[j][1]);
+				j++;
+			}
+			j = 0;
+			while (j < sh->count - 1)
+				free((*pipes)[j++]);
 			free (*pipes);
 			*pipes = NULL;
 			return (0);
