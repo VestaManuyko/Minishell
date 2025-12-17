@@ -64,7 +64,7 @@ static int	process_line(char **line, int expand, t_shell *sh, char *lim)
 */
 static int	readline_eof(int fd, char *lim)
 {
-	if (g_return == 130 || g_return == 131)
+	if (g_return == 130)
 		return (close(fd), 0);
 	ft_putstr_fd("minishell: here-doc delimited by eof (wanted `", 2);
 	ft_putstr_fd(lim, 2);

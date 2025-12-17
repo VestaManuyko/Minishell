@@ -62,7 +62,7 @@ int	programs_populate(t_shell *sh)
 	t_arr	*cmds;
 	int		i;
 
-	if (is_only_space(sh->cmd_line) || !cmd_valid_pipes(sh->cmd_line, sh))
+	if (!cmd_valid_pipes(sh->cmd_line, sh))
 		return (0);
 	cmds = split_commands(sh->cmd_line);
 	if (cmds == NULL)

@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 09:13:23 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/12/15 17:48:00 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/17 10:21:34 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,6 @@ int		exec_pipeline(t_shell *sh);
  * Introducing our fantastic linux only pid reader
  */
 int		ft_getpid(void);
-
 
 /*
  * All the built in functions.

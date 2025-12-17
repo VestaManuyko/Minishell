@@ -18,11 +18,6 @@ void	red_shellstatus(t_shell *sh)
 {
 	if (sh->status == 0)
 		sh->status = 1;
-	if (sh->cmd_line && is_only_space(sh->cmd_line))
-	{
-		if (sh->status != 130)
-			sh->status = 0;
-	}
 }
 
 void	gret_to_status(t_shell *sh)
@@ -49,14 +44,16 @@ int	main(int ac, char **av, char **env)
 		if (get_command(&sh))
 		{
 			gret_to_status(&sh);
-			if (programs_populate(&sh))
+			if (!is_only_space(sh.cmd_line))
 			{
-				exec_programs(&sh);
-				reset_shell(&sh);
+				if (programs_populate(&sh))
+				{
+					exec_programs(&sh);
+					reset_shell(&sh);
+				}
+				else
+					red_shellstatus(&sh);
 			}
-			else
-				red_shellstatus(&sh);
 		}
 	}
-	return (0);
 }

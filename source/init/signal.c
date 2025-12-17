@@ -34,8 +34,6 @@ void	hd_handler(int signum)
 {
 	if (signum == SIGINT)
 		g_return = 130;
-	if (signum == SIGQUIT)
-		g_return = 131;
 }
 
 int	rl_hd_hook(void)
@@ -68,7 +66,7 @@ void	signal_set(int is_child, t_shell *shell)
 		sa.sa_handler = hd_handler;
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 		clean_exit(ER_SIGACT, shell, 1);
-	if (!is_child)
+	if (!is_child || is_child == 3)
 		signal(SIGQUIT, SIG_IGN);
 	else
 	{
