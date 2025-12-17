@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 15:10:09 by fpaglia           #+#    #+#             */
-/*   Updated: 2025/12/15 09:04:31 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/16 16:59:22 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	bltn_export(t_arr *args, t_shell *sh)
 	{
 		if (g_return == 130)
 			return (0);
+		if (ft_strlen((char *)args->arr[i]) > 131072)
+			return (cmd_perror(ER_EXP, "entry update", ER_ENVLIM), 0);
 		if (!env_entry_update(sh->env, (char *)args->arr[i]))
 		{
 			cmd_perror(ER_EXP, (char *)args->arr[i], ER_IDENT);

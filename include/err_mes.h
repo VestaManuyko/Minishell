@@ -6,7 +6,7 @@
 /*   By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 11:22:40 by vmanuyko          #+#    #+#             */
-/*   Updated: 2025/11/17 15:53:55 by fpaglia          ###   ########.fr       */
+/*   Updated: 2025/12/16 16:54:23 by fpaglia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@
 # define ER_CDHM "Error\nminishell: cd: HOME not set"
 # define ER_CDENV "Error\nminishell: cd: error retrieving current directory"
 # define CLOSE_FDS "Close fds"
+# define ER_ENVLIM "exceed allowed entry size of 131072 characters"
 
 #endif
