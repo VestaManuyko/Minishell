@@ -1,9 +1,12 @@
-# minishell
-42 Vienna assignment: reproduce a subset of the functionalities of a shell
+# Minishell
+42 Vienna group-project: reproduce a subset of the functionalities of a shell.
+
+**Made in cooperation with:** \
+[Paglia Francesco](https://github.com/francescoPagliaPersonal)
 
 Some interesting starting points:
 
-** Git 42 guide ** \
+**Git 42 guide** \
 Quick overview of the minishell \
 https://42-cursus.gitbook.io/guide/3-rank-03/minishell
 
