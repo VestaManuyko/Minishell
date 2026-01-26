@@ -14,10 +14,12 @@ https://en.wikipedia.org/wiki/Abstract_syntax_tree.
 **Bash Manual** \
 https://www.gnu.org/savannah-checkouts/gnu/bash/manual/
 
-# Summary od this document:
+# Summary of this document:
 [Allowed functions](https://github.com/francescoPagliaPersonal/minishell/blob/main/README.md#summary-overview-of-the-allowed-functions)
 
 [Notes](https://github.com/francescoPagliaPersonal/minishell/blob/main/README.md#notes)
+
+[How to use](https://github.com/francescoPagliaPersonal/minishell/blob/main/README.md#how-to-use)
 
 # Summary overview of the allowed functions:
 
@@ -196,3 +198,22 @@ isatty, tcsetattr, tgetstr for terminal handling
 # Notes:
 
 - [how to filter out readline leaks](https://discordapp.com/channels/1026201148803260527/1138120087488966766/1170818150330282015)
+
+# How to use:
+### Build
+Compile the project by running:
+```bash
+make
+```
+### Start
+Then run:
+```bash
+./minishell
+```
+### Run-time
+Type any command you want the shell to execute, works similarily to bash (look bash manual).
+### End
+To finish your session press ctrl-D or run exit command by typing:
+```bash
+exit
+```
