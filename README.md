@@ -1,26 +1,12 @@
-# Minishell
-42 Vienna group-project: reproduce a subset of the functionalities of a shell.
-
 **Made in cooperation with:** \
 [Paglia Francesco](https://github.com/francescoPagliaPersonal)
 
-Some interesting starting points:
+# Minishell
+Group project developed during Common Core at 42Vienna. \
+Goal of the project in to create a minishell by refereing to [Bash manual](https://www.gnu.org/savannah-checkouts/gnu/bash/manual).
 
-**Git 42 guide** \
-Quick overview of the minishell \
-https://42-cursus.gitbook.io/guide/3-rank-03/minishell
-
-**Abstract syntax tree (AST)** \
-A method to parse content based on lexical tokens: \
-https://en.wikipedia.org/wiki/Abstract_syntax_tree.
-
-**Bash Manual** \
-https://www.gnu.org/savannah-checkouts/gnu/bash/manual/
-
-# Summary of this document:
+## Summary of this document:
 [Allowed functions](https://github.com/francescoPagliaPersonal/minishell/blob/main/README.md#summary-overview-of-the-allowed-functions)
-
-[Notes](https://github.com/francescoPagliaPersonal/minishell/blob/main/README.md#notes)
 
 [How to use](https://github.com/francescoPagliaPersonal/minishell/blob/main/README.md#how-to-use)
 
