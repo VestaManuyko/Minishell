@@ -3,23 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fpaglia <fpaglia@student.42vienna.com>     +#+  +:+       +#+         #
+#    By: vmanuyko <vmanuyko@student.42vienna.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/08 12:10:06 by fpaglia           #+#    #+#              #
-#    Updated: 2025/12/15 17:45:26 by fpaglia          ###   ########.fr        #
+#    Updated: 2026/03/27 12:00:16 by vmanuyko         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g3
-INCLUDES = -Iinclude -Ilibs/libft
+INCLUDES = -Iinclude -Ilibft
 LINKS = -lreadline
 
 # Relevant paths
 SRC_DIR := source
 OBJ_DIR := build
-LIB_DIR := libs
+LIB_DIR := libft
 
 # All the h_files
 H_INCLUDES = minishell.h err_mes.h ms_commands.h ms_environment.h ms_init.h \
@@ -79,39 +79,32 @@ OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
 
 H_FILES = $(addprefix include/, $(H_INCLUDES))
 
-LIBFT := $(LIB_DIR)/libft/libft.a
+LIBFT := $(LIB_DIR)/libft.a
 MINI := $(OBJ_DIR)/libmini.a
 NAME := minishell
 
 $(NAME)  : $(LIBFT) $(OBJ) $(H_FILES) 
-	$(CC) $(FLAGS) $(INCLUDES) $(MAIN_SRC) $(OBJ) $(LIBFT) $(LINKS) -o $(NAME)
+	@$(CC) $(FLAGS) $(INCLUDES) $(MAIN_SRC) $(OBJ) $(LIBFT) $(LINKS) -o $(NAME)
+	@echo "minishell compiled."
 $(LIBFT) :
-	make -C $(LIB_DIR)/libft libft.a
+	@make -C $(LIB_DIR) --no-print-directory libft.a
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@ mkdir -p $(dir $@)
-	$(CC) $(FLAGS) $(INCLUDES) -o $@ -c $^
+	@mkdir -p $(dir $@)
+	@$(CC) $(FLAGS) $(INCLUDES) -o $@ -c $^
 $(MINI) : $(OBJ) 
-	@ mkdir -p $(dir $@)
-	ar rcs $@ $^
+	@mkdir -p $(dir $@)
+	@ar rcs $@ $^
 
-.PHONY: all clean fclean re norm demo
+.PHONY: all clean fclean re demo
 
 all : $(NAME) $(LIBFT) $(MINI)
 
 clean  :
-	make -s -C $(LIB_DIR)/libft clean
-	-rm -rf $(OBJ)
+	@make -s -C $(LIB_DIR) --no-print-directory clean
+	@-rm -rf $(OBJ)
+	@echo "minishell cleaned."
 
 fclean : clean
-	-rm -rf $(NAME) $(LIBFT) $(MINI) *.out
+	@-rm -rf $(NAME) $(LIBFT) $(MINI) *.out
 
 re : fclean all
-
-norm:
-	norminette -R CheckForForbiddenHeader $(SRC) 
-
-demo: $(MINI) $(LIBFT) 
-	make -f make-demo.mk 
-dclean: 
-	-rm  -rf demo/bin 
-dre: dclean demo 
