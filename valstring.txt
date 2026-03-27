@@ -1,9 +1,0 @@
-valgrind --suppressions=suppress.supp  --show-leak-kinds=all minihell.out 
-valgrind --suppressions=suppress.supp --show-leak-kinds=all --leak-check=full
-
---track-fds=no|yes|all    track open file descriptors? [no]
-                              all includes reporting stdin, stdout and stderr
-
- --trace-children=no|yes   Valgrind-ise child processes (follow execve)? [no]
- --gen-suppressions=no|yes|all    print suppressions for errors? [no]
- --malloc-fill=<hexnumber>        fill malloc'd areas with given value
